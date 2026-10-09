@@ -10,6 +10,11 @@ from pathlib import Path
 import yaml
 
 OUT = Path(__file__).with_name("home-dashboard.yaml")
+DASHBOARD_URL = "/dashboard-tt"  # URL path of the dashboard in HA (Settings > Dashboards)
+HOME_PATH = "ana-sayfa"
+# True adds an "Odalar" tab with every room on one page (handy on a tablet), at the
+# cost of each room's cards appearing twice in the YAML. Room subviews always exist.
+ALL_ROOMS_VIEW = False
 
 # ---------------------------------------------------------------- entities
 # Leak sensors, thermostats and room temperatures are registered automatically by
@@ -506,15 +511,77 @@ def clock_weather_section():
     ])
 
 
+TR_SLUG = str.maketrans("çğıöşüÇĞİÖŞÜ ", "cgiosuCGIOSU-")
+
+
+def slug(name):
+    return name.translate(TR_SLUG).lower()
+
+
+def room_entities(cards, card_type, suffix=""):
+    return [c["entity"] for c in cards if c.get("type") == card_type and c.get("entity", "").endswith(suffix)]
+
+
+def room_nav_card(name, icon, badge, cards):
+    """Home-page room shortcut: temperature + lights on; turns red on a leak in that room."""
+    lights = ", ".join(f"'{e}'" for e in room_entities(cards, "custom:mushroom-light-card"))
+    leaks = room_entities(cards, "custom:mushroom-entity-card", "_moisture")
+    lights_on = f"expand([{lights}]) | selectattr('state', 'eq', 'on') | list | count"
+    temp = (f"{{{{ states('{badge}') ~ ' °C · ' if has_value('{badge}') else '' }}}}" if badge else "")
+    leak_test = " or ".join(f"is_state('{e}', 'on')" for e in leaks) or "false"
+    go = {"action": "navigate", "navigation_path": f"{DASHBOARD_URL}/{slug(name)}"}
+    return {
+        "type": "custom:mushroom-template-card",
+        "primary": name,
+        "secondary": (
+            f"{{% if {leak_test} %}}Su kaçağı!{{% else %}}"
+            + temp
+            + f"{{% set n = {lights_on} %}}{{{{ n ~ ' ışık açık' if n > 0 else 'Işıklar kapalı' }}}}{{% endif %}}"
+        ),
+        "icon": icon,
+        "icon_color": (
+            f"{{% if {leak_test} %}}red{{% elif ({lights_on}) > 0 %}}amber{{% else %}}grey{{% endif %}}"
+        ),
+        "tap_action": go,
+        "icon_tap_action": go,
+        **HALF,
+    }
+
+
+def rooms_nav_section():
+    return section([heading("Odalar", "mdi:floor-plan")] + [room_nav_card(*room) for room in ROOMS])
+
+
+def room_subview(name, icon, badge, cards):
+    return {
+        "title": name,
+        "path": slug(name),
+        "icon": icon,
+        "subview": True,
+        "back_path": f"{DASHBOARD_URL}/{HOME_PATH}",
+        "type": "sections",
+        "max_columns": 2,
+        "sections": [section([heading(name, icon, badge)] + cards)],
+    }
+
+
+def all_rooms_view():
+    return {
+        "title": "Odalar",
+        "path": "odalar",
+        "icon": "mdi:floor-plan",
+        "type": "sections",
+        "max_columns": 3,
+        "sections": [section([heading(name, icon, badge)] + cards) for name, icon, badge, cards in ROOMS],
+    }
+
+
 def build():
-    room_sections = [
-        section([heading(name, icon, badge)] + cards) for name, icon, badge, cards in ROOMS
-    ]
     return {
         "views": [
             {
                 "title": "Ana Sayfa",
-                "path": "ana-sayfa",
+                "path": HOME_PATH,
                 "icon": "mdi:home",
                 "type": "sections",
                 "max_columns": 4,
@@ -528,16 +595,12 @@ def build():
                     "show_entity_picture": True,
                     "tap_action": {"action": "more-info"},
                 }],
-                "sections": [status_section(), scenarios_section(), heating_section(), clock_weather_section()],
+                "sections": [status_section(), scenarios_section(), rooms_nav_section(), heating_section(),
+                             clock_weather_section()],
             },
-            {
-                "title": "Odalar",
-                "path": "odalar",
-                "icon": "mdi:floor-plan",
-                "type": "sections",
-                "max_columns": 3,
-                "sections": room_sections,
-            },
+            *([all_rooms_view()] if ALL_ROOMS_VIEW else []),
+            # Hidden from the tab bar; opened from the home-page room cards (back arrow returns home).
+            *[room_subview(*room) for room in ROOMS],
         ]
     }
 

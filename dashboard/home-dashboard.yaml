@@ -566,6 +566,129 @@ views:
   - type: grid
     cards:
     - type: heading
+      heading: Odalar
+      heading_style: title
+      icon: mdi:floor-plan
+    - type: custom:mushroom-template-card
+      primary: Salon
+      secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.sonoff_a4b001d938_temperature'') ~ '' °C · '' if has_value(''sensor.sonoff_a4b001d938_temperature'') else '''' }}{% set n = expand([''light.salon_lamba_01'', ''light.salon_lamba_02'', ''light.salon_tavan_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:sofa
+      icon_color: '{% if false %}red{% elif (expand([''light.salon_lamba_01'', ''light.salon_lamba_02'', ''light.salon_tavan_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/salon
+      icon_tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/salon
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      primary: Mutfak
+      secondary: '{% if is_state(''binary_sensor.sonoff_a4b0023723_moisture'', ''on'') %}Su kaçağı!{% else %}{% set n = expand([''light.mutfak_tavan_aydinlatma'', ''light.mutfak_uzun_led_aydinlatma'', ''light.mutfak_kahve_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:countertop
+      icon_color: '{% if is_state(''binary_sensor.sonoff_a4b0023723_moisture'', ''on'') %}red{% elif (expand([''light.mutfak_tavan_aydinlatma'', ''light.mutfak_uzun_led_aydinlatma'', ''light.mutfak_kahve_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/mutfak
+      icon_tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/mutfak
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      primary: Yatak Odası
+      secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.sonoff_a4b001d93a_temperature'') ~ '' °C · '' if has_value(''sensor.sonoff_a4b001d93a_temperature'') else '''' }}{% set n = expand([''light.yatak_odasi_tavan'', ''light.yatak_odasi_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:bed
+      icon_color: '{% if false %}red{% elif (expand([''light.yatak_odasi_tavan'', ''light.yatak_odasi_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/yatak-odasi
+      icon_tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/yatak-odasi
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      primary: Çocuk Odası
+      secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.sonoff_a4b001d937_temperature'') ~ '' °C · '' if has_value(''sensor.sonoff_a4b001d937_temperature'') else '''' }}{% set n = expand([''light.cocuk_odasi_lamba'', ''light.sonoff_10024a8007'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:teddy-bear
+      icon_color: '{% if false %}red{% elif (expand([''light.cocuk_odasi_lamba'', ''light.sonoff_10024a8007'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/cocuk-odasi
+      icon_tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/cocuk-odasi
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      primary: Çalışma Odası
+      secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.sonoff_a4b001d936_temperature'') ~ '' °C · '' if has_value(''sensor.sonoff_a4b001d936_temperature'') else '''' }}{% set n = expand([''light.calisma_odasi_lamba'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:monitor-dashboard
+      icon_color: '{% if false %}red{% elif (expand([''light.calisma_odasi_lamba'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/calisma-odasi
+      icon_tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/calisma-odasi
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      primary: Koridor
+      secondary: '{% if is_state(''binary_sensor.sonoff_a4b0023729_moisture'', ''on'') %}Su kaçağı!{% else %}{% set n = expand([''light.koridor_mutfak'', ''light.koridor_kapi'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:door
+      icon_color: '{% if is_state(''binary_sensor.sonoff_a4b0023729_moisture'', ''on'') %}red{% elif (expand([''light.koridor_mutfak'', ''light.koridor_kapi'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/koridor
+      icon_tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/koridor
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      primary: Büyük Banyo
+      secondary: '{% if is_state(''binary_sensor.sonoff_a4b0023728_moisture'', ''on'') or is_state(''binary_sensor.sonoff_a4b0023726_moisture'', ''on'') %}Su kaçağı!{% else %}{% set n = expand([''light.buyuk_banyo_lamba'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:bathtub
+      icon_color: '{% if is_state(''binary_sensor.sonoff_a4b0023728_moisture'', ''on'') or is_state(''binary_sensor.sonoff_a4b0023726_moisture'', ''on'') %}red{% elif (expand([''light.buyuk_banyo_lamba'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/buyuk-banyo
+      icon_tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/buyuk-banyo
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      primary: Ebeveyn Banyo
+      secondary: '{% if is_state(''binary_sensor.sonoff_a4b0023725_moisture'', ''on'') %}Su kaçağı!{% else %}{% set n = expand([''light.ebeveyn_banyo_aydinlatma'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:bathtub-outline
+      icon_color: '{% if is_state(''binary_sensor.sonoff_a4b0023725_moisture'', ''on'') %}red{% elif (expand([''light.ebeveyn_banyo_aydinlatma'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/ebeveyn-banyo
+      icon_tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/ebeveyn-banyo
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      primary: Balkon
+      secondary: '{% if is_state(''binary_sensor.sonoff_a4b002372b_moisture'', ''on'') or is_state(''binary_sensor.sonoff_a4b002414d_moisture'', ''on'') %}Su kaçağı!{% else %}{% set n = expand([''light.balkon_tavan_aydinlatma'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:balcony
+      icon_color: '{% if is_state(''binary_sensor.sonoff_a4b002372b_moisture'', ''on'') or is_state(''binary_sensor.sonoff_a4b002414d_moisture'', ''on'') %}red{% elif (expand([''light.balkon_tavan_aydinlatma'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/balkon
+      icon_tap_action:
+        action: navigate
+        navigation_path: /dashboard-tt/balkon
+      grid_options:
+        columns: full
+  - type: grid
+    cards:
+    - type: heading
       heading: Isıtma
       heading_style: title
       icon: mdi:radiator
@@ -627,11 +750,13 @@ views:
       secondary_info_attribute: humidity
       grid_options:
         columns: full
-- title: Odalar
-  path: odalar
-  icon: mdi:floor-plan
+- title: Salon
+  path: salon
+  icon: mdi:sofa
+  subview: true
+  back_path: /dashboard-tt/ana-sayfa
   type: sections
-  max_columns: 3
+  max_columns: 2
   sections:
   - type: grid
     cards:
@@ -756,6 +881,14 @@ views:
               box-shadow: 0 0 16px -2px rgba(var(--rgb-deep-orange-color, 255, 87, 34), 0.9) !important;
               {% endif %}
             }
+- title: Mutfak
+  path: mutfak
+  icon: mdi:countertop
+  subview: true
+  back_path: /dashboard-tt/ana-sayfa
+  type: sections
+  max_columns: 2
+  sections:
   - type: grid
     cards:
     - type: heading
@@ -900,6 +1033,14 @@ views:
               100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }
             }
             @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+- title: Yatak Odası
+  path: yatak-odasi
+  icon: mdi:bed
+  subview: true
+  back_path: /dashboard-tt/ana-sayfa
+  type: sections
+  max_columns: 2
+  sections:
   - type: grid
     cards:
     - type: heading
@@ -978,6 +1119,14 @@ views:
               box-shadow: 0 0 16px -2px rgba(var(--rgb-deep-orange-color, 255, 87, 34), 0.9) !important;
               {% endif %}
             }
+- title: Çocuk Odası
+  path: cocuk-odasi
+  icon: mdi:teddy-bear
+  subview: true
+  back_path: /dashboard-tt/ana-sayfa
+  type: sections
+  max_columns: 2
+  sections:
   - type: grid
     cards:
     - type: heading
@@ -1087,6 +1236,14 @@ views:
               box-shadow: 0 0 16px -2px rgba(var(--rgb-deep-orange-color, 255, 87, 34), 0.9) !important;
               {% endif %}
             }
+- title: Çalışma Odası
+  path: calisma-odasi
+  icon: mdi:monitor-dashboard
+  subview: true
+  back_path: /dashboard-tt/ana-sayfa
+  type: sections
+  max_columns: 2
+  sections:
   - type: grid
     cards:
     - type: heading
@@ -1187,6 +1344,14 @@ views:
               box-shadow: 0 0 16px -2px rgba(var(--rgb-deep-orange-color, 255, 87, 34), 0.9) !important;
               {% endif %}
             }
+- title: Koridor
+  path: koridor
+  icon: mdi:door
+  subview: true
+  back_path: /dashboard-tt/ana-sayfa
+  type: sections
+  max_columns: 2
+  sections:
   - type: grid
     cards:
     - type: heading
@@ -1340,6 +1505,14 @@ views:
               100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }
             }
             @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+- title: Büyük Banyo
+  path: buyuk-banyo
+  icon: mdi:bathtub
+  subview: true
+  back_path: /dashboard-tt/ana-sayfa
+  type: sections
+  max_columns: 2
+  sections:
   - type: grid
     cards:
     - type: heading
@@ -1461,6 +1634,14 @@ views:
               100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }
             }
             @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+- title: Ebeveyn Banyo
+  path: ebeveyn-banyo
+  icon: mdi:bathtub-outline
+  subview: true
+  back_path: /dashboard-tt/ana-sayfa
+  type: sections
+  max_columns: 2
+  sections:
   - type: grid
     cards:
     - type: heading
@@ -1535,6 +1716,14 @@ views:
               100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }
             }
             @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+- title: Balkon
+  path: balkon
+  icon: mdi:balcony
+  subview: true
+  back_path: /dashboard-tt/ana-sayfa
+  type: sections
+  max_columns: 2
+  sections:
   - type: grid
     cards:
     - type: heading
