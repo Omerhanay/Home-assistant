@@ -142,7 +142,7 @@ Her turdaki bulgular ve düzeltmeler commit mesajlarına da işlendi (`git log`)
 | Hareket sensörü | Dokununca toggle (çalışmıyordu) | more-info | Hata düzeltmesi |
 | TV | 6 medya kontrolü, tekrar ve karıştır dahil | Tekrar ve karıştır kaldırıldı | Samsung TV'de büyük olasılıkla desteklenmiyor; more-info'da duruyor |
 | Hava durumu | 7 gün, ikincil bilgi sıcaklık | 5 gün, ikincil bilgi nem | Sıcaklık iki kez yazıyordu; kart sığması için |
-| Saat | Saniyeli | Saniyesiz | Sakin görünüm. Anahtarlar orijinalden aynen alındı (bkz. H) |
+| Saat | Ayarlar okunmuyordu (snake_case anahtar, moment biçimi) | `locale: tr`, `timeZone`, `timeFormat: HH:mm`, `dateFormat: cccc, d LLLL yyyy` | Kurulu kart wassy92x v1.2.4: camelCase ve Luxon bekliyor. Kartta saniye seçeneği yok |
 | Kişi | Badge'e konmuş kart, hold → toggle (geçersiz) | Native entity badge, tap → more-info | Hata düzeltmesi |
 | Kart bazlı temalar | `ios-dark-mode-blue-red` 10 kartta | Kaldırıldı, profil temasın kullanılıyor | Tutarlılık. İstersen görünüm seviyesinde `theme:` eklenebilir |
 
@@ -177,7 +177,7 @@ Better-thermostat kartını geri eklemek için `build.py` içinde ilgili odanın
 |---|---|---|---|---|
 | Görsel tasarım ve estetik | 25% | 79 | 19.75 | Renk dili ve sakin hareket tutarlı. Senaryo ızgarası sade kaldı; açık temada ışık halesi soluk. |
 | Kullanılabilirlik ve bilgi hiyerarşisi | 20% | 80 | 16.0 | Uyarılar önde, oda kartları durum özetiyle birlikte. Ayarlara uzun basmak keşfedilmesi zor bir hareket. |
-| Teknik doğruluk ve uyumluluk | 20% | 78 | 15.6 | Kaynak koddan doğrulanmış seçenekler. Çalışma testi yok; saat kartı belirsiz. |
+| Teknik doğruluk ve uyumluluk | 20% | 78 | 15.6 | Kaynak koddan doğrulanmış seçenekler. Çalışma testi yok. (Saat kartı v6 denetiminden sonra düzeltildi; puan yeniden hesaplanmadı.) |
 | Mobil ve responsive | 15% | 85 | 12.75 | İlk ekran doğru, kart yükseklikleri sabit. Odalara tek dokunuşla gidilip geri dönülüyor. |
 | İşlevlerin korunması | 10% | 82 | 8.2 | Tüm kontroller en fazla 2 dokunuşla erişilebilir. BT eco butonu yok (geri ekleme kodu bölüm E'de). |
 | Bakım kolaylığı ve performans | 10% | 88 | 8.8 | Tek kaynaktan üretim ve regresyon kontrolü. Panel URL'i tek satırda sabit. |
@@ -185,10 +185,9 @@ Better-thermostat kartını geri eklemek için `build.py` içinde ilgili odanın
 
 **Hedef 95 puana ulaşılamadı.** Puanı yapay olarak yükseltmiyorum. Engeller şunlar:
 1. **Gerçek ortamda test yok.** Teknik puan statik incelemeyle sınırlı kalıyor. Bu, en büyük engel.
-2. **Kurulum bilgisi eksik.** Hangi saat kartının kurulu olduğu bilinmiyor.
-3. **Kalan eksikler.** Senaryo ızgarası görsel olarak sade kaldı. Açık temada ışık halesi soluk görünüyor. Alt sayfalarda oda adı hem başlıkta hem heading kartında tekrar ediyor (kozmetik).
+2. **Kalan eksikler.** Senaryo ızgarası görsel olarak sade kaldı. Açık temada ışık halesi soluk görünüyor. Alt sayfalarda oda adı hem başlıkta hem heading kartında tekrar ediyor (kozmetik).
 
-Senin sisteminde test sonrası geri bildirim gelirse (ekran görüntüsü, saat kartı) sonraki turda bu engeller kapatılabilir.
+Senin sisteminde test sonrası geri bildirim gelirse (ekran görüntüsü) sonraki turda bu engeller kapatılabilir.
 
 **Testlerin kapsamı:**
 
@@ -221,7 +220,7 @@ Senin sisteminde test sonrası geri bildirim gelirse (ekran görüntüsü, saat 
    - Bir senaryo butonu "Çalışıyor…" yazıp nötre dönüyor mu?
    - "Prizleri Kapat" onay soruyor mu? İkona dokunulduğunda da sormalı.
 6. **Senin sisteminde doğrulaman gerekenler:**
-   - `custom:digital-clock` ayarları uygulanıyor mu? Kart wassy92x ise anahtarlar camelCase olmalı: `timeZone`, `timeFormat`, `dateFormat`. Hangi kartın kurulu olduğunu söylersen düzeltirim.
+   - Saat kartı "Cuma, 9 Ekim 2026" biçiminde Türkçe tarih gösteriyor mu?
    - Peteklerin `hvac_modes` listesinde `auto` var mı?
    - Petekler `hvac_action` bilgisi veriyor mu? Isıtma parıltısı buna bağlı.
    - Mushroom v5'te görsel editör "migration" uyarısı gösterebilir. Bu zararsız.

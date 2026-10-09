@@ -735,10 +735,10 @@ views:
   - type: grid
     cards:
     - type: custom:digital-clock
-      timezone: Europe/Istanbul
-      time_format: 24
-      date_format: dddd, DD MMMM YYYY
-      show_seconds: false
+      locale: tr
+      timeZone: Europe/Istanbul
+      timeFormat: HH:mm
+      dateFormat: cccc, d LLLL yyyy
       grid_options:
         columns: full
     - type: weather-forecast

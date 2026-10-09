@@ -491,11 +491,13 @@ def heating_section():
 def clock_weather_section():
     return section([
         {
+            # wassy92x/lovelace-digital-clock (v1.2.4 installed): camelCase keys, Luxon
+            # format tokens. The original snake_case keys were silently ignored.
             "type": "custom:digital-clock",
-            "timezone": "Europe/Istanbul",
-            "time_format": 24,
-            "date_format": "dddd, DD MMMM YYYY",
-            "show_seconds": False,
+            "locale": "tr",
+            "timeZone": "Europe/Istanbul",
+            "timeFormat": "HH:mm",
+            "dateFormat": "cccc, d LLLL yyyy",
             **FULL,
         },
         {
