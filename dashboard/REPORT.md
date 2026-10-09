@@ -171,25 +171,24 @@ Better-thermostat kartını geri eklemek için `build.py` içinde ilgili odanın
 
 ## F. Nihai kalite raporu
 
-**Karar (Agent 8, v5 yeniden denetimi): KOŞULLU ONAY.** Kritik hata kalmadı. Koşul, aşağıdaki "senin sisteminde doğrulanacaklar" listesinin (bölüm H) kontrol edilmesi.
+**Karar (Agent 8, v6 yeniden denetimi): KOŞULLU ONAY.** Kritik hata kalmadı. Koşul, bölüm H'deki "senin sisteminde doğrulanacaklar" listesinin kontrol edilmesi.
 
 | Kriter | Ağırlık | Puan | Katkı | Gerekçe (özet) |
 |---|---|---|---|---|
-| Görsel tasarım ve estetik | 25% | 78 | 19.5 | Renk dili ve sakin hareket tutarlı. Senaryo ızgarası ve açık temada soluk hale hâlâ zayıf. |
-| Kullanılabilirlik ve bilgi hiyerarşisi | 20% | 77 | 15.4 | Uyarılar önde, çevrimdışı durum kaçaktan ayrı. Ayarlara uzun basmak keşfedilmesi zor bir hareket. |
+| Görsel tasarım ve estetik | 25% | 79 | 19.75 | Renk dili ve sakin hareket tutarlı. Senaryo ızgarası sade kaldı; açık temada ışık halesi soluk. |
+| Kullanılabilirlik ve bilgi hiyerarşisi | 20% | 80 | 16.0 | Uyarılar önde, oda kartları durum özetiyle birlikte. Ayarlara uzun basmak keşfedilmesi zor bir hareket. |
 | Teknik doğruluk ve uyumluluk | 20% | 78 | 15.6 | Kaynak koddan doğrulanmış seçenekler. Çalışma testi yok; saat kartı belirsiz. |
-| Mobil ve responsive | 15% | 82 | 12.3 | İlk ekran doğru, kart yükseklikleri sabit. Odalar sayfası telefonda yaklaşık 4 ekran. |
-| İşlevlerin korunması | 10% | 78 | 7.8 | Tüm entity'ler duruyor. BT eco butonu ve kart içi kaydırıcılar more-info'ya taşındı. |
-| Bakım kolaylığı ve performans | 10% | 89 | 8.9 | −%78 boyut, 0 sürekli animasyon, tek kaynaktan üretim, regresyon kontrolü. |
-| **Toplam** | | | **79.5 / 100** | |
+| Mobil ve responsive | 15% | 85 | 12.75 | İlk ekran doğru, kart yükseklikleri sabit. Odalara tek dokunuşla gidilip geri dönülüyor. |
+| İşlevlerin korunması | 10% | 82 | 8.2 | Tüm kontroller en fazla 2 dokunuşla erişilebilir. BT eco butonu yok (geri ekleme kodu bölüm E'de). |
+| Bakım kolaylığı ve performans | 10% | 88 | 8.8 | Tek kaynaktan üretim ve regresyon kontrolü. Panel URL'i tek satırda sabit. |
+| **Toplam** | | | **81.1 / 100** | Önceki sürüm (v5): 79.5 |
 
 **Hedef 95 puana ulaşılamadı.** Puanı yapay olarak yükseltmiyorum. Engeller şunlar:
-1. **Gerçek ortamda test yok.** Teknik puan statik incelemeyle sınırlı kalıyor.
-2. **Tasarım ödünleri bilinçli.** Odalar sayfası telefonda hâlâ yaklaşık 4 ekran sürüyor. Oda alt görünümleri için dashboard URL yolunun bilinmesi gerekiyor.
-3. **Kurulum bilgisi eksik.** Hangi saat kartının kurulu olduğu bilinmiyor.
-4. **Kalan eksikler.** Senaryo ızgarası görsel olarak sade kaldı. Açık temada ışık halesi soluk görünüyor.
+1. **Gerçek ortamda test yok.** Teknik puan statik incelemeyle sınırlı kalıyor. Bu, en büyük engel.
+2. **Kurulum bilgisi eksik.** Hangi saat kartının kurulu olduğu bilinmiyor.
+3. **Kalan eksikler.** Senaryo ızgarası görsel olarak sade kaldı. Açık temada ışık halesi soluk görünüyor. Alt sayfalarda oda adı hem başlıkta hem heading kartında tekrar ediyor (kozmetik).
 
-Senin sisteminde test edilip 2–3 cevap alınırsa (URL yolu, saat kartı, ekran görüntüsü) sonraki turda bu engellerin çoğu kapatılabilir.
+Senin sisteminde test sonrası geri bildirim gelirse (ekran görüntüsü, saat kartı) sonraki turda bu engeller kapatılabilir.
 
 **Testlerin kapsamı:**
 
@@ -226,4 +225,5 @@ Senin sisteminde test edilip 2–3 cevap alınırsa (URL yolu, saat kartı, ekra
    - Peteklerin `hvac_modes` listesinde `auto` var mı?
    - Petekler `hvac_action` bilgisi veriyor mu? Isıtma parıltısı buna bağlı.
    - Mushroom v5'te görsel editör "migration" uyarısı gösterebilir. Bu zararsız.
+   - Ana sayfadaki oda kartı ilgili odanın sayfasını açıyor mu? Geri ok ana sayfaya dönüyor mu? Oda sayfaları sekme çubuğunda gizli mi?
 7. **Geri dönüş.** Raw configuration editor'e 1. adımda aldığın yedeği yapıştırıp kaydet. Sıfırlama otomasyonunu da devre dışı bırak.
