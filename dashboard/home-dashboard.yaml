@@ -1,0 +1,1398 @@
+views:
+- title: Ana Sayfa
+  path: ana-sayfa
+  icon: mdi:home
+  type: sections
+  max_columns: 4
+  badges:
+  - type: entity
+    entity: person.omer
+    name: Ömer
+    show_name: true
+    show_state: true
+    show_icon: true
+    show_entity_picture: true
+    tap_action:
+      action: none
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Ev Durumu
+      heading_style: title
+      icon: mdi:home-heart
+    - type: custom:mushroom-chips-card
+      alignment: start
+      chips:
+      - type: template
+        icon: mdi:lightbulb-group
+        icon_color: '{{ ''amber'' if states.light | selectattr(''state'', ''eq'', ''on'') | list | count > 0 else ''grey'' }}'
+        content: '{{ states.light | selectattr(''state'', ''eq'', ''on'') | list | count }} ışık açık'
+        tap_action:
+          action: none
+      - type: template
+        icon: mdi:home-thermometer
+        icon_color: orange
+        content: '{% set t = [''sensor.sonoff_a4b001d936_temperature'', ''sensor.sonoff_a4b001d937_temperature'', ''sensor.sonoff_a4b001d93a_temperature'', ''sensor.sonoff_a4b001d938_temperature''] | map(''states'') | select(''is_number'') | map(''float'') | list %}İç ort. {{ (t | sum / t | count) | round(1) if t | count > 0 else ''–'' }} °C'
+        tap_action:
+          action: none
+      grid_options:
+        columns: full
+    - type: markdown
+      content: <ha-icon icon="mdi:shield-check"></ha-icon> **Her şey yolunda** · su kaçağı yok, kapı kapalı
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_a4b0023729_moisture
+        state: 'off'
+      - condition: state
+        entity: binary_sensor.sonoff_a4b0023723_moisture
+        state: 'off'
+      - condition: state
+        entity: binary_sensor.sonoff_a4b0023728_moisture
+        state: 'off'
+      - condition: state
+        entity: binary_sensor.sonoff_a4b0023726_moisture
+        state: 'off'
+      - condition: state
+        entity: binary_sensor.sonoff_a4b002372b_moisture
+        state: 'off'
+      - condition: state
+        entity: binary_sensor.sonoff_a4b002414d_moisture
+        state: 'off'
+      - condition: state
+        entity: binary_sensor.sonoff_a4b0023725_moisture
+        state: 'off'
+      - condition: state
+        entity: binary_sensor.sonoff_100235874c
+        state: 'off'
+      grid_options:
+        columns: full
+    - type: tile
+      entity: binary_sensor.sonoff_100235874c
+      name: Kapı açık
+      icon: mdi:door-open
+      color: red
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_100235874c
+        state:
+        - 'on'
+        - unavailable
+      grid_options:
+        columns: full
+    - type: tile
+      entity: binary_sensor.sonoff_a4b0023729_moisture
+      name: Su kaçağı · Ayakkabılık
+      icon: mdi:water-alert
+      color: red
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_a4b0023729_moisture
+        state:
+        - 'on'
+        - unavailable
+      grid_options:
+        columns: full
+    - type: tile
+      entity: binary_sensor.sonoff_a4b0023723_moisture
+      name: Su kaçağı · Mutfak Lavabo
+      icon: mdi:water-alert
+      color: red
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_a4b0023723_moisture
+        state:
+        - 'on'
+        - unavailable
+      grid_options:
+        columns: full
+    - type: tile
+      entity: binary_sensor.sonoff_a4b0023728_moisture
+      name: Su kaçağı · Büyük Banyo Lavabo
+      icon: mdi:water-alert
+      color: red
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_a4b0023728_moisture
+        state:
+        - 'on'
+        - unavailable
+      grid_options:
+        columns: full
+    - type: tile
+      entity: binary_sensor.sonoff_a4b0023726_moisture
+      name: Su kaçağı · Çamaşır Makinesi
+      icon: mdi:water-alert
+      color: red
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_a4b0023726_moisture
+        state:
+        - 'on'
+        - unavailable
+      grid_options:
+        columns: full
+    - type: tile
+      entity: binary_sensor.sonoff_a4b002372b_moisture
+      name: Su kaçağı · Balkon Sol
+      icon: mdi:water-alert
+      color: red
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_a4b002372b_moisture
+        state:
+        - 'on'
+        - unavailable
+      grid_options:
+        columns: full
+    - type: tile
+      entity: binary_sensor.sonoff_a4b002414d_moisture
+      name: Su kaçağı · Balkon Sağ
+      icon: mdi:water-alert
+      color: red
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_a4b002414d_moisture
+        state:
+        - 'on'
+        - unavailable
+      grid_options:
+        columns: full
+    - type: tile
+      entity: binary_sensor.sonoff_a4b0023725_moisture
+      name: Su kaçağı · Ebeveyn Banyo Lavabo
+      icon: mdi:water-alert
+      color: red
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_a4b0023725_moisture
+        state:
+        - 'on'
+        - unavailable
+      grid_options:
+        columns: full
+  - type: grid
+    cards:
+    - type: heading
+      heading: Senaryolar
+      heading_style: title
+      icon: mdi:play-circle-outline
+    - type: tile
+      entity: input_boolean.evdeyim_section
+      name: Evdeyim
+      icon: mdi:home
+      color: primary
+      tap_action:
+        action: toggle
+      icon_tap_action:
+        action: toggle
+      grid_options:
+        columns: 4
+    - type: tile
+      entity: input_boolean.tatil_modu_section
+      name: Tatil
+      icon: mdi:palm-tree
+      color: primary
+      tap_action:
+        action: toggle
+      icon_tap_action:
+        action: toggle
+      grid_options:
+        columns: 4
+    - type: tile
+      entity: input_boolean.uyku_modu_section
+      name: Uyku
+      icon: mdi:sleep
+      color: primary
+      tap_action:
+        action: toggle
+      icon_tap_action:
+        action: toggle
+      grid_options:
+        columns: 4
+    - type: tile
+      entity: input_boolean.tum_isiklar_acik_section
+      name: Işıkları Aç
+      icon: mdi:lightbulb-on
+      color: amber
+      tap_action:
+        action: toggle
+      icon_tap_action:
+        action: toggle
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: input_boolean.tum_isiklar_kapali_section
+      name: Işıkları Kapat
+      icon: mdi:lightbulb-off-outline
+      color: grey
+      tap_action:
+        action: toggle
+      icon_tap_action:
+        action: toggle
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: input_boolean.tum_petekler_acik_section
+      name: Petekleri Aç
+      icon: mdi:radiator
+      color: deep-orange
+      tap_action:
+        action: toggle
+      icon_tap_action:
+        action: toggle
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: input_boolean.tum_petekler_kapali_section
+      name: Petekleri Kapat
+      icon: mdi:radiator-off
+      color: grey
+      tap_action:
+        action: toggle
+      icon_tap_action:
+        action: toggle
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: input_boolean.tum_prizler_acik_section
+      name: Prizleri Aç
+      icon: mdi:power-plug-battery
+      color: green
+      tap_action:
+        action: toggle
+      icon_tap_action:
+        action: toggle
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: input_boolean.tum_prizler_kapali_section
+      name: Prizleri Kapat
+      icon: mdi:power-plug-off-outline
+      color: grey
+      tap_action:
+        action: toggle
+        confirmation:
+          text: Tüm prizler kapatılsın mı? Prize bağlı cihazların (modem vb.) enerjisi kesilebilir.
+      icon_tap_action:
+        action: toggle
+        confirmation:
+          text: Tüm prizler kapatılsın mı? Prize bağlı cihazların (modem vb.) enerjisi kesilebilir.
+      grid_options:
+        columns: 6
+  - type: grid
+    cards:
+    - type: heading
+      heading: Isıtma
+      heading_style: title
+      icon: mdi:radiator
+    - type: tile
+      entity: climate.sonoff_a4b001d936
+      name: Çalışma Odası
+      state_content:
+      - hvac_action
+      - current_temperature
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: climate.sonoff_a4b001d937
+      name: Çocuk Odası
+      state_content:
+      - hvac_action
+      - current_temperature
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: climate.sonoff_a4b001d93a
+      name: Yatak Odası
+      state_content:
+      - hvac_action
+      - current_temperature
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: climate.sonoff_a4b001d938
+      name: Salon
+      state_content:
+      - hvac_action
+      - current_temperature
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: 6
+  - type: grid
+    cards:
+    - type: custom:digital-clock
+      timezone: Europe/Istanbul
+      time_format: 24
+      date_format: dddd, DD MMMM YYYY
+      show_seconds: false
+      grid_options:
+        columns: full
+    - type: weather-forecast
+      entity: weather.forecast_home
+      show_current: true
+      show_forecast: true
+      forecast_type: daily
+      forecast_slots: 5
+      secondary_info_attribute: temperature
+      grid_options:
+        columns: full
+- title: Odalar
+  path: odalar
+  icon: mdi:floor-plan
+  type: sections
+  max_columns: 3
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Çalışma Odası
+      heading_style: title
+      icon: mdi:monitor-dashboard
+      badges:
+      - type: entity
+        entity: sensor.sonoff_a4b001d936_temperature
+        show_icon: true
+        show_state: true
+        color: orange
+        tap_action:
+          action: more-info
+    - type: custom:mushroom-light-card
+      entity: light.calisma_odasi_lamba
+      name: Lamba
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-entity-card
+      entity: switch.calisma_odasi_kapi_priz
+      name: Kitaplık Led Trafo
+      icon: mdi:power-plug
+      icon_color: yellow
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-template-card
+      entity: fan.zhimi_sg_918358888_meb1_s_2_air_purifier
+      primary: Kokuştroşko
+      secondary: '{% set p = state_attr(entity, ''preset_mode'') %}{{ state_translated(entity) if not is_state(entity, ''on'') else (p or state_translated(entity)) }} · PM2.5 {{ states(''sensor.zhimi_sg_918358888_meb1_pm2_5_density_p_3_4'') }} · Filtre %{{ states(''sensor.zhimi_sg_918358888_meb1_filter_life_level_p_4_1'') }}'
+      icon: mdi:air-purifier
+      icon_color: '{% if not is_state(entity, ''on'') %}grey{% elif states(''sensor.zhimi_sg_918358888_meb1_pm2_5_density_p_3_4'') | float(0) > 50 %}red{% elif states(''sensor.zhimi_sg_918358888_meb1_pm2_5_density_p_3_4'') | float(0) > 25 %}orange{% else %}light-blue{% endif %}'
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: full
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-climate-card
+      entity: climate.sonoff_a4b001d936
+      name: Petek
+      hvac_modes:
+      - auto
+      - heat
+      - 'off'
+      show_temperature_control: true
+      collapsible_controls: false
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: full
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              {% if state_attr(config.entity, 'hvac_action') == 'heating' %}
+              animation: heat-pulse 3s ease-in-out infinite;
+              {% endif %}
+            }
+            @keyframes heat-pulse {
+              0%, 100% { box-shadow: 0 0 0 0 rgba(255, 112, 67, 0); }
+              50% { box-shadow: 0 0 14px 3px rgba(255, 112, 67, 0.45); }
+            }
+            @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+  - type: grid
+    cards:
+    - type: heading
+      heading: Koridor
+      heading_style: title
+      icon: mdi:door
+    - type: custom:mushroom-light-card
+      entity: light.koridor_mutfak
+      name: Koridor (Mutfak)
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-light-card
+      entity: light.koridor_kapi
+      name: Koridor (Kapı)
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.sonoff_100235874c
+      primary: Kapı
+      secondary: '{{ state_translated(entity) }}'
+      icon: '{{ ''mdi:door-open'' if is_state(entity, ''on'') else ''mdi:door-closed'' }}'
+      icon_color: '{% if is_state(entity, ''on'') %}red{% elif states(entity) in [''unavailable'', ''unknown''] %}grey{% else %}green{% endif %}'
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              {% if is_state(config.entity, 'on') %}
+              animation: alert-pulse 1.6s ease-out infinite;
+              {% endif %}
+            }
+            @keyframes alert-pulse {
+              0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.6); }
+              100% { box-shadow: 0 0 0 12px rgba(244, 67, 54, 0); }
+            }
+            @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+          '.:': |
+            ha-card {
+              transition: background-color 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              background-color: rgba(244, 67, 54, 0.14);
+              border: 1px solid rgba(244, 67, 54, 0.55);
+              {% endif %}
+            }
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.sonoff_a4b001a3ce
+      primary: Hareket
+      secondary: '{{ state_translated(entity) }}'
+      icon: '{{ ''mdi:motion-sensor'' if is_state(entity, ''on'') else ''mdi:motion-sensor-off'' }}'
+      icon_color: '{% if is_state(entity, ''on'') %}amber{% elif states(entity) in [''unavailable'', ''unknown''] %}grey{% else %}green{% endif %}'
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              {% if is_state(config.entity, 'on') %}
+              animation: alert-pulse 1.6s ease-out infinite;
+              {% endif %}
+            }
+            @keyframes alert-pulse {
+              0% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.6); }
+              100% { box-shadow: 0 0 0 12px rgba(255, 193, 7, 0); }
+            }
+            @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.sonoff_a4b0023729_moisture
+      primary: Ayakkabılık Su Kaçağı
+      secondary: '{{ state_translated(entity) }}'
+      icon: '{{ ''mdi:water-alert'' if is_state(entity, ''on'') else ''mdi:water-check'' }}'
+      icon_color: '{% if is_state(entity, ''on'') %}red{% elif states(entity) in [''unavailable'', ''unknown''] %}grey{% else %}green{% endif %}'
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              {% if is_state(config.entity, 'on') %}
+              animation: alert-pulse 1.6s ease-out infinite;
+              {% endif %}
+            }
+            @keyframes alert-pulse {
+              0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.6); }
+              100% { box-shadow: 0 0 0 12px rgba(244, 67, 54, 0); }
+            }
+            @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+          '.:': |
+            ha-card {
+              transition: background-color 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              background-color: rgba(244, 67, 54, 0.14);
+              border: 1px solid rgba(244, 67, 54, 0.55);
+              {% endif %}
+            }
+  - type: grid
+    cards:
+    - type: heading
+      heading: Mutfak
+      heading_style: title
+      icon: mdi:countertop
+    - type: custom:mushroom-light-card
+      entity: light.mutfak_tavan_aydinlatma
+      name: Tavan Lamba
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-light-card
+      entity: light.mutfak_uzun_led_aydinlatma
+      name: Uzun Led
+      icon: mdi:led-strip-variant
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-light-card
+      entity: light.mutfak_kahve_led
+      name: Kahve Led
+      icon: mdi:led-strip-variant
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-entity-card
+      entity: switch.sonoff_10021dd88c_1
+      name: Kahve Makinesi
+      icon: mdi:coffee-maker
+      icon_color: deep-orange
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-entity-card
+      entity: switch.mutfak_masa_priz_socket_1
+      name: Masa Priz
+      icon: mdi:power-socket-eu
+      icon_color: green
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      double_tap_action:
+        action: none
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.sonoff_a4b0023723_moisture
+      primary: Lavabo Su Kaçağı
+      secondary: '{{ state_translated(entity) }}'
+      icon: '{{ ''mdi:water-alert'' if is_state(entity, ''on'') else ''mdi:water-check'' }}'
+      icon_color: '{% if is_state(entity, ''on'') %}red{% elif states(entity) in [''unavailable'', ''unknown''] %}grey{% else %}green{% endif %}'
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              {% if is_state(config.entity, 'on') %}
+              animation: alert-pulse 1.6s ease-out infinite;
+              {% endif %}
+            }
+            @keyframes alert-pulse {
+              0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.6); }
+              100% { box-shadow: 0 0 0 12px rgba(244, 67, 54, 0); }
+            }
+            @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+          '.:': |
+            ha-card {
+              transition: background-color 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              background-color: rgba(244, 67, 54, 0.14);
+              border: 1px solid rgba(244, 67, 54, 0.55);
+              {% endif %}
+            }
+  - type: grid
+    cards:
+    - type: heading
+      heading: Çocuk Odası
+      heading_style: title
+      icon: mdi:teddy-bear
+      badges:
+      - type: entity
+        entity: sensor.sonoff_a4b001d937_temperature
+        show_icon: true
+        show_state: true
+        color: orange
+        tap_action:
+          action: more-info
+    - type: custom:mushroom-light-card
+      entity: light.cocuk_odasi_lamba
+      name: Lamba
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-light-card
+      entity: light.sonoff_10024a8007
+      name: Gece Lambası
+      icon: mdi:lightbulb-night
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-entity-card
+      entity: switch.sonoff_a4b0024d63
+      name: Kapı Priz
+      icon: mdi:power-plug
+      icon_color: indigo
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-media-player-card
+      entity: media_player.samsung_7_series_43_ue43ru7100uxtk
+      name: Samsung TV
+      icon_color: red
+      use_media_info: false
+      show_volume_level: true
+      collapsible_controls: true
+      media_controls:
+      - on_off
+      - previous
+      - play_pause_stop
+      - next
+      - repeat
+      - shuffle
+      volume_controls:
+      - volume_mute
+      - volume_set
+      - volume_buttons
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: full
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if states(config.entity) not in ['off', 'standby', 'unavailable', 'unknown'] %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-climate-card
+      entity: climate.sonoff_a4b001d937
+      name: Petek
+      hvac_modes:
+      - auto
+      - heat
+      - 'off'
+      show_temperature_control: true
+      collapsible_controls: false
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: full
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              {% if state_attr(config.entity, 'hvac_action') == 'heating' %}
+              animation: heat-pulse 3s ease-in-out infinite;
+              {% endif %}
+            }
+            @keyframes heat-pulse {
+              0%, 100% { box-shadow: 0 0 0 0 rgba(255, 112, 67, 0); }
+              50% { box-shadow: 0 0 14px 3px rgba(255, 112, 67, 0.45); }
+            }
+            @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+  - type: grid
+    cards:
+    - type: heading
+      heading: Büyük Banyo
+      heading_style: title
+      icon: mdi:bathtub
+    - type: custom:mushroom-light-card
+      entity: light.buyuk_banyo_lamba
+      name: Lamba
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.sonoff_a4b0023728_moisture
+      primary: Lavabo Su Kaçağı
+      secondary: '{{ state_translated(entity) }}'
+      icon: '{{ ''mdi:water-alert'' if is_state(entity, ''on'') else ''mdi:water-check'' }}'
+      icon_color: '{% if is_state(entity, ''on'') %}red{% elif states(entity) in [''unavailable'', ''unknown''] %}grey{% else %}green{% endif %}'
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              {% if is_state(config.entity, 'on') %}
+              animation: alert-pulse 1.6s ease-out infinite;
+              {% endif %}
+            }
+            @keyframes alert-pulse {
+              0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.6); }
+              100% { box-shadow: 0 0 0 12px rgba(244, 67, 54, 0); }
+            }
+            @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+          '.:': |
+            ha-card {
+              transition: background-color 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              background-color: rgba(244, 67, 54, 0.14);
+              border: 1px solid rgba(244, 67, 54, 0.55);
+              {% endif %}
+            }
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.sonoff_a4b0023726_moisture
+      primary: Çamaşır Makinesi Su Kaçağı
+      secondary: '{{ state_translated(entity) }}'
+      icon: '{{ ''mdi:water-alert'' if is_state(entity, ''on'') else ''mdi:water-check'' }}'
+      icon_color: '{% if is_state(entity, ''on'') %}red{% elif states(entity) in [''unavailable'', ''unknown''] %}grey{% else %}green{% endif %}'
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              {% if is_state(config.entity, 'on') %}
+              animation: alert-pulse 1.6s ease-out infinite;
+              {% endif %}
+            }
+            @keyframes alert-pulse {
+              0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.6); }
+              100% { box-shadow: 0 0 0 12px rgba(244, 67, 54, 0); }
+            }
+            @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+          '.:': |
+            ha-card {
+              transition: background-color 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              background-color: rgba(244, 67, 54, 0.14);
+              border: 1px solid rgba(244, 67, 54, 0.55);
+              {% endif %}
+            }
+  - type: grid
+    cards:
+    - type: heading
+      heading: Yatak Odası
+      heading_style: title
+      icon: mdi:bed
+      badges:
+      - type: entity
+        entity: sensor.sonoff_a4b001d93a_temperature
+        show_icon: true
+        show_state: true
+        color: orange
+        tap_action:
+          action: more-info
+    - type: custom:mushroom-light-card
+      entity: light.yatak_odasi_tavan
+      name: Tavan Lamba
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-light-card
+      entity: light.yatak_odasi_led
+      name: Led
+      icon: mdi:led-strip-variant
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-climate-card
+      entity: climate.sonoff_a4b001d93a
+      name: Petek
+      hvac_modes:
+      - auto
+      - heat
+      - 'off'
+      show_temperature_control: true
+      collapsible_controls: false
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: full
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              {% if state_attr(config.entity, 'hvac_action') == 'heating' %}
+              animation: heat-pulse 3s ease-in-out infinite;
+              {% endif %}
+            }
+            @keyframes heat-pulse {
+              0%, 100% { box-shadow: 0 0 0 0 rgba(255, 112, 67, 0); }
+              50% { box-shadow: 0 0 14px 3px rgba(255, 112, 67, 0.45); }
+            }
+            @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+  - type: grid
+    cards:
+    - type: heading
+      heading: Salon
+      heading_style: title
+      icon: mdi:sofa
+      badges:
+      - type: entity
+        entity: sensor.sonoff_a4b001d938_temperature
+        show_icon: true
+        show_state: true
+        color: orange
+        tap_action:
+          action: more-info
+    - type: custom:mushroom-light-card
+      entity: light.salon_lamba_01
+      name: Tavan Lamba 1
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-light-card
+      entity: light.salon_lamba_02
+      name: Tavan Lamba 2
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-light-card
+      entity: light.salon_tavan_led
+      name: Tavan Led
+      icon: mdi:led-strip-variant
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-entity-card
+      entity: switch.tv_priz
+      name: TV Priz
+      icon: mdi:power-plug
+      icon_color: indigo
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-entity-card
+      entity: switch.playstation_5_priz
+      name: PlayStation 5
+      icon: mdi:controller
+      icon_color: purple
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-climate-card
+      entity: climate.sonoff_a4b001d938
+      name: Petek
+      hvac_modes:
+      - auto
+      - heat
+      - 'off'
+      show_temperature_control: true
+      collapsible_controls: false
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: full
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              {% if state_attr(config.entity, 'hvac_action') == 'heating' %}
+              animation: heat-pulse 3s ease-in-out infinite;
+              {% endif %}
+            }
+            @keyframes heat-pulse {
+              0%, 100% { box-shadow: 0 0 0 0 rgba(255, 112, 67, 0); }
+              50% { box-shadow: 0 0 14px 3px rgba(255, 112, 67, 0.45); }
+            }
+            @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+  - type: grid
+    cards:
+    - type: heading
+      heading: Balkon
+      heading_style: title
+      icon: mdi:balcony
+    - type: custom:mushroom-light-card
+      entity: light.balkon_tavan_aydinlatma
+      name: Tavan Lamba
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.sonoff_a4b002372b_moisture
+      primary: Sol Su Kaçağı
+      secondary: '{{ state_translated(entity) }}'
+      icon: '{{ ''mdi:water-alert'' if is_state(entity, ''on'') else ''mdi:water-check'' }}'
+      icon_color: '{% if is_state(entity, ''on'') %}red{% elif states(entity) in [''unavailable'', ''unknown''] %}grey{% else %}green{% endif %}'
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              {% if is_state(config.entity, 'on') %}
+              animation: alert-pulse 1.6s ease-out infinite;
+              {% endif %}
+            }
+            @keyframes alert-pulse {
+              0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.6); }
+              100% { box-shadow: 0 0 0 12px rgba(244, 67, 54, 0); }
+            }
+            @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+          '.:': |
+            ha-card {
+              transition: background-color 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              background-color: rgba(244, 67, 54, 0.14);
+              border: 1px solid rgba(244, 67, 54, 0.55);
+              {% endif %}
+            }
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.sonoff_a4b002414d_moisture
+      primary: Sağ Su Kaçağı
+      secondary: '{{ state_translated(entity) }}'
+      icon: '{{ ''mdi:water-alert'' if is_state(entity, ''on'') else ''mdi:water-check'' }}'
+      icon_color: '{% if is_state(entity, ''on'') %}red{% elif states(entity) in [''unavailable'', ''unknown''] %}grey{% else %}green{% endif %}'
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              {% if is_state(config.entity, 'on') %}
+              animation: alert-pulse 1.6s ease-out infinite;
+              {% endif %}
+            }
+            @keyframes alert-pulse {
+              0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.6); }
+              100% { box-shadow: 0 0 0 12px rgba(244, 67, 54, 0); }
+            }
+            @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+          '.:': |
+            ha-card {
+              transition: background-color 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              background-color: rgba(244, 67, 54, 0.14);
+              border: 1px solid rgba(244, 67, 54, 0.55);
+              {% endif %}
+            }
+  - type: grid
+    cards:
+    - type: heading
+      heading: Ebeveyn Banyo
+      heading_style: title
+      icon: mdi:bathtub-outline
+    - type: custom:mushroom-light-card
+      entity: light.ebeveyn_banyo_aydinlatma
+      name: Lamba
+      icon_color: amber
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: true
+      secondary_info: state
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              transition: box-shadow 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              box-shadow: 0 0 0 3px var(--shape-color), 0 0 16px 2px var(--shape-color);
+              {% endif %}
+            }
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.sonoff_a4b0023725_moisture
+      primary: Lavabo Su Kaçağı
+      secondary: '{{ state_translated(entity) }}'
+      icon: '{{ ''mdi:water-alert'' if is_state(entity, ''on'') else ''mdi:water-check'' }}'
+      icon_color: '{% if is_state(entity, ''on'') %}red{% elif states(entity) in [''unavailable'', ''unknown''] %}grey{% else %}green{% endif %}'
+      tap_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style:
+          mushroom-shape-icon$: |
+            .shape {
+              {% if is_state(config.entity, 'on') %}
+              animation: alert-pulse 1.6s ease-out infinite;
+              {% endif %}
+            }
+            @keyframes alert-pulse {
+              0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.6); }
+              100% { box-shadow: 0 0 0 12px rgba(244, 67, 54, 0); }
+            }
+            @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+          '.:': |
+            ha-card {
+              transition: background-color 0.4s ease;
+              {% if is_state(config.entity, 'on') %}
+              background-color: rgba(244, 67, 54, 0.14);
+              border: 1px solid rgba(244, 67, 54, 0.55);
+              {% endif %}
+            }

@@ -1,0 +1,29 @@
+# OPTIONAL — makes the 9 scenario buttons momentary: tap -> "on" -> back to "off" after 2 s.
+#
+# Add via Settings > Automations > Create > ⋮ > Edit in YAML (paste everything below "alias").
+#
+# CHECK FIRST: your existing scenario automations must trigger on `to: "on"` only.
+# If any of them also reacts to the boolean turning OFF (e.g. "Evdeyim off -> leave-home
+# routine"), this reset would fire that routine too. In that case do not use this file.
+alias: Senaryo butonlarını sıfırla
+description: Senaryo input_boolean'larını tetiklendikten 2 sn sonra kapatır (anlık buton davranışı).
+mode: parallel
+triggers:
+  - trigger: state
+    entity_id:
+      - input_boolean.evdeyim_section
+      - input_boolean.tatil_modu_section
+      - input_boolean.uyku_modu_section
+      - input_boolean.tum_isiklar_acik_section
+      - input_boolean.tum_isiklar_kapali_section
+      - input_boolean.tum_petekler_acik_section
+      - input_boolean.tum_petekler_kapali_section
+      - input_boolean.tum_prizler_acik_section
+      - input_boolean.tum_prizler_kapali_section
+    to: "on"
+    for:
+      seconds: 2
+actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: "{{ trigger.entity_id }}"
