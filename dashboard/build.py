@@ -12,39 +12,24 @@ import yaml
 OUT = Path(__file__).with_name("home-dashboard.yaml")
 
 # ---------------------------------------------------------------- entities
-LEAK_SENSORS = [
-    ("binary_sensor.sonoff_a4b0023729_moisture", "Ayakkabılık"),
-    ("binary_sensor.sonoff_a4b0023723_moisture", "Mutfak Lavabo"),
-    ("binary_sensor.sonoff_a4b0023728_moisture", "Büyük Banyo Lavabo"),
-    ("binary_sensor.sonoff_a4b0023726_moisture", "Çamaşır Makinesi"),
-    ("binary_sensor.sonoff_a4b002372b_moisture", "Balkon Sol"),
-    ("binary_sensor.sonoff_a4b002414d_moisture", "Balkon Sağ"),
-    ("binary_sensor.sonoff_a4b0023725_moisture", "Ebeveyn Banyo Lavabo"),
-]
+# Leak sensors, thermostats and room temperatures are registered automatically by
+# leak()/climate()/ROOMS below, so each entity id is written exactly once.
+LEAK_SENSORS = []  # (entity, home-page label)
+CLIMATES = []      # (entity, room)
 DOOR = "binary_sensor.sonoff_100235874c"
 MOTION = "binary_sensor.sonoff_a4b001a3ce"
-TEMP_SENSORS = [
-    "sensor.sonoff_a4b001d936_temperature",
-    "sensor.sonoff_a4b001d937_temperature",
-    "sensor.sonoff_a4b001d93a_temperature",
-    "sensor.sonoff_a4b001d938_temperature",
-]
-CLIMATES = [
-    ("climate.sonoff_a4b001d938", "Salon"),
-    ("climate.sonoff_a4b001d93a", "Yatak Odası"),
-    ("climate.sonoff_a4b001d937", "Çocuk Odası"),
-    ("climate.sonoff_a4b001d936", "Çalışma Odası"),
-]
 PURIFIER = "fan.zhimi_sg_918358888_meb1_s_2_air_purifier"
 PURIFIER_PM25 = "sensor.zhimi_sg_918358888_meb1_pm2_5_density_p_3_4"
 PURIFIER_FILTER = "sensor.zhimi_sg_918358888_meb1_filter_life_level_p_4_1"
 TV = "media_player.samsung_7_series_43_ue43ru7100uxtk"
 
 # Colour language: red = alarm only · amber = light · teal = plug/device
-# purple = media · deep-orange = heating · orange = warning · green = OK
+# purple = media · deep-orange = heating · orange = warning (door open, offline)
+# blue = motion · green = OK
 RED = "var(--rgb-red-color, 244, 67, 54)"
 GREEN = "var(--rgb-green-color, 76, 175, 80)"
-AMBER = "var(--rgb-amber-color, 255, 193, 7)"
+ORANGE = "var(--rgb-orange-color, 255, 152, 0)"
+BLUE = "var(--rgb-blue-color, 33, 150, 243)"
 HEAT = "var(--rgb-deep-orange-color, 255, 87, 34)"
 DISABLED = "var(--rgb-disabled-color, 189, 189, 189)"
 
@@ -57,29 +42,26 @@ LIGHT_HALO = (
     ".shape {\n"
     "  transition: box-shadow 0.4s ease;\n"
     "  {% if is_state(config.entity, 'on') %}\n"
-    "  box-shadow: 0 0 16px -2px var(--icon-color);\n"
+    "  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n"
     "  {% endif %}\n"
     "}\n"
 )
 
-# Slow pulse only while the valve is actually heating (hvac_action), not merely in heat mode.
-HEATING_PULSE = (
+# Static warm glow only while the valve is actually heating (hvac_action), not merely in heat mode.
+HEATING_GLOW = (
     ".shape {\n"
+    "  transition: box-shadow 0.4s ease;\n"
     "  {% if state_attr(config.entity, 'hvac_action') == 'heating' %}\n"
-    "  animation: heat-pulse 3s ease-in-out infinite;\n"
+    f"  box-shadow: 0 0 16px -2px rgba({HEAT}, 0.9) !important;\n"
     "  {% endif %}\n"
     "}\n"
-    "@keyframes heat-pulse {\n"
-    f"  0%, 100% {{ box-shadow: 0 0 0 0 rgba({HEAT}, 0); }}\n"
-    f"  50% {{ box-shadow: 0 0 14px 3px rgba({HEAT}, 0.45); }}\n"
-    "}\n" + REDUCED_MOTION
 )
 
-# Leak (wet) / door (open): pulsing red ring on the icon.
+# Leak (wet) only: pulsing red ring on the icon. The single animated alarm on the dashboard.
 ALERT_PULSE = (
     ".shape {\n"
     "  {% if is_state(config.entity, 'on') %}\n"
-    "  animation: alert-pulse 1.6s ease-out infinite;\n"
+    "  animation: alert-pulse 1.6s ease-out infinite !important;\n"
     "  {% endif %}\n"
     "}\n"
     "@keyframes alert-pulse {\n"
@@ -90,10 +72,19 @@ ALERT_PULSE = (
 
 
 def icon_colours(on_rgb, off_rgb):
-    """Host-level colours by state (on / unavailable+unknown / off). !important beats Mushroom's inline style."""
+    """Host-level colours by state (on / unavailable+unknown / off).
+
+    Mushroom paints inactive icons (off/unavailable) from the *-disabled variables,
+    so both pairs are set; !important beats Mushroom's inline style.
+    """
     def pair(rgb):
-        return (f"--icon-color: rgb({rgb}) !important;\n"
-                f"    --shape-color: rgba({rgb}, 0.2) !important;\n")
+        return "".join(
+            f"--{v}: {fn}({rgb}{alpha}) !important;\n    "
+            for v, fn, alpha in (
+                ("icon-color", "rgb", ""), ("icon-color-disabled", "rgb", ""),
+                ("shape-color", "rgba", ", 0.2"), ("shape-color-disabled", "rgba", ", 0.2"),
+            )
+        )
     return (
         "mushroom-shape-icon {\n"
         "  {% if is_state(config.entity, 'on') %}\n"
@@ -118,7 +109,7 @@ ALERT_CARD = (
 )
 
 # Home-page alert tiles are only rendered while the alarm is active, so no Jinja needed.
-HOME_ALERT_TILE = (
+HOME_LEAK_TILE = (
     "ha-card {\n"
     f"  background-color: rgba({RED}, 0.14);\n"
     f"  box-shadow: inset 0 0 0 1px rgba({RED}, 0.6);\n"
@@ -148,10 +139,9 @@ def light(entity, name, icon=None):
     card.update({
         "icon_color": "amber",
         "use_light_color": True,
-        # Only brightness on the card keeps every card the same height on a phone;
-        # colour + colour temperature stay one long-press away (more-info).
-        "show_brightness_control": True,
-        "collapsible_controls": False,
+        # No inline sliders: every card stays one row high on a phone. The state line
+        # shows brightness %, and brightness/colour/colour temperature are one long-press
+        # away (more-info), which also gives a full-width, precise slider.
         "secondary_info": "state",
         "tap_action": {"action": "toggle"},
         "hold_action": {"action": "more-info"},
@@ -161,7 +151,7 @@ def light(entity, name, icon=None):
     return card
 
 
-def switch(entity, name, icon, color="teal", **actions):
+def switch(entity, name, icon, color="teal", halo=False, **actions):
     card = {
         "type": "custom:mushroom-entity-card",
         "entity": entity,
@@ -174,10 +164,12 @@ def switch(entity, name, icon, color="teal", **actions):
     }
     card.update(actions)
     card.update(HALF)
+    if halo:
+        card.update(shape_mod(LIGHT_HALO))
     return card
 
 
-def sensor_card(entity, name, on_rgb, off_rgb, alert=False):
+def sensor_card(entity, name, on_rgb, off_rgb, alert=False, secondary="state"):
     """Binary sensor: icon follows device_class, secondary line is HA's translated state."""
     style = {".": icon_colours(on_rgb, off_rgb) + (ALERT_CARD if alert else "")}
     if alert:
@@ -186,28 +178,30 @@ def sensor_card(entity, name, on_rgb, off_rgb, alert=False):
         "type": "custom:mushroom-entity-card",
         "entity": entity,
         "name": name,
-        "secondary_info": "state",
+        "secondary_info": secondary,
         "tap_action": {"action": "more-info"},
         **HALF,
         "card_mod": {"style": style},
     }
 
 
-def leak(entity, name):
+def leak(entity, name, home_label):
+    LEAK_SENSORS.append((entity, home_label))
     return sensor_card(entity, name, RED, GREEN, alert=True)
 
 
-def climate(entity, name):
+def climate(entity, room):
+    CLIMATES.append((entity, room))
     return {
         "type": "custom:mushroom-climate-card",
         "entity": entity,
-        "name": name,
+        "name": "Petek",
         "hvac_modes": ["auto", "heat", "off"],
         "show_temperature_control": True,
         "collapsible_controls": False,
         "tap_action": {"action": "more-info"},
         **FULL,
-        **shape_mod(HEATING_PULSE),
+        **shape_mod(HEATING_GLOW),
     }
 
 
@@ -218,8 +212,6 @@ def purifier():
             "entity": PURIFIER,
             "name": "Kokuştroşko",
             "icon": "mdi:air-purifier",
-            "icon_color": "light-blue",
-            "icon_animation": True,
             "secondary_info": "state",
             "tap_action": {"action": "toggle"},
             "hold_action": {"action": "more-info"},
@@ -237,11 +229,10 @@ def tv():
         "name": "Samsung TV",
         "use_media_info": False,
         "show_volume_level": True,
-        "collapsible_controls": True,
-        "media_controls": ["on_off", "previous", "play_pause_stop", "next", "repeat", "shuffle"],
-        "volume_controls": ["volume_mute", "volume_set", "volume_buttons"],
-        "tap_action": {"action": "toggle"},
-        "hold_action": {"action": "more-info"},
+        "collapsible_controls": False,
+        "media_controls": ["on_off", "previous", "play_pause_stop", "next"],
+        "volume_controls": ["volume_mute", "volume_buttons"],
+        "tap_action": {"action": "more-info"},
         **FULL,
     }
 
@@ -254,7 +245,6 @@ def heading(text, icon, badge_entity=None, style="title"):
             "entity": badge_entity,
             "show_icon": True,
             "show_state": True,
-            "color": "deep-orange",
             "tap_action": {"action": "more-info"},
         }]
     return card
@@ -274,6 +264,7 @@ def section(cards):
 
 
 # ---------------------------------------------------------------- rooms (most used first)
+# (room, icon, temperature sensor shown as heading badge, cards)
 ROOMS = [
     ("Salon", "mdi:sofa", "sensor.sonoff_a4b001d938_temperature", [
         light("light.salon_lamba_01", "Tavan Lamba 1"),
@@ -281,7 +272,7 @@ ROOMS = [
         light("light.salon_tavan_led", "Tavan LED", "mdi:led-strip-variant"),
         switch("switch.tv_priz", "TV Priz", "mdi:power-plug"),
         switch("switch.playstation_5_priz", "PlayStation 5", "mdi:controller", "purple"),
-        climate("climate.sonoff_a4b001d938", "Petek"),
+        climate("climate.sonoff_a4b001d938", "Salon"),
     ]),
     ("Mutfak", "mdi:countertop", None, [
         light("light.mutfak_tavan_aydinlatma", "Tavan Lamba"),
@@ -290,48 +281,49 @@ ROOMS = [
         switch("switch.sonoff_10021dd88c_1", "Kahve Makinesi", "mdi:coffee-maker"),
         switch("switch.mutfak_masa_priz_socket_1", "Masa Priz", "mdi:power-socket-eu",
                double_tap_action={"action": "none"}),
-        leak("binary_sensor.sonoff_a4b0023723_moisture", "Su Kaçağı (Lavabo)"),
+        leak("binary_sensor.sonoff_a4b0023723_moisture", "Lavabo Kaçak", "Mutfak Lavabo"),
     ]),
     ("Yatak Odası", "mdi:bed", "sensor.sonoff_a4b001d93a_temperature", [
         light("light.yatak_odasi_tavan", "Tavan Lamba"),
         light("light.yatak_odasi_led", "LED", "mdi:led-strip-variant"),
-        climate("climate.sonoff_a4b001d93a", "Petek"),
+        climate("climate.sonoff_a4b001d93a", "Yatak Odası"),
     ]),
     ("Çocuk Odası", "mdi:teddy-bear", "sensor.sonoff_a4b001d937_temperature", [
         light("light.cocuk_odasi_lamba", "Lamba"),
         light("light.sonoff_10024a8007", "Gece Lambası", "mdi:lightbulb-night"),
         switch("switch.sonoff_a4b0024d63", "Kapı Priz", "mdi:power-plug"),
         tv(),
-        climate("climate.sonoff_a4b001d937", "Petek"),
+        climate("climate.sonoff_a4b001d937", "Çocuk Odası"),
     ]),
     ("Çalışma Odası", "mdi:monitor-dashboard", "sensor.sonoff_a4b001d936_temperature", [
         light("light.calisma_odasi_lamba", "Lamba"),
-        switch("switch.calisma_odasi_kapi_priz", "Kitaplık LED", "mdi:led-strip", "amber"),
+        switch("switch.calisma_odasi_kapi_priz", "Kitaplık LED", "mdi:led-strip", "amber", halo=True),
         *purifier(),
-        climate("climate.sonoff_a4b001d936", "Petek"),
+        climate("climate.sonoff_a4b001d936", "Çalışma Odası"),
     ]),
     ("Koridor", "mdi:door", None, [
         light("light.koridor_mutfak", "Mutfak Tarafı"),
         light("light.koridor_kapi", "Kapı Tarafı"),
-        sensor_card(DOOR, "Kapı", RED, GREEN, alert=True),
-        sensor_card(MOTION, "Hareket", AMBER, DISABLED),
-        leak("binary_sensor.sonoff_a4b0023729_moisture", "Su Kaçağı (Ayakkabılık)"),
+        sensor_card(DOOR, "Kapı", ORANGE, GREEN, secondary="last-changed"),
+        sensor_card(MOTION, "Hareket", BLUE, DISABLED),
+        leak("binary_sensor.sonoff_a4b0023729_moisture", "Ayakkabılık Kaçak", "Ayakkabılık"),
     ]),
     ("Büyük Banyo", "mdi:bathtub", None, [
         light("light.buyuk_banyo_lamba", "Lamba"),
-        leak("binary_sensor.sonoff_a4b0023728_moisture", "Su Kaçağı (Lavabo)"),
-        leak("binary_sensor.sonoff_a4b0023726_moisture", "Su Kaçağı (Çamaşır M.)"),
+        leak("binary_sensor.sonoff_a4b0023728_moisture", "Lavabo Kaçak", "Büyük Banyo Lavabo"),
+        leak("binary_sensor.sonoff_a4b0023726_moisture", "Çamaşır M. Kaçak", "Çamaşır Makinesi"),
     ]),
     ("Ebeveyn Banyo", "mdi:bathtub-outline", None, [
         light("light.ebeveyn_banyo_aydinlatma", "Lamba"),
-        leak("binary_sensor.sonoff_a4b0023725_moisture", "Su Kaçağı (Lavabo)"),
+        leak("binary_sensor.sonoff_a4b0023725_moisture", "Lavabo Kaçak", "Ebeveyn Banyo Lavabo"),
     ]),
     ("Balkon", "mdi:balcony", None, [
         light("light.balkon_tavan_aydinlatma", "Tavan Lamba"),
-        leak("binary_sensor.sonoff_a4b002372b_moisture", "Su Kaçağı (Sol)"),
-        leak("binary_sensor.sonoff_a4b002414d_moisture", "Su Kaçağı (Sağ)"),
+        leak("binary_sensor.sonoff_a4b002372b_moisture", "Sol Kaçak", "Balkon Sol"),
+        leak("binary_sensor.sonoff_a4b002414d_moisture", "Sağ Kaçak", "Balkon Sağ"),
     ]),
 ]
+TEMP_SENSORS = [badge for _, _, badge, _ in ROOMS if badge]
 
 
 # ---------------------------------------------------------------- home view
@@ -352,25 +344,27 @@ def scenario(entity, name, icon, color, confirm=None):
     }
 
 
-def alert_tile(entity, name, icon, states, warn=False):
+def alert_tile(entity, name, icon, color, style=None):
+    """Full-width home tile that only exists while the entity is 'on'."""
     tile = {
         "type": "tile",
         "entity": entity,
         "name": name,
         "icon": icon,
-        "color": "orange" if warn else "red",
+        "color": color,
         "tap_action": {"action": "more-info"},
-        "visibility": [{"condition": "state", "entity": entity, "state": states}],
+        "visibility": [{"condition": "state", "entity": entity, "state": "on"}],
         **FULL,
     }
-    if not warn:
-        tile["card_mod"] = {"style": HOME_ALERT_TILE}
+    if style:
+        tile["card_mod"] = {"style": style}
     return tile
 
 
 def status_section():
-    ok_conditions = [{"condition": "state", "entity": e, "state": "off"} for e, _ in LEAK_SENSORS]
-    ok_conditions.append({"condition": "state", "entity": DOOR, "state": "off"})
+    watched = [e for e, _ in LEAK_SENSORS] + [DOOR]
+    ok_conditions = [{"condition": "state", "entity": e, "state": "off"} for e in watched]
+    offline = "[" + ", ".join(f"'{e}'" for e in watched) + "] | reject('has_value') | list"
     temps = ", ".join(f"'{t}'" for t in TEMP_SENSORS)
     lights_on = "states.light | selectattr('state', 'eq', 'on') | list | count"
     cards = [
@@ -389,7 +383,7 @@ def status_section():
                 {
                     "type": "template",
                     "icon": "mdi:home-thermometer",
-                    "icon_color": "deep-orange",
+                    "icon_color": "blue-grey",
                     "content": (
                         f"{{% set t = [{temps}] | map('states') | select('is_number') | map('float') | list %}}"
                         "İç ort. {{ (t | sum / t | count) | round(1) ~ ' °C' if t | count > 0 else '–' }}"
@@ -401,18 +395,38 @@ def status_section():
         },
         {
             "type": "markdown",
-            "content": "<ha-icon icon=\"mdi:shield-check\"></ha-icon> **Her şey yolunda** · su kaçağı yok, kapı kapalı",
+            "content": "<ha-icon icon=\"mdi:shield-check\"></ha-icon> **Her şey yolunda** · su ve kapı sensörleri normal",
             "visibility": ok_conditions,
             **FULL,
         },
-        alert_tile(DOOR, "Kapı açık", "mdi:door-open", ["on"]),
     ]
-    for entity, name in LEAK_SENSORS:
-        cards.append(alert_tile(entity, f"Su kaçağı · {name}", "mdi:water-alert", ["on"]))
-    # A dead sensor must never look like "all clear" nor like a leak.
-    for entity, name in LEAK_SENSORS + [(DOOR, "Kapı")]:
-        cards.append(alert_tile(entity, f"Sensör yanıt vermiyor · {name}", "mdi:wifi-off",
-                                ["unavailable", "unknown"], warn=True))
+    for entity, label in LEAK_SENSORS:
+        cards.append(alert_tile(entity, f"Su kaçağı · {label}", "mdi:water-alert", "red", HOME_LEAK_TILE))
+    cards.append(alert_tile(DOOR, "Kapı açık", "mdi:door-open", "orange"))
+    # One summary for dead sensors (a hub outage must not flood the screen, nor look like a leak).
+    cards.append({
+        "type": "custom:mushroom-template-card",
+        "primary": f"{{{{ {offline} | count }}}} sensör yanıt vermiyor",
+        "secondary": f"{{{{ {offline} | map('state_attr', 'friendly_name') | join(', ') }}}}",
+        "icon": "mdi:wifi-off",
+        "icon_color": "orange",
+        "multiline_secondary": True,
+        "tap_action": {"action": "none"},
+        "visibility": [{
+            "condition": "or",
+            "conditions": [{"condition": "state", "entity": e, "state": ["unavailable", "unknown"]} for e in watched],
+        }],
+        **FULL,
+    })
+    cards.append({
+        "type": "tile",
+        "entity": PURIFIER_FILTER,
+        "name": "Hava temizleyici filtresi değişmeli",
+        "icon": "mdi:air-filter",
+        "color": "orange",
+        "visibility": [{"condition": "numeric_state", "entity": PURIFIER_FILTER, "below": 10}],
+        **FULL,
+    })
     return section(cards)
 
 
@@ -440,7 +454,7 @@ def heating_section():
             "type": "tile",
             "entity": entity,
             "name": name,
-            "state_content": ["hvac_action", "current_temperature"],
+            "state_content": ["hvac_action", "current_temperature", "temperature"],
             "tap_action": {"action": "more-info"},
             **HALF,
         })
@@ -518,7 +532,12 @@ def _str(dumper, value):
 
 Dumper.add_representer(str, _str)
 
+HEADER = (
+    "# GENERATED by dashboard/build.py: edit build.py and regenerate instead of editing\n"
+    "# this file or the dashboard in the HA UI (UI edits are lost on the next paste).\n"
+)
+
 if __name__ == "__main__":
-    text = yaml.dump(build(), Dumper=Dumper, sort_keys=False, allow_unicode=True, width=4096, indent=2)
+    text = HEADER + yaml.dump(build(), Dumper=Dumper, sort_keys=False, allow_unicode=True, width=4096, indent=2)
     OUT.write_text(text, encoding="utf-8")
     print(f"wrote {OUT} ({len(text.splitlines())} lines, {len(text.encode())} bytes)")
