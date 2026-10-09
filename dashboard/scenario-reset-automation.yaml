@@ -1,0 +1,35 @@
+# REQUIRED with the new dashboard — makes the 9 scenario buttons momentary:
+# tap -> input_boolean.turn_on -> your scenario automation runs -> back to "off" after 2 s.
+# (The dashboard buttons only ever turn the boolean ON; without this automation a
+#  button would stay "on" and a second tap would do nothing.)
+#
+# Add via Settings > Automations > Create automation > ⋮ > Edit in YAML, paste this file.
+# Needs HA 2024.10+ (triggers:/actions: syntax).
+#
+# CHECK FIRST — do NOT use this as-is if any of your automations:
+#   * trigger when one of these booleans turns OFF (e.g. "Evdeyim off -> leave-home routine"), or
+#   * use one of them as a CONDITION (e.g. "only if Tatil Modu is on").
+# Both would break once the boolean is reset after 2 s. Remove those booleans from the
+# list below (and tell me — their buttons should then become real on/off switches).
+alias: Senaryo butonlarını sıfırla
+description: Senaryo input_boolean'larını tetiklendikten 2 sn sonra kapatır (anlık buton davranışı).
+mode: parallel
+triggers:
+  - trigger: state
+    entity_id:
+      - input_boolean.evdeyim_section
+      - input_boolean.tatil_modu_section
+      - input_boolean.uyku_modu_section
+      - input_boolean.tum_isiklar_acik_section
+      - input_boolean.tum_isiklar_kapali_section
+      - input_boolean.tum_petekler_acik_section
+      - input_boolean.tum_petekler_kapali_section
+      - input_boolean.tum_prizler_acik_section
+      - input_boolean.tum_prizler_kapali_section
+    to: "on"
+    for:
+      seconds: 2
+actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: "{{ trigger.entity_id }}"

@@ -71,7 +71,8 @@ except yaml.YAMLError as exc:
 
 # 1. every entity the original referenced is still present (or consciously dropped)
 orig_ids = set(ENTITY_RE.findall(orig_text)) - {"fan.includes"}
-new_ids = set(ENTITY_RE.findall(new_text))
+SERVICES = {"input_boolean.turn_on", "input_boolean.turn_off", "input_boolean.toggle"}  # action names, not entities
+new_ids = set(ENTITY_RE.findall(new_text)) - SERVICES
 missing = sorted(orig_ids - new_ids - INTENTIONALLY_DROPPED)
 for e in missing:
     errors.append(f"entity lost: {e}")

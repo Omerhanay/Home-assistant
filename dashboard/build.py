@@ -15,6 +15,7 @@ OUT = Path(__file__).with_name("home-dashboard.yaml")
 # Leak sensors, thermostats and room temperatures are registered automatically by
 # leak()/climate()/ROOMS below, so each entity id is written exactly once.
 LEAK_SENSORS = []  # (entity, home-page label)
+LIGHTS = []        # every light card on the dashboard (for the "N ışık açık" chip)
 CLIMATES = []      # (entity, room)
 DOOR = "binary_sensor.sonoff_100235874c"
 MOTION = "binary_sensor.sonoff_a4b001a3ce"
@@ -25,7 +26,7 @@ TV = "media_player.samsung_7_series_43_ue43ru7100uxtk"
 
 # Colour language: red = alarm only · amber = light · teal = plug/device
 # purple = media · deep-orange = heating · orange = warning (door open, offline)
-# blue = motion · green = OK
+# blue = motion · indigo = home modes · green = OK
 RED = "var(--rgb-red-color, 244, 67, 54)"
 GREEN = "var(--rgb-green-color, 76, 175, 80)"
 ORANGE = "var(--rgb-orange-color, 255, 152, 0)"
@@ -40,7 +41,7 @@ REDUCED_MOTION = "@media (prefers-reduced-motion: reduce) { .shape { animation: 
 # use_light_color). No animation — "a light that is on glows".
 LIGHT_HALO = (
     ".shape {\n"
-    "  transition: box-shadow 0.4s ease;\n"
+    "  transition: box-shadow 0.4s ease !important;\n"
     "  {% if is_state(config.entity, 'on') %}\n"
     "  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n"
     "  {% endif %}\n"
@@ -50,7 +51,7 @@ LIGHT_HALO = (
 # Static warm glow only while the valve is actually heating (hvac_action), not merely in heat mode.
 HEATING_GLOW = (
     ".shape {\n"
-    "  transition: box-shadow 0.4s ease;\n"
+    "  transition: box-shadow 0.4s ease !important;\n"
     "  {% if state_attr(config.entity, 'hvac_action') == 'heating' %}\n"
     f"  box-shadow: 0 0 16px -2px rgba({HEAT}, 0.9) !important;\n"
     "  {% endif %}\n"
@@ -133,6 +134,7 @@ FULL = {"grid_options": {"columns": "full"}}
 
 
 def light(entity, name, icon=None):
+    LIGHTS.append(entity)
     card = {"type": "custom:mushroom-light-card", "entity": entity, "name": name}
     if icon:
         card["icon"] = icon
@@ -271,7 +273,7 @@ ROOMS = [
         light("light.salon_lamba_02", "Tavan Lamba 2"),
         light("light.salon_tavan_led", "Tavan LED", "mdi:led-strip-variant"),
         switch("switch.tv_priz", "TV Priz", "mdi:power-plug"),
-        switch("switch.playstation_5_priz", "PlayStation 5", "mdi:controller", "purple"),
+        switch("switch.playstation_5_priz", "PlayStation 5", "mdi:controller"),
         climate("climate.sonoff_a4b001d938", "Salon"),
     ]),
     ("Mutfak", "mdi:countertop", None, [
@@ -281,7 +283,7 @@ ROOMS = [
         switch("switch.sonoff_10021dd88c_1", "Kahve Makinesi", "mdi:coffee-maker"),
         switch("switch.mutfak_masa_priz_socket_1", "Masa Priz", "mdi:power-socket-eu",
                double_tap_action={"action": "none"}),
-        leak("binary_sensor.sonoff_a4b0023723_moisture", "Lavabo Kaçak", "Mutfak Lavabo"),
+        leak("binary_sensor.sonoff_a4b0023723_moisture", "Lavabo", "Mutfak Lavabo"),
     ]),
     ("Yatak Odası", "mdi:bed", "sensor.sonoff_a4b001d93a_temperature", [
         light("light.yatak_odasi_tavan", "Tavan Lamba"),
@@ -306,42 +308,52 @@ ROOMS = [
         light("light.koridor_kapi", "Kapı Tarafı"),
         sensor_card(DOOR, "Kapı", ORANGE, GREEN, secondary="last-changed"),
         sensor_card(MOTION, "Hareket", BLUE, DISABLED),
-        leak("binary_sensor.sonoff_a4b0023729_moisture", "Ayakkabılık Kaçak", "Ayakkabılık"),
+        leak("binary_sensor.sonoff_a4b0023729_moisture", "Ayakkabılık", "Ayakkabılık"),
     ]),
     ("Büyük Banyo", "mdi:bathtub", None, [
         light("light.buyuk_banyo_lamba", "Lamba"),
-        leak("binary_sensor.sonoff_a4b0023728_moisture", "Lavabo Kaçak", "Büyük Banyo Lavabo"),
-        leak("binary_sensor.sonoff_a4b0023726_moisture", "Çamaşır M. Kaçak", "Çamaşır Makinesi"),
+        leak("binary_sensor.sonoff_a4b0023728_moisture", "Lavabo", "Büyük Banyo Lavabo"),
+        leak("binary_sensor.sonoff_a4b0023726_moisture", "Çamaşır Mak.", "Çamaşır Makinesi"),
     ]),
     ("Ebeveyn Banyo", "mdi:bathtub-outline", None, [
         light("light.ebeveyn_banyo_aydinlatma", "Lamba"),
-        leak("binary_sensor.sonoff_a4b0023725_moisture", "Lavabo Kaçak", "Ebeveyn Banyo Lavabo"),
+        leak("binary_sensor.sonoff_a4b0023725_moisture", "Lavabo", "Ebeveyn Banyo Lavabo"),
     ]),
     ("Balkon", "mdi:balcony", None, [
         light("light.balkon_tavan_aydinlatma", "Tavan Lamba"),
-        leak("binary_sensor.sonoff_a4b002372b_moisture", "Sol Kaçak", "Balkon Sol"),
-        leak("binary_sensor.sonoff_a4b002414d_moisture", "Sağ Kaçak", "Balkon Sağ"),
+        leak("binary_sensor.sonoff_a4b002372b_moisture", "Sol", "Balkon Sol"),
+        leak("binary_sensor.sonoff_a4b002414d_moisture", "Sağ", "Balkon Sağ"),
     ]),
 ]
 TEMP_SENSORS = [badge for _, _, badge, _ in ROOMS if badge]
 
 
 # ---------------------------------------------------------------- home view
-def scenario(entity, name, icon, color, confirm=None):
-    tap = {"action": "toggle"}
+def scenario(entity, name, icon, color, confirm=None, mode=False):
+    """Momentary button: always turn_on (never toggles a stuck boolean off);
+    scenario-reset-automation.yaml turns it back off 2 s later. The fixed category
+    colour gives each button an identity; 'Çalışıyor…' shows during those 2 s."""
+    tap = {
+        "action": "perform-action",
+        "perform_action": "input_boolean.turn_on",
+        "target": {"entity_id": entity},
+    }
     if confirm:
         tap["confirmation"] = {"text": confirm}
-    return {
-        "type": "tile",
+    card = {
+        "type": "custom:mushroom-template-card",
         "entity": entity,
-        "name": name,
+        "primary": name,
+        "secondary": "{{ 'Çalışıyor…' if is_state(entity, 'on') else '' }}",
         "icon": icon,
-        "color": color,
-        "hide_state": True,
+        "icon_color": color,
         "tap_action": tap,
-        "icon_tap_action": tap,
-        "grid_options": {"columns": 4 if name in ("Evdeyim", "Tatil", "Uyku") else 6},
+        "hold_action": {"action": "more-info"},
+        "grid_options": {"columns": 4 if mode else 6},
     }
+    if mode:
+        card["layout"] = "vertical"
+    return card
 
 
 def alert_tile(entity, name, icon, color, style=None):
@@ -364,9 +376,12 @@ def alert_tile(entity, name, icon, color, style=None):
 def status_section():
     watched = [e for e, _ in LEAK_SENSORS] + [DOOR]
     ok_conditions = [{"condition": "state", "entity": e, "state": "off"} for e in watched]
-    offline = "[" + ", ".join(f"'{e}'" for e in watched) + "] | reject('has_value') | list"
+    # Offline summary also covers battery TRVs and temperature sensors (not part of "all clear").
+    monitored = watched + [e for e, _ in CLIMATES] + TEMP_SENSORS
+    offline = "[" + ", ".join(f"'{e}'" for e in monitored) + "] | reject('has_value') | list"
     temps = ", ".join(f"'{t}'" for t in TEMP_SENSORS)
-    lights_on = "states.light | selectattr('state', 'eq', 'on') | list | count"
+    lights = ", ".join(f"'{e}'" for e in LIGHTS)
+    lights_on = f"expand([{lights}]) | selectattr('state', 'eq', 'on') | list | count"
     cards = [
         heading("Ev Durumu", "mdi:home-heart"),
         {
@@ -394,8 +409,12 @@ def status_section():
             **FULL,
         },
         {
-            "type": "markdown",
-            "content": "<ha-icon icon=\"mdi:shield-check\"></ha-icon> **Her şey yolunda** · su ve kapı sensörleri normal",
+            "type": "custom:mushroom-template-card",
+            "primary": "Her şey yolunda",
+            "secondary": "Su ve kapı sensörleri normal",
+            "icon": "mdi:shield-check",
+            "icon_color": "green",
+            "tap_action": {"action": "none"},
             "visibility": ok_conditions,
             **FULL,
         },
@@ -407,14 +426,14 @@ def status_section():
     cards.append({
         "type": "custom:mushroom-template-card",
         "primary": f"{{{{ {offline} | count }}}} sensör yanıt vermiyor",
-        "secondary": f"{{{{ {offline} | map('state_attr', 'friendly_name') | join(', ') }}}}",
+        "secondary": f"{{{{ {offline} | map('state_attr', 'friendly_name') | map('default', '?', true) | join(', ') }}}}",
         "icon": "mdi:wifi-off",
         "icon_color": "orange",
         "multiline_secondary": True,
         "tap_action": {"action": "none"},
         "visibility": [{
             "condition": "or",
-            "conditions": [{"condition": "state", "entity": e, "state": ["unavailable", "unknown"]} for e in watched],
+            "conditions": [{"condition": "state", "entity": e, "state": ["unavailable", "unknown"]} for e in monitored],
         }],
         **FULL,
     })
@@ -433,16 +452,16 @@ def status_section():
 def scenarios_section():
     return section([
         heading("Senaryolar", "mdi:play-circle-outline"),
-        scenario("input_boolean.evdeyim_section", "Evdeyim", "mdi:home-account", "primary"),
-        scenario("input_boolean.tatil_modu_section", "Tatil", "mdi:palm-tree", "primary"),
-        scenario("input_boolean.uyku_modu_section", "Uyku", "mdi:sleep", "primary"),
+        scenario("input_boolean.evdeyim_section", "Evdeyim", "mdi:home-account", "indigo", mode=True),
+        scenario("input_boolean.tatil_modu_section", "Tatil", "mdi:palm-tree", "indigo", mode=True),
+        scenario("input_boolean.uyku_modu_section", "Uyku", "mdi:sleep", "indigo", mode=True),
         scenario("input_boolean.tum_isiklar_acik_section", "Işıkları Aç", "mdi:lightbulb-on", "amber"),
-        scenario("input_boolean.tum_isiklar_kapali_section", "Işıkları Kapat", "mdi:lightbulb-off-outline", "primary"),
+        scenario("input_boolean.tum_isiklar_kapali_section", "Işıkları Kapat", "mdi:lightbulb-off-outline", "amber"),
         scenario("input_boolean.tum_petekler_acik_section", "Petekleri Aç", "mdi:radiator", "deep-orange"),
-        scenario("input_boolean.tum_petekler_kapali_section", "Petekleri Kapat", "mdi:radiator-off", "primary",
+        scenario("input_boolean.tum_petekler_kapali_section", "Petekleri Kapat", "mdi:radiator-off", "deep-orange",
                  confirm="Tüm petekler kapatılsın mı?"),
         scenario("input_boolean.tum_prizler_acik_section", "Prizleri Aç", "mdi:power-plug", "teal"),
-        scenario("input_boolean.tum_prizler_kapali_section", "Prizleri Kapat", "mdi:power-plug-off", "primary",
+        scenario("input_boolean.tum_prizler_kapali_section", "Prizleri Kapat", "mdi:power-plug-off", "teal",
                  confirm="Tüm prizler kapatılsın mı? Prize bağlı tüm cihazların enerjisi kesilir."),
     ])
 
@@ -454,7 +473,7 @@ def heating_section():
             "type": "tile",
             "entity": entity,
             "name": name,
-            "state_content": ["hvac_action", "current_temperature", "temperature"],
+            "state_content": ["hvac_action", "current_temperature"],
             "tap_action": {"action": "more-info"},
             **HALF,
         })
@@ -504,7 +523,7 @@ def build():
                     "show_state": True,
                     "show_icon": True,
                     "show_entity_picture": True,
-                    "tap_action": {"action": "none"},
+                    "tap_action": {"action": "more-info"},
                 }],
                 "sections": [status_section(), scenarios_section(), heating_section(), clock_weather_section()],
             },
