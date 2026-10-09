@@ -233,7 +233,7 @@ def tv():
         "show_volume_level": True,
         "collapsible_controls": False,
         "media_controls": ["on_off", "previous", "play_pause_stop", "next"],
-        "volume_controls": ["volume_mute", "volume_buttons"],
+        "volume_controls": ["volume_mute", "volume_set", "volume_buttons"],
         "tap_action": {"action": "more-info"},
         **FULL,
     }
@@ -348,6 +348,9 @@ def scenario(entity, name, icon, color, confirm=None, mode=False):
         "icon": icon,
         "icon_color": color,
         "tap_action": tap,
+        # Mushroom v5 defaults icon_tap_action to toggle for entities: that would skip
+        # turn_on and the confirmation, so the icon must run the same action.
+        "icon_tap_action": tap,
         "hold_action": {"action": "more-info"},
         "grid_options": {"columns": 4 if mode else 6},
     }

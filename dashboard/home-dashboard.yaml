@@ -383,6 +383,11 @@ views:
         perform_action: input_boolean.turn_on
         target:
           entity_id: input_boolean.evdeyim_section
+      icon_tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.evdeyim_section
       hold_action:
         action: more-info
       grid_options:
@@ -395,6 +400,11 @@ views:
       icon: mdi:palm-tree
       icon_color: indigo
       tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tatil_modu_section
+      icon_tap_action:
         action: perform-action
         perform_action: input_boolean.turn_on
         target:
@@ -415,6 +425,11 @@ views:
         perform_action: input_boolean.turn_on
         target:
           entity_id: input_boolean.uyku_modu_section
+      icon_tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.uyku_modu_section
       hold_action:
         action: more-info
       grid_options:
@@ -427,6 +442,11 @@ views:
       icon: mdi:lightbulb-on
       icon_color: amber
       tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_isiklar_acik_section
+      icon_tap_action:
         action: perform-action
         perform_action: input_boolean.turn_on
         target:
@@ -446,6 +466,11 @@ views:
         perform_action: input_boolean.turn_on
         target:
           entity_id: input_boolean.tum_isiklar_kapali_section
+      icon_tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_isiklar_kapali_section
       hold_action:
         action: more-info
       grid_options:
@@ -457,6 +482,11 @@ views:
       icon: mdi:radiator
       icon_color: deep-orange
       tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_petekler_acik_section
+      icon_tap_action:
         action: perform-action
         perform_action: input_boolean.turn_on
         target:
@@ -478,6 +508,13 @@ views:
           entity_id: input_boolean.tum_petekler_kapali_section
         confirmation:
           text: Tüm petekler kapatılsın mı?
+      icon_tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_petekler_kapali_section
+        confirmation:
+          text: Tüm petekler kapatılsın mı?
       hold_action:
         action: more-info
       grid_options:
@@ -493,6 +530,11 @@ views:
         perform_action: input_boolean.turn_on
         target:
           entity_id: input_boolean.tum_prizler_acik_section
+      icon_tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_prizler_acik_section
       hold_action:
         action: more-info
       grid_options:
@@ -504,6 +546,13 @@ views:
       icon: mdi:power-plug-off
       icon_color: teal
       tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_prizler_kapali_section
+        confirmation:
+          text: Tüm prizler kapatılsın mı? Prize bağlı tüm cihazların enerjisi kesilir.
+      icon_tap_action:
         action: perform-action
         perform_action: input_boolean.turn_on
         target:
@@ -1010,6 +1059,7 @@ views:
       - next
       volume_controls:
       - volume_mute
+      - volume_set
       - volume_buttons
       tap_action:
         action: more-info

@@ -104,6 +104,10 @@ def rules(n, path):
             ent = n.get("entity", "")
             if not ent.startswith(TOGGLEABLE):
                 errors.append(f"{path}: {key} toggle on non-toggleable {ent or '(no entity)'}")
+    tap = n.get("tap_action") or {}
+    if (t or "").startswith("custom:mushroom") and n.get("entity") and tap.get("action") not in (None, "toggle", "more-info") \
+            and "icon_tap_action" not in n:
+        errors.append(f"{path}: Mushroom v5 makes the icon toggle by default; set icon_tap_action")
     if t == "heading" and not n.get("heading"):
         errors.append(f"{path}: heading card without text")
     if t in ("button", "tile", "custom:mushroom-entity-card") and "entity" not in n:
