@@ -31,9 +31,9 @@ Dosyalar (`dashboard/`):
 - `rows: 1,5` yazımı ve `columns: 35/36/48` gibi geçersiz grid değerleri vardı.
 - Kişi kartı badge alanına konmuştu ve geçersiz bir `toggle` atanmıştı.
 
-**Seçilen yaklaşım.** Durum öncelikli bir kontrol merkezi. İki görünüm var:
-- **Ana Sayfa:** Ev durumu ve uyarılar, senaryolar, ısıtma özeti, saat ve hava durumu.
-- **Odalar:** Her oda kendi bölümünde. Tablette bölümler yan yana akar.
+**Seçilen yaklaşım.** Durum öncelikli bir kontrol merkezi:
+- **Ana Sayfa:** Ev durumu ve uyarılar, senaryolar, oda kartları, ısıtma özeti, saat ve hava durumu.
+- **9 oda alt sayfası (subview):** Ana sayfadaki oda kartına dokununca açılır, sol üstteki geri okuyla ana sayfaya döner. Oda kartında odanın sıcaklığı ve kaç ışığın açık olduğu yazar; o odada su kaçağı varsa kart kırmızıya döner.
 
 Tasarım ilkeleri:
 - Animasyon sakin ve anlamlı: açık ışık hafifçe parlar, ısıtan petek sıcak bir parıltı alır. Yanıp sönen tek öğe su kaçağıdır.
@@ -68,7 +68,7 @@ Tasarım ilkeleri:
 
 **B seçildi.** Kritik ihtiyaç "tek bakışta güvenlik ve açık kalan cihazlar" bilgisiydi ve bunu doğrudan yalnızca B çözüyor. A estetikte önde, ama kullanılabilirliği zayıf ve popup altyapısı için yeni bir bağımlılık gerekiyor.
 
-Oda başına alt görünüm (subview) **bilerek kullanılmadı.** `navigate` aksiyonu için dashboard'un URL yolunu bilmek gerekiyor, ama bu yol bilinmiyor. Görünümler arasında geçiş, HA'nın sekme çubuğuyla yapılıyor.
+Panel adresi (`/dashboard-tt`) öğrenildikten sonra oda alt sayfaları eklendi (v6). Önceki "Odalar" sekmesi kaldırıldı; böylece her kontrol tek yerde duruyor. Tablette bütün odaları tek ekranda görmek istersen `build.py` içinde `ALL_ROOMS_VIEW = True` yapman yeterli. Panel adresi değişirse `build.py` içindeki `DASHBOARD_URL` satırını güncellemelisin.
 
 **Renk dili:**
 
@@ -94,6 +94,7 @@ Oda başına alt görünüm (subview) **bilerek kullanılmadı.** `navigate` aks
 - Telefonda ilk ekranda şunlar görünür: durum çipleri, uyarı ya da "Her şey yolunda" kartı ve senaryoların çoğu.
 - Işık kartları tek satır yüksekliğinde. Durum satırında parlaklık yüzdesi yazar. Parlaklık, renk ve renk sıcaklığı uzun basınca açılan more-info penceresinde.
 - Yarım genişlikte tek kalan kart otomatik olarak tam genişliğe çekilir.
+- Bir odaya ulaşmak tek dokunuş, ana sayfaya dönmek tek dokunuş. Telefondaki uzun "Odalar" sayfası sorunu böylece ortadan kalktı.
 - Odalar, kullanım sıklığına göre sıralandı. Sıra bir varsayıma dayanıyor ve `build.py` içinden değiştirilebilir.
 
 **Senaryolar** (istenen davranış: "tıklayınca aktif olsun, sonra nötre dönsün"):
@@ -133,7 +134,7 @@ Her turdaki bulgular ve düzeltmeler commit mesajlarına da işlendi (`git log`)
 
 | Ne | Eski | Yeni | Neden |
 |---|---|---|---|
-| Görünüm yapısı | Tek "Home" görünümü | "Ana Sayfa" + "Odalar" | Bilgi hiyerarşisi ve telefon kullanımı |
+| Görünüm yapısı | Tek "Home" görünümü | "Ana Sayfa" + 9 oda alt sayfası | Bilgi hiyerarşisi ve telefon kullanımı |
 | Senaryolar | `button` + toggle | Mushroom kartı + `turn_on` + zorunlu sıfırlama otomasyonu | Senin istediğin anlık buton davranışı |
 | Işık kartları | Parlaklık, renk ve renk sıcaklığı kaydırıcıları kartta açık | Tek satır kart, ayarlar uzun basınca açılıyor | Telefonda sabit yükseklik ve yanlış dokunmayı önlemek |
 | Sıcaklık kartları | Ayrı animasyonlu kartlar | Oda başlığında rozet + ana sayfada ortalama çipi | Tekrar ve hareket azaltıldı |
