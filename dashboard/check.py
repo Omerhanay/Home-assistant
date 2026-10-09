@@ -49,10 +49,12 @@ def walk(node, fn, path="root"):
             walk(v, fn, f"{path}[{i}]")
 
 
-def cards_entities(doc):
+def cards_entities(doc, skip_conditional=False):
     found = {}
 
     def fn(n, path):
+        if skip_conditional and n.get("visibility"):
+            return  # mutually exclusive alert tiles, rendered only in one state
         if isinstance(n.get("type"), str) and n.get("entity"):
             found.setdefault(n["entity"], []).append(path)
     walk(doc, fn)
@@ -106,6 +108,12 @@ def rules(n, path):
     if t in ("button", "tile", "custom:mushroom-entity-card") and "entity" not in n:
         errors.append(f"{path}: {t} without entity")
     style = (n.get("card_mod") or {}).get("style")
+    if isinstance(style, dict):
+        for key in style:
+            if key.endswith(":"):
+                errors.append(f"{path}: card_mod key {key!r} (YAML key must be '.' not '.:')")
+        if t == "custom:mushroom-template-card" and "mushroom-shape-icon$" in style:
+            errors.append(f"{path}: Mushroom v5 template card has no mushroom-shape-icon")
     blobs = style.values() if isinstance(style, dict) else [style] if style else []
     for css in blobs:
         hard = ENTITY_RE.findall(css)
@@ -135,7 +143,7 @@ walk(new, rules)
 
 # 4. duplicates: the same entity shown by several controls in the same view
 for view in new["views"]:
-    seen = cards_entities(view)
+    seen = cards_entities(view, skip_conditional=True)
     for e, paths in seen.items():
         if len(paths) > 1:
             warnings.append(f"view '{view['title']}': {e} appears {len(paths)}x")
