@@ -58,13 +58,24 @@ home = views["ana-sayfa"]["sections"]
 top = home[0]["cards"]
 hero = find(top, type="custom:button-card")[0]
 weather = find(top, type="weather-forecast")[0]
-# Hero card already shows the clock: drop the duplicate standalone clock, hero first.
-home[0]["cards"] = [hero, weather]
-log.append("home: removed duplicate digital-clock, hero first")
+# Hero card already shows the clock: drop the duplicate standalone clock. The forecast
+# moves into a pop-up opened from the hero (Bubble Card >= 3.2: standalone pop-up with cards:).
+home[0]["cards"] = [hero]
+weather["name"] = "Hava Durumu"
+weather.pop("grid_options", None)
+home[-1]["cards"].append({
+    "type": "custom:bubble-card",
+    "card_type": "pop-up",
+    "hash": "#hava",
+    "name": "Hava Durumu",
+    "icon": "mdi:weather-partly-cloudy",
+    "cards": [weather],
+})
+log.append("home: removed duplicate digital-clock; forecast moved into pop-up #hava (hero tap)")
 # Greeting read variables.kisi, which was never defined -> name never shown.
 hero["variables"] = {"kisi": "person.omer", **hero["variables"]}
-# '#hava' opened nothing (no pop-up with that hash exists) -> weather details.
-hero["tap_action"] = {"action": "more-info", "entity": "weather.forecast_home"}
+# Tap opens the Bubble Card pop-up '#hava' (daily forecast) defined at the end of this view.
+hero["tap_action"] = {"action": "navigate", "navigation_path": "#hava"}
 # Nested clock used snake_case keys the installed wassy92x card ignores.
 saat = hero["custom_fields"]["saat"]["card"]
 for k in ("timezone", "time_format", "date_format", "show_seconds"):
@@ -86,7 +97,7 @@ saat_mod = {"style": (
 )}
 saat.update({"locale": "tr", "timeZone": "Europe/Istanbul", "timeFormat": "HH:mm",
              "dateFormat": "cccc, d LLLL", "card_mod": saat_mod})
-log.append("hero: kisi var, tap->weather more-info, nested clock keys fixed")
+log.append("hero: kisi var, tap->#hava pop-up, nested clock keys fixed")
 
 status = home[1]["cards"]
 # Chips (lights + average) and "Her şey yolunda" duplicate what the hero summary now says.

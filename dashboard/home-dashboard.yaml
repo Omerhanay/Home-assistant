@@ -24,8 +24,8 @@ views:
       show_state: false
       layout: custom
       tap_action:
-        action: more-info
-        entity: weather.forecast_home
+        action: navigate
+        navigation_path: '#hava'
       hold_action:
         action: none
       variables:
@@ -335,15 +335,6 @@ views:
       grid_options:
         columns: full
         rows: 4
-    - type: weather-forecast
-      entity: weather.forecast_home
-      show_current: true
-      show_forecast: true
-      forecast_type: daily
-      forecast_slots: 5
-      secondary_info_attribute: humidity
-      grid_options:
-        columns: full
   - type: grid
     cards:
     - type: heading
@@ -1062,6 +1053,20 @@ views:
         action: more-info
       grid_options:
         columns: 6
+    - type: custom:bubble-card
+      card_type: pop-up
+      hash: '#hava'
+      name: Hava Durumu
+      icon: mdi:weather-partly-cloudy
+      cards:
+      - type: weather-forecast
+        entity: weather.forecast_home
+        show_current: true
+        show_forecast: true
+        forecast_type: daily
+        forecast_slots: 5
+        secondary_info_attribute: humidity
+        name: Hava Durumu
 - title: Salon
   path: salon
   icon: mdi:sofa
