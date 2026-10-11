@@ -98,6 +98,44 @@ saat_mod = {"style": (
 saat.update({"locale": "tr", "timeZone": "Europe/Istanbul", "timeFormat": "HH:mm",
              "dateFormat": "cccc, d LLLL", "card_mod": saat_mod})
 log.append("hero: kisi var, tap->#hava pop-up, nested clock keys fixed")
+# 'gok' had no style and no grid area: button-card still drops it into the grid as an
+# implicit cell that can shift the layout.
+hero["custom_fields"].pop("gok", None)
+# Room names from a fixed map (stripping "su kaçak" from friendly names left "... Sensörü"),
+# offline count also covers thermostats (matches the Ev Durumu offline card), door = orange.
+hero["custom_fields"]["ozet"] = """[[[
+  const v = variables, S = id => (states[id] || {}).state;
+  const ad = {
+    'binary_sensor.sonoff_a4b0023729_moisture': 'Ayakkabılık',
+    'binary_sensor.sonoff_a4b0023723_moisture': 'Mutfak',
+    'binary_sensor.sonoff_a4b0023728_moisture': 'Büyük Banyo',
+    'binary_sensor.sonoff_a4b0023726_moisture': 'Çamaşır Makinesi',
+    'binary_sensor.sonoff_a4b002372b_moisture': 'Balkon Sol',
+    'binary_sensor.sonoff_a4b002414d_moisture': 'Balkon Sağ',
+    'binary_sensor.sonoff_a4b0023725_moisture': 'Ebeveyn Banyo'
+  };
+  const islak = v.kacak.filter(id => S(id) === 'on').map(id => ad[id] || id);
+  if (islak.length)
+    return `<span style="color:#fecaca;font-weight:700">⚠ Su kaçağı: ${islak.join(', ')}</span>`;
+  const p = [];
+  const isik = v.isiklar.filter(id => S(id) === 'on').length;
+  p.push(isik ? `${isik} ışık açık` : 'Tüm ışıklar kapalı');
+  const isit = v.petekler.filter(id => ((states[id] || {}).attributes || {}).hvac_action === 'heating').length;
+  if (isit) p.push(`${isit} petek ısıtıyor`);
+  if (S(v.kapi) === 'on') p.push('<span style="color:#fed7aa">giriş kapısı açık</span>');
+  const yok = [...v.kacak, v.kapi, ...v.petekler]
+    .filter(id => !S(id) || ['unavailable', 'unknown'].includes(S(id))).length;
+  if (yok) p.push(`<span style="color:#fed7aa">${yok} sensör çevrimdışı</span>`);
+  else if (S(v.kapi) !== 'on') p.push('her şey yolunda');
+  const c = p.join(', ');
+  return c.charAt(0).toUpperCase() + c.slice(1) + '.';
+]]]
+"""
+# Stars spread over 600px instead of 1400px so they also fill a phone-width card.
+for rule in hero["styles"]["custom_fields"]["yildiz"]:
+    if "box-shadow" in rule:
+        rule["box-shadow"] = rule["box-shadow"].replace("r() * 1400", "r() * 600")
+log.append("hero: removed unused 'gok', summary room names/offline/door colour, stars 600px")
 
 status = home[1]["cards"]
 # Chips (lights + average) and "Her şey yolunda" duplicate what the hero summary now says.
