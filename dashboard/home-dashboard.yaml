@@ -142,12 +142,12 @@ views:
                   background: none !important;
                   box-shadow: none !important;
                   border: none !important;
-                  color: #fff;
-                  text-align: left;
+                  color: #fff !important;
+                  text-align: left !important;
                   padding: 0 !important;
                 }
-                .first-line { font-size: 64px; font-weight: 200; letter-spacing: -2px; line-height: 1; }
-                .second-line { font-size: 14px; opacity: 0.8; }
+                .first-line { font-size: 64px !important; font-weight: 200 !important; letter-spacing: -2px; line-height: 1 !important; }
+                .second-line { font-size: 14px !important; opacity: 0.8; }
         ozet: |
           [[[
             const v = variables, S = id => (states[id] || {}).state;
@@ -650,9 +650,9 @@ views:
            'sensor.sonoff_a4b001d936_temperature': 'Çalışma Odası'} %}
         {% set ns = namespace(v=[]) %}
         {% for e, ad in odalar.items() if states(e) | is_number %}{% set ns.v = ns.v + [(states(e) | float, ad)] %}{% endfor %}
-        {% if ns.v %}{% set s = ns.v | sort %}{% set ort = (s | map(attribute=0) | sum) / (s | count) %}<ha-icon icon="mdi:home-thermometer"></ha-icon> **İç ortalama {{ '%.1f' | format(ort) }} °C**
+        {% if ns.v %}{% set s = ns.v | sort %}{% set ort = (s | map(attribute=0) | sum) / (s | count) %}<ha-icon icon="mdi:home-thermometer"></ha-icon> **İç ortalama {{ '%.1f' | format(ort) }} °C**{% if s | count > 1 %}
 
-        En sıcak **{{ s[-1][1] }}** {{ '%.1f' | format(s[-1][0]) }} °C · en soğuk **{{ s[0][1] }}** {{ '%.1f' | format(s[0][0]) }} °C{% else %}Sıcaklık verisi yok{% endif %}
+        En sıcak **{{ s[-1][1] }}** {{ '%.1f' | format(s[-1][0]) }} °C · en soğuk **{{ s[0][1] }}** {{ '%.1f' | format(s[0][0]) }} °C{% endif %}{% else %}Sıcaklık verisi yok{% endif %}
       grid_options:
         columns: full
     - type: tile

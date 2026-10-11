@@ -69,7 +69,21 @@ hero["tap_action"] = {"action": "more-info", "entity": "weather.forecast_home"}
 saat = hero["custom_fields"]["saat"]["card"]
 for k in ("timezone", "time_format", "date_format", "show_seconds"):
     saat.pop(k, None)
-saat_mod = saat.pop("card_mod")
+saat.pop("card_mod")
+# The card's own adopted styles win over card-mod at equal specificity: !important needed.
+saat_mod = {"style": (
+    "ha-card {\n"
+    "  background: none !important;\n"
+    "  box-shadow: none !important;\n"
+    "  border: none !important;\n"
+    "  color: #fff !important;\n"
+    "  text-align: left !important;\n"
+    "  padding: 0 !important;\n"
+    "}\n"
+    ".first-line { font-size: 64px !important; font-weight: 200 !important;"
+    " letter-spacing: -2px; line-height: 1 !important; }\n"
+    ".second-line { font-size: 14px !important; opacity: 0.8; }\n"
+)}
 saat.update({"locale": "tr", "timeZone": "Europe/Istanbul", "timeFormat": "HH:mm",
              "dateFormat": "cccc, d LLLL", "card_mod": saat_mod})
 log.append("hero: kisi var, tap->weather more-info, nested clock keys fixed")
@@ -90,9 +104,10 @@ md["content"] = (
     "{% for e, ad in odalar.items() if states(e) | is_number %}"
     "{% set ns.v = ns.v + [(states(e) | float, ad)] %}{% endfor %}\n"
     "{% if ns.v %}{% set s = ns.v | sort %}{% set ort = (s | map(attribute=0) | sum) / (s | count) %}"
-    "<ha-icon icon=\"mdi:home-thermometer\"></ha-icon> **İç ortalama {{ '%.1f' | format(ort) }} °C**\n\n"
+    "<ha-icon icon=\"mdi:home-thermometer\"></ha-icon> **İç ortalama {{ '%.1f' | format(ort) }} °C**"
+    "{% if s | count > 1 %}\n\n"
     "En sıcak **{{ s[-1][1] }}** {{ '%.1f' | format(s[-1][0]) }} °C · "
-    "en soğuk **{{ s[0][1] }}** {{ '%.1f' | format(s[0][0]) }} °C"
+    "en soğuk **{{ s[0][1] }}** {{ '%.1f' | format(s[0][0]) }} °C{% endif %}"
     "{% else %}Sıcaklık verisi yok{% endif %}\n"
 )
 log.append("home: temperature summary rewritten (dead variables removed, no giant H1)")
@@ -168,7 +183,7 @@ fan = "fan.zhimi_sg_918358888_meb1_s_2_air_purifier"
 before = len(kor)
 kor[:] = [c for c in kor
           if not (c["type"] == "custom:mushroom-fan-card" and c.get("entity") == fan)
-          and not (c["type"] == "tile" and "pm2_5" in c.get("entity", "") + c.get("entity", "") and "features" not in c)
+          and not (c["type"] == "tile" and "pm2_5" in c.get("entity", "") and "features" not in c)
           and not (c["type"] == "tile" and "filter_life" in c.get("entity", "") and "features" not in c)]
 for c in kor:
     if "pm2_5" in c.get("entity", ""):
