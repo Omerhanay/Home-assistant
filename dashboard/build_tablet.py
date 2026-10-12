@@ -3,9 +3,11 @@
 
 Source: home-dashboard.yaml (phone dashboard, v7.3). Output: tablet-dashboard.yaml
 Same cards and entities, re-arranged into exactly three columns so the home page fits
-one landscape screen without scrolling; room pages use the full tablet width.
+one landscape screen without scrolling; room pages span three columns (full width).
+Needs the HA sidebar collapsed on the tablet: with it open (256px) only 2 columns fit.
 """
 import copy
+import re
 from pathlib import Path
 
 import yaml
@@ -38,7 +40,16 @@ saat = hero["custom_fields"]["saat"]["card"]
 saat["card_mod"]["style"] = saat["card_mod"]["style"].replace("font-size: 64px", "font-size: 76px")
 alerts = [c for c in s_status if c["type"] not in ("heading", "markdown")]
 summary = next(c for c in s_status if c["type"] == "markdown")
-col1 = [hero] + alerts + [summary]
+# The view badge would cost a whole row of height; the person goes into column 1's spare space.
+person = {
+    "type": "tile",
+    "entity": "person.omer",
+    "name": "Ömer",
+    "show_entity_picture": True,
+    "state_content": ["state", "last_changed"],
+    "grid_options": {"columns": "full"},
+}
+col1 = [hero] + alerts + [summary, person]
 
 # ---- column 2: scenarios + the three devices people reach for from the wall
 devices = [
@@ -76,6 +87,8 @@ for c in s_rooms[1:]:
     c["secondary"] = (c["secondary"]
                       .replace("' °C · '", "'° · '")
                       .replace("'Işıklar kapalı'", "'Işık kapalı'"))
+    # one decimal: a sensor reporting 21.37 shows 21.4
+    c["secondary"] = re.sub(r"states\('(sensor\.[a-z0-9_]+)'\) ~", r"(states('\1') | float(0) | round(1)) ~", c["secondary"])
 popup = s_heat.pop()
 assert popup.get("card_type") == "pop-up"
 col3 = s_rooms + s_heat + [popup]
@@ -86,17 +99,23 @@ tablet_home = {
     "icon": "mdi:tablet-dashboard",
     "type": "sections",
     "max_columns": 3,
-    "badges": copy.deepcopy(home.get("badges", [])),
+    "badges": [],
     "sections": [{"type": "grid", "cards": col} for col in (col1, col2, col3)],
 }
 
-# ---- room pages: one section spanning the whole tablet width
+# ---- room pages: one section spanning 3 columns (36 grid columns), numeric widths x1.5
+# so cards keep the same proportions (6 -> 9 = quarter, 12 -> 18 = half).
 tablet_rooms = []
 for v in rooms:
     v = copy.deepcopy(v)
     v["back_path"] = TABLET + "ana-sayfa"
-    v["max_columns"] = 2
-    v["sections"][0]["column_span"] = 2
+    v["max_columns"] = 3
+    sec = v["sections"][0]
+    sec["column_span"] = 3
+    for c in sec["cards"]:
+        go = c.get("grid_options", {})
+        if isinstance(go.get("columns"), int):
+            go["columns"] = go["columns"] * 3 // 2
     tablet_rooms.append(v)
 
 out = {"views": [tablet_home] + tablet_rooms}
