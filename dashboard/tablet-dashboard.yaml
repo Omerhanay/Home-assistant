@@ -637,6 +637,19 @@ views:
       grid_options:
         columns: full
     - type: tile
+      entity: sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery
+      name: Çocuk Odası sensör pili zayıf
+      icon: mdi:battery-alert-variant-outline
+      color: orange
+      tap_action:
+        action: more-info
+      visibility:
+      - condition: numeric_state
+        entity: sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery
+        below: 15
+      grid_options:
+        columns: full
+    - type: tile
       entity: vacuum.ijai_sg_1025189601_v3
       name: Robot süpürge yardım bekliyor
       icon: mdi:robot-vacuum-alert

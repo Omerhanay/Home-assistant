@@ -40,6 +40,7 @@ USER_ADDED = {
     "switch.kitaplik_led_sonoff_10021d962d_1", "input_boolean.dashboard_animasyon",
     "sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature",
     "sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity",
+    "sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery",
 }
 # Card moved to a better source; entity still referenced (offline alert).
 CARD_REPLACED = {"sensor.sonoff_a4b001d937_temperature"}  # TRV reading -> Çocuk Odası TH sensor
