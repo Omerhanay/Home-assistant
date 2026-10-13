@@ -34,6 +34,16 @@ INTENTIONALLY_DROPPED = {
     "sensor.playstation_5_total_energy",     # only fed an unused intensity variable
     "sensor.mutfak_masa_priz_total_energy",  # kWh shown as W; badge removed at user's request
 }
+# Added after the original by the user (confirmed in HA / Watchman), not invented.
+USER_ADDED = {
+    "sensor.tv_priz_power", "sensor.playstation_5_power", "sensor.mutfak_masa_priz_power",
+    "switch.kitaplik_led_sonoff_10021d962d_1", "input_boolean.dashboard_animasyon",
+    "sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature",
+    "sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity",
+}
+# Card moved to a better source; entity still referenced (offline alert).
+CARD_REPLACED = {"sensor.sonoff_a4b001d937_temperature"}  # TRV reading -> Çocuk Odası TH sensor
+GLOBAL_HELPERS = {"input_boolean.dashboard_animasyon"}  # animation switch, global by design
 TOGGLEABLE = ("light.", "switch.", "fan.", "input_boolean.", "media_player.", "climate.")
 
 errors, warnings = [], []
@@ -76,14 +86,14 @@ new_ids = set(ENTITY_RE.findall(new_text)) - SERVICES
 missing = sorted(orig_ids - new_ids - INTENTIONALLY_DROPPED)
 for e in missing:
     errors.append(f"entity lost: {e}")
-added = sorted(new_ids - orig_ids)
+added = sorted(new_ids - orig_ids - USER_ADDED)
 for e in added:
     errors.append(f"entity not in original (possible invention): {e}")
 
 # 2. every original card-level entity still has a card
 orig_cards, new_cards = cards_entities(orig), cards_entities(new)
 for e in orig_cards:
-    if e not in new_cards:
+    if e not in new_cards and e not in CARD_REPLACED:
         errors.append(f"no card for original entity: {e}")
 
 
@@ -121,7 +131,7 @@ def rules(n, path):
             errors.append(f"{path}: Mushroom v5 template card has no mushroom-shape-icon")
     blobs = style.values() if isinstance(style, dict) else [style] if style else []
     for css in blobs:
-        hard = ENTITY_RE.findall(css)
+        hard = [h for h in ENTITY_RE.findall(css) if h not in GLOBAL_HELPERS]
         if hard:
             errors.append(f"{path}: card_mod hardcodes {hard} (use config.entity)")
         if re.search(r"\d+px \d+(?:\.\d+)? rgba", css) and re.search(r"(?<![\w.-])\d+ rgba", css):
