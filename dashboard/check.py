@@ -42,6 +42,14 @@ USER_ADDED = {
     "sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature",
     "sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity",
     "sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery",
+    # battery sensors (from the user's entity export, 2026-10-13)
+    "sensor.sonoff_100235874c_battery", "sensor.sonoff_a4b001a3ce_battery",
+    "sensor.miaomiaoc_sg_blt_1_1a3no5uth4g03_t2_battery_level_p_3_1",
+    "sensor.sonoff_a4b001d938_battery", "sensor.sonoff_a4b001d93a_battery",
+    "sensor.sonoff_a4b001d937_battery", "sensor.sonoff_a4b001d936_battery",
+    "sensor.sonoff_a4b0023723_battery", "sensor.sonoff_a4b0023728_battery", "sensor.sonoff_a4b0023726_battery",
+    "sensor.sonoff_a4b0023725_battery", "sensor.sonoff_a4b0023729_battery", "sensor.sonoff_a4b002372b_battery",
+    "sensor.sonoff_a4b002414d_battery",
 }
 # Card moved to a better source; entity still referenced (offline alert).
 CARD_REPLACED = {"sensor.sonoff_a4b001d937_temperature", "switch.mutfak_masa_priz_socket_1"}  # TRV reading -> Çocuk Odası TH sensor

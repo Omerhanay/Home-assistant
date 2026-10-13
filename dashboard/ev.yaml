@@ -651,17 +651,65 @@ views:
         below: 10
       grid_options:
         columns: full
-    - type: tile
-      entity: sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery
-      name: Çocuk Odası sensör pili zayıf
-      icon: mdi:battery-alert-variant-outline
-      color: orange
+    - type: custom:mushroom-template-card
+      primary: Piller
+      secondary: |-
+        {% set p = {
+           'sensor.sonoff_100235874c_battery': 'Kapı Sensörü',
+           'sensor.sonoff_a4b001a3ce_battery': 'Hareket Sensörü',
+           'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery': 'Çocuk Odası TH',
+           'sensor.miaomiaoc_sg_blt_1_1a3no5uth4g03_t2_battery_level_p_3_1': 'Yatak Odası TH',
+           'sensor.sonoff_a4b001d938_battery': 'Salon Petek',
+           'sensor.sonoff_a4b001d93a_battery': 'Yatak Odası Petek',
+           'sensor.sonoff_a4b001d937_battery': 'Çocuk Odası Petek',
+           'sensor.sonoff_a4b001d936_battery': 'Çalışma Odası Petek',
+           'sensor.sonoff_a4b0023723_battery': 'Mutfak Lavabo',
+           'sensor.sonoff_a4b0023728_battery': 'Büyük Banyo Lavabo',
+           'sensor.sonoff_a4b0023726_battery': 'Çamaşır Makinesi',
+           'sensor.sonoff_a4b0023725_battery': 'Ebeveyn Banyo',
+           'sensor.sonoff_a4b0023729_battery': 'Ayakkabılık',
+           'sensor.sonoff_a4b002372b_battery': 'Balkon Sol',
+           'sensor.sonoff_a4b002414d_battery': 'Balkon Sağ'} %}{% set ns = namespace(l=[]) %}{% for e, ad in p.items() if states(e) | is_number %}{% set ns.l = ns.l + [(states(e) | float, ad)] %}{% endfor %}{% if ns.l %}{% set s = ns.l | sort %}{% set zayif = s | selectattr(0, 'lt', 20) | list | count %}En düşük: {{ s[0][1] }} %{{ s[0][0] | int }}{{ ' · ' ~ zayif ~ ' pil zayıf' if zayif > 0 else '' }}{% else %}Pil verisi yok{% endif %}
+      icon: |-
+        {% set p = {
+           'sensor.sonoff_100235874c_battery': 'Kapı Sensörü',
+           'sensor.sonoff_a4b001a3ce_battery': 'Hareket Sensörü',
+           'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery': 'Çocuk Odası TH',
+           'sensor.miaomiaoc_sg_blt_1_1a3no5uth4g03_t2_battery_level_p_3_1': 'Yatak Odası TH',
+           'sensor.sonoff_a4b001d938_battery': 'Salon Petek',
+           'sensor.sonoff_a4b001d93a_battery': 'Yatak Odası Petek',
+           'sensor.sonoff_a4b001d937_battery': 'Çocuk Odası Petek',
+           'sensor.sonoff_a4b001d936_battery': 'Çalışma Odası Petek',
+           'sensor.sonoff_a4b0023723_battery': 'Mutfak Lavabo',
+           'sensor.sonoff_a4b0023728_battery': 'Büyük Banyo Lavabo',
+           'sensor.sonoff_a4b0023726_battery': 'Çamaşır Makinesi',
+           'sensor.sonoff_a4b0023725_battery': 'Ebeveyn Banyo',
+           'sensor.sonoff_a4b0023729_battery': 'Ayakkabılık',
+           'sensor.sonoff_a4b002372b_battery': 'Balkon Sol',
+           'sensor.sonoff_a4b002414d_battery': 'Balkon Sağ'} %}{% set ns = namespace(l=[]) %}{% for e, ad in p.items() if states(e) | is_number %}{% set ns.l = ns.l + [(states(e) | float, ad)] %}{% endfor %}{% set m = (ns.l | sort | first | default([100]))[0] %}{{ 'mdi:battery-alert-variant-outline' if m < 20 else ('mdi:battery-medium' if m < 40 else 'mdi:battery-high') }}
+      icon_color: |-
+        {% set p = {
+           'sensor.sonoff_100235874c_battery': 'Kapı Sensörü',
+           'sensor.sonoff_a4b001a3ce_battery': 'Hareket Sensörü',
+           'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery': 'Çocuk Odası TH',
+           'sensor.miaomiaoc_sg_blt_1_1a3no5uth4g03_t2_battery_level_p_3_1': 'Yatak Odası TH',
+           'sensor.sonoff_a4b001d938_battery': 'Salon Petek',
+           'sensor.sonoff_a4b001d93a_battery': 'Yatak Odası Petek',
+           'sensor.sonoff_a4b001d937_battery': 'Çocuk Odası Petek',
+           'sensor.sonoff_a4b001d936_battery': 'Çalışma Odası Petek',
+           'sensor.sonoff_a4b0023723_battery': 'Mutfak Lavabo',
+           'sensor.sonoff_a4b0023728_battery': 'Büyük Banyo Lavabo',
+           'sensor.sonoff_a4b0023726_battery': 'Çamaşır Makinesi',
+           'sensor.sonoff_a4b0023725_battery': 'Ebeveyn Banyo',
+           'sensor.sonoff_a4b0023729_battery': 'Ayakkabılık',
+           'sensor.sonoff_a4b002372b_battery': 'Balkon Sol',
+           'sensor.sonoff_a4b002414d_battery': 'Balkon Sağ'} %}{% set ns = namespace(l=[]) %}{% for e, ad in p.items() if states(e) | is_number %}{% set ns.l = ns.l + [(states(e) | float, ad)] %}{% endfor %}{% if not ns.l %}grey{% else %}{% set m = (ns.l | sort | first)[0] %}{{ 'red' if m < 20 else ('orange' if m < 40 else 'green') }}{% endif %}
       tap_action:
-        action: more-info
-      visibility:
-      - condition: numeric_state
-        entity: sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery
-        below: 15
+        action: navigate
+        navigation_path: /dashboard-ev/piller
+      icon_tap_action:
+        action: navigate
+        navigation_path: /dashboard-ev/piller
       grid_options:
         columns: full
     - type: markdown
@@ -2539,3 +2587,206 @@ views:
               100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }
             }
             @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+- title: Piller
+  path: piller
+  icon: mdi:battery-heart-variant
+  subview: true
+  back_path: /dashboard-ev/ana-sayfa
+  type: sections
+  max_columns: 2
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Piller
+      heading_style: title
+      icon: mdi:battery-heart-variant
+    - type: heading
+      heading: Sensörler
+      heading_style: subtitle
+    - type: tile
+      entity: sensor.sonoff_100235874c_battery
+      name: Kapı Sensörü
+      tap_action:
+        action: more-info
+      features:
+      - type: bar-gauge
+        min: 0
+        max: 100
+      features_position: inline
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.sonoff_a4b001a3ce_battery
+      name: Hareket Sensörü
+      tap_action:
+        action: more-info
+      features:
+      - type: bar-gauge
+        min: 0
+        max: 100
+      features_position: inline
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery
+      name: Çocuk Odası TH
+      tap_action:
+        action: more-info
+      features:
+      - type: bar-gauge
+        min: 0
+        max: 100
+      features_position: inline
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.miaomiaoc_sg_blt_1_1a3no5uth4g03_t2_battery_level_p_3_1
+      name: Yatak Odası TH
+      tap_action:
+        action: more-info
+      features:
+      - type: bar-gauge
+        min: 0
+        max: 100
+      features_position: inline
+      grid_options:
+        columns: 6
+    - type: heading
+      heading: Petekler
+      heading_style: subtitle
+    - type: tile
+      entity: sensor.sonoff_a4b001d938_battery
+      name: Salon Petek
+      tap_action:
+        action: more-info
+      features:
+      - type: bar-gauge
+        min: 0
+        max: 100
+      features_position: inline
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.sonoff_a4b001d93a_battery
+      name: Yatak Odası Petek
+      tap_action:
+        action: more-info
+      features:
+      - type: bar-gauge
+        min: 0
+        max: 100
+      features_position: inline
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.sonoff_a4b001d937_battery
+      name: Çocuk Odası Petek
+      tap_action:
+        action: more-info
+      features:
+      - type: bar-gauge
+        min: 0
+        max: 100
+      features_position: inline
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.sonoff_a4b001d936_battery
+      name: Çalışma Odası Petek
+      tap_action:
+        action: more-info
+      features:
+      - type: bar-gauge
+        min: 0
+        max: 100
+      features_position: inline
+      grid_options:
+        columns: 6
+    - type: heading
+      heading: Su kaçağı sensörleri
+      heading_style: subtitle
+    - type: tile
+      entity: sensor.sonoff_a4b0023723_battery
+      name: Mutfak Lavabo
+      tap_action:
+        action: more-info
+      features:
+      - type: bar-gauge
+        min: 0
+        max: 100
+      features_position: inline
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.sonoff_a4b0023728_battery
+      name: Büyük Banyo Lavabo
+      tap_action:
+        action: more-info
+      features:
+      - type: bar-gauge
+        min: 0
+        max: 100
+      features_position: inline
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.sonoff_a4b0023726_battery
+      name: Çamaşır Makinesi
+      tap_action:
+        action: more-info
+      features:
+      - type: bar-gauge
+        min: 0
+        max: 100
+      features_position: inline
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.sonoff_a4b0023725_battery
+      name: Ebeveyn Banyo
+      tap_action:
+        action: more-info
+      features:
+      - type: bar-gauge
+        min: 0
+        max: 100
+      features_position: inline
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.sonoff_a4b0023729_battery
+      name: Ayakkabılık
+      tap_action:
+        action: more-info
+      features:
+      - type: bar-gauge
+        min: 0
+        max: 100
+      features_position: inline
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.sonoff_a4b002372b_battery
+      name: Balkon Sol
+      tap_action:
+        action: more-info
+      features:
+      - type: bar-gauge
+        min: 0
+        max: 100
+      features_position: inline
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.sonoff_a4b002414d_battery
+      name: Balkon Sağ
+      tap_action:
+        action: more-info
+      features:
+      - type: bar-gauge
+        min: 0
+        max: 100
+      features_position: inline
+      grid_options:
+        columns: 6
