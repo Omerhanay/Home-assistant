@@ -34,6 +34,8 @@ views:
         kapi: binary_sensor.sonoff_100235874c
         isiklar:
         - light.calisma_odasi_lamba
+        - switch.calisma_odasi_kapi_priz
+        - switch.kitaplik_led_sonoff_10021d962d_1
         - light.koridor_mutfak
         - light.koridor_kapi
         - light.mutfak_tavan_aydinlatma
@@ -68,6 +70,8 @@ views:
       - binary_sensor.sonoff_100235874c
       - input_boolean.dashboard_animasyon
       - light.calisma_odasi_lamba
+      - switch.calisma_odasi_kapi_priz
+      - switch.kitaplik_led_sonoff_10021d962d_1
       - light.koridor_mutfak
       - light.koridor_kapi
       - light.mutfak_tavan_aydinlatma
@@ -1127,9 +1131,9 @@ views:
           }
     - type: custom:mushroom-template-card
       primary: Çalışma Odası
-      secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.sonoff_a4b001d936_temperature'') ~ '' °C · '' if has_value(''sensor.sonoff_a4b001d936_temperature'') else '''' }}{% set n = expand([''light.calisma_odasi_lamba'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.sonoff_a4b001d936_temperature'') ~ '' °C · '' if has_value(''sensor.sonoff_a4b001d936_temperature'') else '''' }}{% set n = expand([''light.calisma_odasi_lamba'', ''switch.calisma_odasi_kapi_priz'', ''switch.kitaplik_led_sonoff_10021d962d_1'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
       icon: mdi:monitor-dashboard
-      icon_color: '{% if false %}red{% elif (expand([''light.calisma_odasi_lamba'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      icon_color: '{% if false %}red{% elif (expand([''light.calisma_odasi_lamba'', ''switch.calisma_odasi_kapi_priz'', ''switch.kitaplik_led_sonoff_10021d962d_1'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
       tap_action:
         action: navigate
         navigation_path: /dashboard-ev/calisma-odasi
