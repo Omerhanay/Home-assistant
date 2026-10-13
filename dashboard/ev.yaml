@@ -934,6 +934,32 @@ views:
         navigation_path: /dashboard-ev/salon
       grid_options:
         columns: 6
+      card_mod:
+        style: |
+          ha-tile-info {
+            container-type: inline-size;
+            overflow: hidden;
+          }
+          span[slot="secondary"] {
+          {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+            display: block !important;
+            width: max-content !important;
+            max-width: none !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+            animation: oda-kayan 12s ease-in-out infinite;
+          {% else %}
+            white-space: normal !important;
+          {% endif %}
+          }
+          @keyframes oda-kayan {
+            0%, 15% { transform: translateX(0); }
+            45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+            90%, 100% { transform: translateX(0); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            span[slot="secondary"] { animation: none !important; white-space: normal !important; }
+          }
     - type: custom:mushroom-template-card
       primary: Mutfak
       secondary: '{% if is_state(''binary_sensor.sonoff_a4b0023723_moisture'', ''on'') %}Su kaçağı!{% else %}{% set n = expand([''light.mutfak_tavan_aydinlatma'', ''light.mutfak_uzun_led_aydinlatma'', ''light.mutfak_kahve_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
@@ -947,6 +973,32 @@ views:
         navigation_path: /dashboard-ev/mutfak
       grid_options:
         columns: 6
+      card_mod:
+        style: |
+          ha-tile-info {
+            container-type: inline-size;
+            overflow: hidden;
+          }
+          span[slot="secondary"] {
+          {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+            display: block !important;
+            width: max-content !important;
+            max-width: none !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+            animation: oda-kayan 12s ease-in-out infinite;
+          {% else %}
+            white-space: normal !important;
+          {% endif %}
+          }
+          @keyframes oda-kayan {
+            0%, 15% { transform: translateX(0); }
+            45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+            90%, 100% { transform: translateX(0); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            span[slot="secondary"] { animation: none !important; white-space: normal !important; }
+          }
     - type: custom:mushroom-template-card
       primary: Yatak Odası
       secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.sonoff_a4b001d93a_temperature'') ~ '' °C · '' if has_value(''sensor.sonoff_a4b001d93a_temperature'') else '''' }}{% set n = expand([''light.yatak_odasi_tavan'', ''light.yatak_odasi_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
@@ -960,6 +1012,32 @@ views:
         navigation_path: /dashboard-ev/yatak-odasi
       grid_options:
         columns: 6
+      card_mod:
+        style: |
+          ha-tile-info {
+            container-type: inline-size;
+            overflow: hidden;
+          }
+          span[slot="secondary"] {
+          {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+            display: block !important;
+            width: max-content !important;
+            max-width: none !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+            animation: oda-kayan 12s ease-in-out infinite;
+          {% else %}
+            white-space: normal !important;
+          {% endif %}
+          }
+          @keyframes oda-kayan {
+            0%, 15% { transform: translateX(0); }
+            45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+            90%, 100% { transform: translateX(0); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            span[slot="secondary"] { animation: none !important; white-space: normal !important; }
+          }
     - type: custom:mushroom-template-card
       primary: Çocuk Odası
       secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'') ~ '' °C · '' if has_value(''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'') else '''' }}{{ ''%'' ~ (states(''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'') | float(0) | round | int) ~ '' · '' if has_value(''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'') else '''' }}{% set n = expand([''light.cocuk_odasi_lamba'', ''light.sonoff_10024a8007'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
@@ -973,6 +1051,32 @@ views:
         navigation_path: /dashboard-ev/cocuk-odasi
       grid_options:
         columns: 6
+      card_mod:
+        style: |
+          ha-tile-info {
+            container-type: inline-size;
+            overflow: hidden;
+          }
+          span[slot="secondary"] {
+          {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+            display: block !important;
+            width: max-content !important;
+            max-width: none !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+            animation: oda-kayan 12s ease-in-out infinite;
+          {% else %}
+            white-space: normal !important;
+          {% endif %}
+          }
+          @keyframes oda-kayan {
+            0%, 15% { transform: translateX(0); }
+            45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+            90%, 100% { transform: translateX(0); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            span[slot="secondary"] { animation: none !important; white-space: normal !important; }
+          }
     - type: custom:mushroom-template-card
       primary: Çalışma Odası
       secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.sonoff_a4b001d936_temperature'') ~ '' °C · '' if has_value(''sensor.sonoff_a4b001d936_temperature'') else '''' }}{% set n = expand([''light.calisma_odasi_lamba'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
@@ -986,6 +1090,32 @@ views:
         navigation_path: /dashboard-ev/calisma-odasi
       grid_options:
         columns: 6
+      card_mod:
+        style: |
+          ha-tile-info {
+            container-type: inline-size;
+            overflow: hidden;
+          }
+          span[slot="secondary"] {
+          {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+            display: block !important;
+            width: max-content !important;
+            max-width: none !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+            animation: oda-kayan 12s ease-in-out infinite;
+          {% else %}
+            white-space: normal !important;
+          {% endif %}
+          }
+          @keyframes oda-kayan {
+            0%, 15% { transform: translateX(0); }
+            45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+            90%, 100% { transform: translateX(0); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            span[slot="secondary"] { animation: none !important; white-space: normal !important; }
+          }
     - type: custom:mushroom-template-card
       primary: Koridor
       secondary: '{% if is_state(''binary_sensor.sonoff_a4b0023729_moisture'', ''on'') %}Su kaçağı!{% else %}{% set n = expand([''light.koridor_mutfak'', ''light.koridor_kapi'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
@@ -999,6 +1129,32 @@ views:
         navigation_path: /dashboard-ev/koridor
       grid_options:
         columns: 6
+      card_mod:
+        style: |
+          ha-tile-info {
+            container-type: inline-size;
+            overflow: hidden;
+          }
+          span[slot="secondary"] {
+          {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+            display: block !important;
+            width: max-content !important;
+            max-width: none !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+            animation: oda-kayan 12s ease-in-out infinite;
+          {% else %}
+            white-space: normal !important;
+          {% endif %}
+          }
+          @keyframes oda-kayan {
+            0%, 15% { transform: translateX(0); }
+            45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+            90%, 100% { transform: translateX(0); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            span[slot="secondary"] { animation: none !important; white-space: normal !important; }
+          }
     - type: custom:mushroom-template-card
       primary: Büyük Banyo
       secondary: '{% if is_state(''binary_sensor.sonoff_a4b0023728_moisture'', ''on'') or is_state(''binary_sensor.sonoff_a4b0023726_moisture'', ''on'') %}Su kaçağı!{% else %}{% set n = expand([''light.buyuk_banyo_lamba'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
@@ -1012,6 +1168,32 @@ views:
         navigation_path: /dashboard-ev/buyuk-banyo
       grid_options:
         columns: 6
+      card_mod:
+        style: |
+          ha-tile-info {
+            container-type: inline-size;
+            overflow: hidden;
+          }
+          span[slot="secondary"] {
+          {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+            display: block !important;
+            width: max-content !important;
+            max-width: none !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+            animation: oda-kayan 12s ease-in-out infinite;
+          {% else %}
+            white-space: normal !important;
+          {% endif %}
+          }
+          @keyframes oda-kayan {
+            0%, 15% { transform: translateX(0); }
+            45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+            90%, 100% { transform: translateX(0); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            span[slot="secondary"] { animation: none !important; white-space: normal !important; }
+          }
     - type: custom:mushroom-template-card
       primary: Ebeveyn Banyo
       secondary: '{% if is_state(''binary_sensor.sonoff_a4b0023725_moisture'', ''on'') %}Su kaçağı!{% else %}{% set n = expand([''light.ebeveyn_banyo_aydinlatma'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
@@ -1025,6 +1207,32 @@ views:
         navigation_path: /dashboard-ev/ebeveyn-banyo
       grid_options:
         columns: 6
+      card_mod:
+        style: |
+          ha-tile-info {
+            container-type: inline-size;
+            overflow: hidden;
+          }
+          span[slot="secondary"] {
+          {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+            display: block !important;
+            width: max-content !important;
+            max-width: none !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+            animation: oda-kayan 12s ease-in-out infinite;
+          {% else %}
+            white-space: normal !important;
+          {% endif %}
+          }
+          @keyframes oda-kayan {
+            0%, 15% { transform: translateX(0); }
+            45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+            90%, 100% { transform: translateX(0); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            span[slot="secondary"] { animation: none !important; white-space: normal !important; }
+          }
     - type: custom:mushroom-template-card
       primary: Balkon
       secondary: '{% if is_state(''binary_sensor.sonoff_a4b002372b_moisture'', ''on'') or is_state(''binary_sensor.sonoff_a4b002414d_moisture'', ''on'') %}Su kaçağı!{% else %}{% set n = expand([''light.balkon_tavan_aydinlatma'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
@@ -1038,6 +1246,32 @@ views:
         navigation_path: /dashboard-ev/balkon
       grid_options:
         columns: full
+      card_mod:
+        style: |
+          ha-tile-info {
+            container-type: inline-size;
+            overflow: hidden;
+          }
+          span[slot="secondary"] {
+          {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+            display: block !important;
+            width: max-content !important;
+            max-width: none !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+            animation: oda-kayan 12s ease-in-out infinite;
+          {% else %}
+            white-space: normal !important;
+          {% endif %}
+          }
+          @keyframes oda-kayan {
+            0%, 15% { transform: translateX(0); }
+            45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+            90%, 100% { transform: translateX(0); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            span[slot="secondary"] { animation: none !important; white-space: normal !important; }
+          }
   - type: grid
     cards:
     - type: heading
