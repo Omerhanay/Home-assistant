@@ -1634,7 +1634,7 @@ views:
       grid_options:
         columns: 9
     - type: custom:mushroom-template-card
-      entity: switch.mutfak_masa_priz_socket_1
+      entity: switch.mutfak_masa_priz
       primary: Masa Priz
       secondary: '{{ state_translated(entity) }}{% if is_state(entity, ''on'') and has_value(''sensor.mutfak_masa_priz_power'') %} · {{ states(''sensor.mutfak_masa_priz_power'') | float(0) | round(0) | int }} W{% endif %}'
       icon: mdi:power-socket-eu
@@ -1649,7 +1649,7 @@ views:
         action: none
       visibility:
       - condition: state
-        entity: switch.mutfak_masa_priz_socket_1
+        entity: switch.mutfak_masa_priz
         state_not:
         - unavailable
         - unknown

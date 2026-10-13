@@ -112,7 +112,7 @@ varlığa tıklayın → ⚙️ → **Varlık kimliği** alanı.
 | `light.mutfak_tavan_aydinlatma` | Mutfak · Tavan Lamba |
 | `light.mutfak_uzun_led_aydinlatma` | Mutfak · Uzun LED |
 | `light.mutfak_kahve_led` | Mutfak · Kahve LED |
-| `switch.mutfak_masa_priz_socket_1` | Mutfak · Masa prizi (arızalı cihaz — gelmezse sorun değil, kart gizlenir) |
+| `switch.mutfak_masa_priz` | Mutfak · Masa prizi (arızalı cihaz — gelmezse sorun değil, kart gizlenir) |
 | `sensor.mutfak_masa_priz_power` | Mutfak · Masa prizinin güç sensörü |
 | `light.koridor_kapi` | Koridor · Kapı tarafı lamba |
 | `light.koridor_mutfak` | Koridor · Mutfak tarafı lamba |
