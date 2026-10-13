@@ -42,6 +42,11 @@ USER_ADDED = {
     "sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature",
     "sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity",
     "sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery",
+    # TRV child lock / open-window switches (petek chips)
+    "switch.sonoff_a4b001d938_child_lock", "switch.sonoff_a4b001d938_window_switch",
+    "switch.sonoff_a4b001d93a_child_lock", "switch.sonoff_a4b001d93a_window_switch",
+    "switch.sonoff_a4b001d937_child_lock", "switch.sonoff_a4b001d937_window_switch",
+    "switch.sonoff_a4b001d936_child_lock", "switch.sonoff_a4b001d936_window_switch",
     # battery sensors (from the user's entity export, 2026-10-13)
     "sensor.sonoff_100235874c_battery", "sensor.sonoff_a4b001a3ce_battery",
     "sensor.miaomiaoc_sg_blt_1_1a3no5uth4g03_t2_battery_level_p_3_1",

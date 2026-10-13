@@ -1493,23 +1493,71 @@ views:
         action: more-info
       grid_options:
         columns: full
-    - type: tile
-      entity: climate.sonoff_a4b001d938
-      name: Petek
-      state_content:
-      - hvac_action
-      - current_temperature
-      features:
-      - type: target-temperature
-      - type: climate-hvac-modes
-        hvac_modes:
-        - heat
-        - auto
-        - 'off'
-        style: icons
-      features_position: bottom
+    - type: custom:vertical-stack-in-card
       grid_options:
         columns: full
+      cards:
+      - type: tile
+        entity: climate.sonoff_a4b001d938
+        name: Petek
+        state_content:
+        - hvac_action
+        - current_temperature
+        features:
+        - type: target-temperature
+        - type: climate-hvac-modes
+          hvac_modes:
+          - heat
+          - auto
+          - 'off'
+          style: icons
+        features_position: bottom
+      - type: custom:mushroom-chips-card
+        alignment: end
+        chips:
+        - type: template
+          entity: switch.sonoff_a4b001d938_child_lock
+          icon: '{{ ''mdi:lock'' if is_state(entity, ''on'') else ''mdi:lock-open-variant-outline'' }}'
+          icon_color: '{{ ''amber'' if is_state(entity, ''on'') else ''disabled'' }}'
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+        - type: template
+          entity: switch.sonoff_a4b001d938_window_switch
+          icon: '{{ ''mdi:window-open-variant'' if is_state(entity, ''on'') else ''mdi:window-closed-variant'' }}'
+          icon_color: '{{ ''light-blue'' if is_state(entity, ''on'') else ''disabled'' }}'
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+        card_mod:
+          style: |
+            ha-card {
+              position: absolute;
+              top: 10px;
+              right: 10px;
+              width: max-content;
+              background: none !important;
+              border: none !important;
+              box-shadow: none !important;
+              pointer-events: none;
+              z-index: 10;
+              --chip-background: rgba(255, 255, 255, 0.05);
+              --chip-box-shadow: none;
+              --chip-border-width: 0px;
+              --chip-spacing: 6px;
+              --chip-height: 36px;
+              --chip-icon-size: 20px;
+            }
+            mushroom-template-chip {
+              pointer-events: auto;
+            }
+      card_mod:
+        style: |
+          ha-card {
+            position: relative;
+          }
     - type: custom:mushroom-media-player-card
       entity: media_player.samsung_7_series_43_ue43ru7100uxtk
       name: Samsung TV
@@ -1788,23 +1836,71 @@ views:
               box-shadow: 0 0 16px -2px var(--icon-color) !important;
               {% endif %}
             }
-    - type: tile
-      entity: climate.sonoff_a4b001d93a
-      name: Petek
-      state_content:
-      - hvac_action
-      - current_temperature
-      features:
-      - type: target-temperature
-      - type: climate-hvac-modes
-        hvac_modes:
-        - heat
-        - auto
-        - 'off'
-        style: icons
-      features_position: bottom
+    - type: custom:vertical-stack-in-card
       grid_options:
         columns: full
+      cards:
+      - type: tile
+        entity: climate.sonoff_a4b001d93a
+        name: Petek
+        state_content:
+        - hvac_action
+        - current_temperature
+        features:
+        - type: target-temperature
+        - type: climate-hvac-modes
+          hvac_modes:
+          - heat
+          - auto
+          - 'off'
+          style: icons
+        features_position: bottom
+      - type: custom:mushroom-chips-card
+        alignment: end
+        chips:
+        - type: template
+          entity: switch.sonoff_a4b001d93a_child_lock
+          icon: '{{ ''mdi:lock'' if is_state(entity, ''on'') else ''mdi:lock-open-variant-outline'' }}'
+          icon_color: '{{ ''amber'' if is_state(entity, ''on'') else ''disabled'' }}'
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+        - type: template
+          entity: switch.sonoff_a4b001d93a_window_switch
+          icon: '{{ ''mdi:window-open-variant'' if is_state(entity, ''on'') else ''mdi:window-closed-variant'' }}'
+          icon_color: '{{ ''light-blue'' if is_state(entity, ''on'') else ''disabled'' }}'
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+        card_mod:
+          style: |
+            ha-card {
+              position: absolute;
+              top: 10px;
+              right: 10px;
+              width: max-content;
+              background: none !important;
+              border: none !important;
+              box-shadow: none !important;
+              pointer-events: none;
+              z-index: 10;
+              --chip-background: rgba(255, 255, 255, 0.05);
+              --chip-box-shadow: none;
+              --chip-border-width: 0px;
+              --chip-spacing: 6px;
+              --chip-height: 36px;
+              --chip-icon-size: 20px;
+            }
+            mushroom-template-chip {
+              pointer-events: auto;
+            }
+      card_mod:
+        style: |
+          ha-card {
+            position: relative;
+          }
     - type: tile
       grid_options:
         columns: 12
@@ -1899,23 +1995,71 @@ views:
         action: more-info
       grid_options:
         columns: full
-    - type: tile
-      entity: climate.sonoff_a4b001d937
-      name: Petek
-      state_content:
-      - hvac_action
-      - current_temperature
-      features:
-      - type: target-temperature
-      - type: climate-hvac-modes
-        hvac_modes:
-        - heat
-        - auto
-        - 'off'
-        style: icons
-      features_position: bottom
+    - type: custom:vertical-stack-in-card
       grid_options:
         columns: full
+      cards:
+      - type: tile
+        entity: climate.sonoff_a4b001d937
+        name: Petek
+        state_content:
+        - hvac_action
+        - current_temperature
+        features:
+        - type: target-temperature
+        - type: climate-hvac-modes
+          hvac_modes:
+          - heat
+          - auto
+          - 'off'
+          style: icons
+        features_position: bottom
+      - type: custom:mushroom-chips-card
+        alignment: end
+        chips:
+        - type: template
+          entity: switch.sonoff_a4b001d937_child_lock
+          icon: '{{ ''mdi:lock'' if is_state(entity, ''on'') else ''mdi:lock-open-variant-outline'' }}'
+          icon_color: '{{ ''amber'' if is_state(entity, ''on'') else ''disabled'' }}'
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+        - type: template
+          entity: switch.sonoff_a4b001d937_window_switch
+          icon: '{{ ''mdi:window-open-variant'' if is_state(entity, ''on'') else ''mdi:window-closed-variant'' }}'
+          icon_color: '{{ ''light-blue'' if is_state(entity, ''on'') else ''disabled'' }}'
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+        card_mod:
+          style: |
+            ha-card {
+              position: absolute;
+              top: 10px;
+              right: 10px;
+              width: max-content;
+              background: none !important;
+              border: none !important;
+              box-shadow: none !important;
+              pointer-events: none;
+              z-index: 10;
+              --chip-background: rgba(255, 255, 255, 0.05);
+              --chip-box-shadow: none;
+              --chip-border-width: 0px;
+              --chip-spacing: 6px;
+              --chip-height: 36px;
+              --chip-icon-size: 20px;
+            }
+            mushroom-template-chip {
+              pointer-events: auto;
+            }
+      card_mod:
+        style: |
+          ha-card {
+            position: relative;
+          }
     - type: tile
       grid_options:
         columns: 6
@@ -2024,23 +2168,71 @@ views:
               box-shadow: 0 0 16px -2px var(--icon-color) !important;
               {% endif %}
             }
-    - type: tile
-      entity: climate.sonoff_a4b001d936
-      name: Petek
-      state_content:
-      - hvac_action
-      - current_temperature
-      features:
-      - type: target-temperature
-      - type: climate-hvac-modes
-        hvac_modes:
-        - heat
-        - auto
-        - 'off'
-        style: icons
-      features_position: bottom
+    - type: custom:vertical-stack-in-card
       grid_options:
         columns: full
+      cards:
+      - type: tile
+        entity: climate.sonoff_a4b001d936
+        name: Petek
+        state_content:
+        - hvac_action
+        - current_temperature
+        features:
+        - type: target-temperature
+        - type: climate-hvac-modes
+          hvac_modes:
+          - heat
+          - auto
+          - 'off'
+          style: icons
+        features_position: bottom
+      - type: custom:mushroom-chips-card
+        alignment: end
+        chips:
+        - type: template
+          entity: switch.sonoff_a4b001d936_child_lock
+          icon: '{{ ''mdi:lock'' if is_state(entity, ''on'') else ''mdi:lock-open-variant-outline'' }}'
+          icon_color: '{{ ''amber'' if is_state(entity, ''on'') else ''disabled'' }}'
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+        - type: template
+          entity: switch.sonoff_a4b001d936_window_switch
+          icon: '{{ ''mdi:window-open-variant'' if is_state(entity, ''on'') else ''mdi:window-closed-variant'' }}'
+          icon_color: '{{ ''light-blue'' if is_state(entity, ''on'') else ''disabled'' }}'
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+        card_mod:
+          style: |
+            ha-card {
+              position: absolute;
+              top: 10px;
+              right: 10px;
+              width: max-content;
+              background: none !important;
+              border: none !important;
+              box-shadow: none !important;
+              pointer-events: none;
+              z-index: 10;
+              --chip-background: rgba(255, 255, 255, 0.05);
+              --chip-box-shadow: none;
+              --chip-border-width: 0px;
+              --chip-spacing: 6px;
+              --chip-height: 36px;
+              --chip-icon-size: 20px;
+            }
+            mushroom-template-chip {
+              pointer-events: auto;
+            }
+      card_mod:
+        style: |
+          ha-card {
+            position: relative;
+          }
     - type: tile
       entity: sensor.sonoff_a4b001d936_temperature
       name: Sıcaklık
