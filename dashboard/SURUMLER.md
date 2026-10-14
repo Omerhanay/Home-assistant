@@ -4,6 +4,11 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v03 — 2026-10-14
+
+- Koridor, hava temizleyici: **plazma** simgesi şimşekten virüse değişti
+  (`mdi:virus` / `mdi:virus-outline`), kullanıcının telefonda yaptığı düzenleme dosyaya işlendi.
+
 ## 0v02 — 2026-10-14
 
 - Koridor: hava temizleyici kartının sağ üstüne **plazma**, **UV** ve **tuş kilidi** simgeleri eklendi

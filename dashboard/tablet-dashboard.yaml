@@ -1,4 +1,4 @@
-# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v02 · 2026-10-14 · bkz. SURUMLER.md
+# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v03 · 2026-10-14 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -2487,7 +2487,7 @@ views:
         chips:
         - type: template
           entity: switch.zhimi_sg_918358888_meb1_plasma_p_2_6
-          icon: '{{ ''mdi:flash'' if is_state(entity, ''on'') else ''mdi:flash-outline'' }}'
+          icon: '{{ ''mdi:virus'' if is_state(entity, ''on'') else ''mdi:virus-outline'' }}'
           icon_color: '{{ ''cyan'' if is_state(entity, ''on'') else ''disabled'' }}'
           tap_action:
             action: toggle
