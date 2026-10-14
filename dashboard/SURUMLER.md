@@ -4,6 +4,15 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v12 — 2026-10-14
+
+- **Tüm odalar ve Piller artık Bubble Card penceresi:** Salon, Mutfak, Yatak Odası, Çalışma Odası, Koridor,
+  Büyük Banyo, Ebeveyn Banyo, Balkon ve Piller kartına dokununca alttan pencere açılır (Çocuk Odası 0v09'dan beri).
+- Pencere içindeki tüm kartlarda 0v11'deki açık zemin + ince çerçeve; yarım genişlikteki kartlar ikişerli dizildi.
+- Mutfak Masa Priz görünürlük koşulu pencerede de çalışsın diye koşullu karta (conditional) çevrildi.
+- Eski oda sayfaları ve Piller sayfası kaldırıldı (artık panelde yalnızca Ana Sayfa var).
+- Tablet: aynı pencereler; 0v08'deki Yatak Odası özel boyutu artık gereksiz (pencerede ikişerli dizilim).
+
 ## 0v11 — 2026-10-14
 
 - Çocuk Odası penceresi: kartlara hafif açık zemin ve ince açık çerçeve eklendi; siyah pencere
