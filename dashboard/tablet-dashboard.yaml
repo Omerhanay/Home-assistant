@@ -1,4 +1,4 @@
-# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v06 · 2026-10-14 · bkz. SURUMLER.md
+# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v07 · 2026-10-14 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -1378,18 +1378,13 @@ views:
         - current_temperature
         tap_action:
           action: more-info
-        card_mod:
-          style: |
-            ha-tile-info {
-              padding-inline-end: 72px;
-            }
       - type: custom:mushroom-chips-card
         alignment: end
         chips:
         - type: template
           entity: climate.sonoff_a4b001d938
           icon: mdi:thermostat
-          content: '{% if is_state(entity, ''off'') %}{{ states(''sensor.sonoff_a4b001d938_manual_target_temperature'') | float(0) | round(1) }}°{% else %}{{ state_attr(entity, ''temperature'') }}°{% endif %}'
+          content: '{% if is_state(entity, ''off'') %}{{ ''%g'' | format(states(''sensor.sonoff_a4b001d938_manual_target_temperature'') | float(0)) }}°{% else %}{{ ''%g'' | format(state_attr(entity, ''temperature'') | float(0)) }}°{% endif %}'
           icon_color: '{% if state_attr(entity, ''hvac_action'') == ''heating'' %}deep-orange{% elif is_state(entity, ''off'') %}disabled{% else %}amber{% endif %}'
           tap_action:
             action: more-info
@@ -1397,9 +1392,8 @@ views:
           style: |
             ha-card {
               position: absolute;
-              top: 50%;
-              right: 12px;
-              transform: translateY(-50%);
+              top: 8px;
+              right: 8px;
               width: max-content;
               background: none !important;
               border: none !important;
@@ -1409,9 +1403,10 @@ views:
               --chip-background: rgba(255, 255, 255, 0.06);
               --chip-box-shadow: none;
               --chip-border-width: 0px;
-              --chip-height: 32px;
-              --chip-icon-size: 18px;
-              --chip-font-size: 14px;
+              --chip-height: 22px;
+              --chip-icon-size: 13px;
+              --chip-font-size: 12px;
+              --chip-padding: 0 7px;
             }
             mushroom-template-chip {
               pointer-events: auto;
@@ -1427,24 +1422,19 @@ views:
       cards:
       - type: tile
         entity: climate.sonoff_a4b001d93a
-        name: Yatak Odası
+        name: Yatak
         state_content:
         - hvac_action
         - current_temperature
         tap_action:
           action: more-info
-        card_mod:
-          style: |
-            ha-tile-info {
-              padding-inline-end: 72px;
-            }
       - type: custom:mushroom-chips-card
         alignment: end
         chips:
         - type: template
           entity: climate.sonoff_a4b001d93a
           icon: mdi:thermostat
-          content: '{% if is_state(entity, ''off'') %}{{ states(''sensor.sonoff_a4b001d93a_manual_target_temperature'') | float(0) | round(1) }}°{% else %}{{ state_attr(entity, ''temperature'') }}°{% endif %}'
+          content: '{% if is_state(entity, ''off'') %}{{ ''%g'' | format(states(''sensor.sonoff_a4b001d93a_manual_target_temperature'') | float(0)) }}°{% else %}{{ ''%g'' | format(state_attr(entity, ''temperature'') | float(0)) }}°{% endif %}'
           icon_color: '{% if state_attr(entity, ''hvac_action'') == ''heating'' %}deep-orange{% elif is_state(entity, ''off'') %}disabled{% else %}amber{% endif %}'
           tap_action:
             action: more-info
@@ -1452,9 +1442,8 @@ views:
           style: |
             ha-card {
               position: absolute;
-              top: 50%;
-              right: 12px;
-              transform: translateY(-50%);
+              top: 8px;
+              right: 8px;
               width: max-content;
               background: none !important;
               border: none !important;
@@ -1464,9 +1453,10 @@ views:
               --chip-background: rgba(255, 255, 255, 0.06);
               --chip-box-shadow: none;
               --chip-border-width: 0px;
-              --chip-height: 32px;
-              --chip-icon-size: 18px;
-              --chip-font-size: 14px;
+              --chip-height: 22px;
+              --chip-icon-size: 13px;
+              --chip-font-size: 12px;
+              --chip-padding: 0 7px;
             }
             mushroom-template-chip {
               pointer-events: auto;
@@ -1482,24 +1472,19 @@ views:
       cards:
       - type: tile
         entity: climate.sonoff_a4b001d937
-        name: Çocuk Odası
+        name: Çocuk
         state_content:
         - hvac_action
         - current_temperature
         tap_action:
           action: more-info
-        card_mod:
-          style: |
-            ha-tile-info {
-              padding-inline-end: 72px;
-            }
       - type: custom:mushroom-chips-card
         alignment: end
         chips:
         - type: template
           entity: climate.sonoff_a4b001d937
           icon: mdi:thermostat
-          content: '{% if is_state(entity, ''off'') %}{{ states(''sensor.sonoff_a4b001d937_manual_target_temperature'') | float(0) | round(1) }}°{% else %}{{ state_attr(entity, ''temperature'') }}°{% endif %}'
+          content: '{% if is_state(entity, ''off'') %}{{ ''%g'' | format(states(''sensor.sonoff_a4b001d937_manual_target_temperature'') | float(0)) }}°{% else %}{{ ''%g'' | format(state_attr(entity, ''temperature'') | float(0)) }}°{% endif %}'
           icon_color: '{% if state_attr(entity, ''hvac_action'') == ''heating'' %}deep-orange{% elif is_state(entity, ''off'') %}disabled{% else %}amber{% endif %}'
           tap_action:
             action: more-info
@@ -1507,9 +1492,8 @@ views:
           style: |
             ha-card {
               position: absolute;
-              top: 50%;
-              right: 12px;
-              transform: translateY(-50%);
+              top: 8px;
+              right: 8px;
               width: max-content;
               background: none !important;
               border: none !important;
@@ -1519,9 +1503,10 @@ views:
               --chip-background: rgba(255, 255, 255, 0.06);
               --chip-box-shadow: none;
               --chip-border-width: 0px;
-              --chip-height: 32px;
-              --chip-icon-size: 18px;
-              --chip-font-size: 14px;
+              --chip-height: 22px;
+              --chip-icon-size: 13px;
+              --chip-font-size: 12px;
+              --chip-padding: 0 7px;
             }
             mushroom-template-chip {
               pointer-events: auto;
@@ -1537,24 +1522,19 @@ views:
       cards:
       - type: tile
         entity: climate.sonoff_a4b001d936
-        name: Çalışma Odası
+        name: Çalışma
         state_content:
         - hvac_action
         - current_temperature
         tap_action:
           action: more-info
-        card_mod:
-          style: |
-            ha-tile-info {
-              padding-inline-end: 72px;
-            }
       - type: custom:mushroom-chips-card
         alignment: end
         chips:
         - type: template
           entity: climate.sonoff_a4b001d936
           icon: mdi:thermostat
-          content: '{% if is_state(entity, ''off'') %}{{ states(''sensor.sonoff_a4b001d936_manual_target_temperature'') | float(0) | round(1) }}°{% else %}{{ state_attr(entity, ''temperature'') }}°{% endif %}'
+          content: '{% if is_state(entity, ''off'') %}{{ ''%g'' | format(states(''sensor.sonoff_a4b001d936_manual_target_temperature'') | float(0)) }}°{% else %}{{ ''%g'' | format(state_attr(entity, ''temperature'') | float(0)) }}°{% endif %}'
           icon_color: '{% if state_attr(entity, ''hvac_action'') == ''heating'' %}deep-orange{% elif is_state(entity, ''off'') %}disabled{% else %}amber{% endif %}'
           tap_action:
             action: more-info
@@ -1562,9 +1542,8 @@ views:
           style: |
             ha-card {
               position: absolute;
-              top: 50%;
-              right: 12px;
-              transform: translateY(-50%);
+              top: 8px;
+              right: 8px;
               width: max-content;
               background: none !important;
               border: none !important;
@@ -1574,9 +1553,10 @@ views:
               --chip-background: rgba(255, 255, 255, 0.06);
               --chip-box-shadow: none;
               --chip-border-width: 0px;
-              --chip-height: 32px;
-              --chip-icon-size: 18px;
-              --chip-font-size: 14px;
+              --chip-height: 22px;
+              --chip-icon-size: 13px;
+              --chip-font-size: 12px;
+              --chip-padding: 0 7px;
             }
             mushroom-template-chip {
               pointer-events: auto;
