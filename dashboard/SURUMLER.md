@@ -4,6 +4,14 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v09 — 2026-10-14 (deneme)
+
+- **Çocuk Odası artık Bubble Card penceresi:** ana sayfadaki oda kartına dokununca ayrı sayfaya geçmek yerine
+  oda alttan açılan pencerede görünür (`#cocuk-odasi`). İçerik: lamba ve gece lambası, kapı prizi,
+  petek (kilit/pencere simgeleriyle), sıcaklık ve nem grafikleri.
+- Eski Çocuk Odası sayfası dosyada duruyor (geri dönüş için); şimdilik hiçbir yerden açılmıyor.
+- Diğer odalar ayrı sayfa olarak kaldı.
+
 ## 0v08 — 2026-10-14
 
 - Tablet, Yatak Odası: **Sıcaklık** ve **Nem** grafik kartları telefondaki boyutta (kullanıcının tablette
