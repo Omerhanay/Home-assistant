@@ -4,6 +4,14 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v10 — 2026-10-14
+
+- Düzeltme: Isıtma kartlarındaki set sıcaklığı hapları (ve diğer köşe simgeleri) açılan pencerelerin
+  **üstünde görünüyordu**. Simgeler artık kendi kartının içinde kalıyor (`isolation: isolate`, z-index 2).
+- Düzeltme: petek kartları mod "Isıtma" iken **"Kapalı"** yazıyordu (termostatın vana durumu).
+  Artık petek modunu gösteriyor: Isıtma / Otomatik / Kapalı · oda sıcaklığı. Isıtıp ısıtmadığını
+  set sıcaklığı hapının rengi (turuncu) gösteriyor.
+
 ## 0v09 — 2026-10-14 (deneme)
 
 - **Çocuk Odası artık Bubble Card penceresi:** ana sayfadaki oda kartına dokununca ayrı sayfaya geçmek yerine

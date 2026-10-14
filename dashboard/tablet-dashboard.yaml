@@ -1,4 +1,4 @@
-# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v09 · 2026-10-14 · bkz. SURUMLER.md
+# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v10 · 2026-10-14 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -1374,7 +1374,7 @@ views:
         entity: climate.sonoff_a4b001d938
         name: Salon
         state_content:
-        - hvac_action
+        - state
         - current_temperature
         tap_action:
           action: more-info
@@ -1399,7 +1399,7 @@ views:
               border: none !important;
               box-shadow: none !important;
               pointer-events: none;
-              z-index: 10;
+              z-index: 2;
               --chip-background: rgba(255, 255, 255, 0.06);
               --chip-box-shadow: none;
               --chip-border-width: 0px;
@@ -1415,6 +1415,7 @@ views:
         style: |
           ha-card {
             position: relative;
+            isolation: isolate;
           }
     - type: custom:vertical-stack-in-card
       grid_options:
@@ -1424,7 +1425,7 @@ views:
         entity: climate.sonoff_a4b001d93a
         name: Yatak
         state_content:
-        - hvac_action
+        - state
         - current_temperature
         tap_action:
           action: more-info
@@ -1449,7 +1450,7 @@ views:
               border: none !important;
               box-shadow: none !important;
               pointer-events: none;
-              z-index: 10;
+              z-index: 2;
               --chip-background: rgba(255, 255, 255, 0.06);
               --chip-box-shadow: none;
               --chip-border-width: 0px;
@@ -1465,6 +1466,7 @@ views:
         style: |
           ha-card {
             position: relative;
+            isolation: isolate;
           }
     - type: custom:vertical-stack-in-card
       grid_options:
@@ -1474,7 +1476,7 @@ views:
         entity: climate.sonoff_a4b001d937
         name: Çocuk
         state_content:
-        - hvac_action
+        - state
         - current_temperature
         tap_action:
           action: more-info
@@ -1499,7 +1501,7 @@ views:
               border: none !important;
               box-shadow: none !important;
               pointer-events: none;
-              z-index: 10;
+              z-index: 2;
               --chip-background: rgba(255, 255, 255, 0.06);
               --chip-box-shadow: none;
               --chip-border-width: 0px;
@@ -1515,6 +1517,7 @@ views:
         style: |
           ha-card {
             position: relative;
+            isolation: isolate;
           }
     - type: custom:vertical-stack-in-card
       grid_options:
@@ -1524,7 +1527,7 @@ views:
         entity: climate.sonoff_a4b001d936
         name: Çalışma
         state_content:
-        - hvac_action
+        - state
         - current_temperature
         tap_action:
           action: more-info
@@ -1549,7 +1552,7 @@ views:
               border: none !important;
               box-shadow: none !important;
               pointer-events: none;
-              z-index: 10;
+              z-index: 2;
               --chip-background: rgba(255, 255, 255, 0.06);
               --chip-box-shadow: none;
               --chip-border-width: 0px;
@@ -1565,6 +1568,7 @@ views:
         style: |
           ha-card {
             position: relative;
+            isolation: isolate;
           }
     - type: custom:bubble-card
       card_type: pop-up
@@ -1645,7 +1649,7 @@ views:
           entity: climate.sonoff_a4b001d937
           name: Petek
           state_content:
-          - hvac_action
+          - state
           - current_temperature
           features:
           - type: target-temperature
@@ -1686,7 +1690,7 @@ views:
                 border: none !important;
                 box-shadow: none !important;
                 pointer-events: none;
-                z-index: 10;
+                z-index: 2;
                 --chip-background: rgba(255, 255, 255, 0.05);
                 --chip-box-shadow: none;
                 --chip-border-width: 0px;
@@ -1701,6 +1705,7 @@ views:
           style: |
             ha-card {
               position: relative;
+              isolation: isolate;
             }
       - type: grid
         columns: 2
@@ -1847,7 +1852,7 @@ views:
         entity: climate.sonoff_a4b001d938
         name: Petek
         state_content:
-        - hvac_action
+        - state
         - current_temperature
         features:
         - type: target-temperature
@@ -1888,7 +1893,7 @@ views:
               border: none !important;
               box-shadow: none !important;
               pointer-events: none;
-              z-index: 10;
+              z-index: 2;
               --chip-background: rgba(255, 255, 255, 0.05);
               --chip-box-shadow: none;
               --chip-border-width: 0px;
@@ -1903,6 +1908,7 @@ views:
         style: |
           ha-card {
             position: relative;
+            isolation: isolate;
           }
     - type: custom:mushroom-media-player-card
       entity: media_player.samsung_7_series_43_ue43ru7100uxtk
@@ -2198,7 +2204,7 @@ views:
         entity: climate.sonoff_a4b001d93a
         name: Petek
         state_content:
-        - hvac_action
+        - state
         - current_temperature
         features:
         - type: target-temperature
@@ -2239,7 +2245,7 @@ views:
               border: none !important;
               box-shadow: none !important;
               pointer-events: none;
-              z-index: 10;
+              z-index: 2;
               --chip-background: rgba(255, 255, 255, 0.05);
               --chip-box-shadow: none;
               --chip-border-width: 0px;
@@ -2254,6 +2260,7 @@ views:
         style: |
           ha-card {
             position: relative;
+            isolation: isolate;
           }
     - type: tile
       grid_options:
@@ -2370,7 +2377,7 @@ views:
         entity: climate.sonoff_a4b001d937
         name: Petek
         state_content:
-        - hvac_action
+        - state
         - current_temperature
         features:
         - type: target-temperature
@@ -2411,7 +2418,7 @@ views:
               border: none !important;
               box-shadow: none !important;
               pointer-events: none;
-              z-index: 10;
+              z-index: 2;
               --chip-background: rgba(255, 255, 255, 0.05);
               --chip-box-shadow: none;
               --chip-border-width: 0px;
@@ -2426,6 +2433,7 @@ views:
         style: |
           ha-card {
             position: relative;
+            isolation: isolate;
           }
     - type: tile
       grid_options:
@@ -2544,7 +2552,7 @@ views:
         entity: climate.sonoff_a4b001d936
         name: Petek
         state_content:
-        - hvac_action
+        - state
         - current_temperature
         features:
         - type: target-temperature
@@ -2585,7 +2593,7 @@ views:
               border: none !important;
               box-shadow: none !important;
               pointer-events: none;
-              z-index: 10;
+              z-index: 2;
               --chip-background: rgba(255, 255, 255, 0.05);
               --chip-box-shadow: none;
               --chip-border-width: 0px;
@@ -2600,6 +2608,7 @@ views:
         style: |
           ha-card {
             position: relative;
+            isolation: isolate;
           }
     - type: tile
       entity: sensor.sonoff_a4b001d936_temperature
@@ -2826,7 +2835,7 @@ views:
               border: none !important;
               box-shadow: none !important;
               pointer-events: none;
-              z-index: 10;
+              z-index: 2;
               --chip-background: rgba(255, 255, 255, 0.05);
               --chip-box-shadow: none;
               --chip-border-width: 0px;
@@ -2841,6 +2850,7 @@ views:
         style: |
           ha-card {
             position: relative;
+            isolation: isolate;
           }
     - type: tile
       entity: sensor.zhimi_sg_918358888_meb1_pm2_5_density_p_3_4
