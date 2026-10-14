@@ -4,6 +4,11 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v02 — 2026-10-14
+
+- Koridor: hava temizleyici kartının sağ üstüne **plazma**, **UV** ve **tuş kilidi** simgeleri eklendi
+  (telefonda elle denenmiş haliyle; artık dosyada ve tablette de var).
+
 ## 0v01 — 2026-10-14 (başlangıç)
 
 Bu sürüm, sürüm takibine başlamadan önceki tüm çalışmanın birleşik halidir.
@@ -31,5 +36,5 @@ Bu sürüm, sürüm takibine başlamadan önceki tüm çalışmanın birleşik h
 
 **Açık konular**
 - ~~Yatak Odası pil kimliği~~ — kullanıcı doğruladı: `sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery`.
-- Hava temizleyici plazma/UV/tuş kilidi simgeleri denendi, dosyaya henüz işlenmedi.
+- ~~Hava temizleyici simgeleri~~ — 0v02'de dosyaya işlendi.
 - Senaryo otomasyonları (Evdeyim, Tüm Işıklar) daha sonra ele alınacak.

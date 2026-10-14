@@ -1,4 +1,4 @@
-# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v01 · 2026-10-14 · bkz. SURUMLER.md
+# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v02 · 2026-10-14 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -2467,19 +2467,75 @@ views:
               100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }
             }
             @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
-    - type: tile
-      entity: fan.zhimi_sg_918358888_meb1_s_2_air_purifier
-      name: Kokuştroşko
-      icon: mdi:air-purifier
-      tap_action:
-        action: toggle
-      hold_action:
-        action: more-info
-      features:
-      - type: fan-preset-modes
-      - type: fan-speed
+    - type: custom:vertical-stack-in-card
       grid_options:
         columns: 18
+      cards:
+      - type: tile
+        entity: fan.zhimi_sg_918358888_meb1_s_2_air_purifier
+        name: Kokuştroşko
+        icon: mdi:air-purifier
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+        features:
+        - type: fan-preset-modes
+        - type: fan-speed
+      - type: custom:mushroom-chips-card
+        alignment: end
+        chips:
+        - type: template
+          entity: switch.zhimi_sg_918358888_meb1_plasma_p_2_6
+          icon: '{{ ''mdi:flash'' if is_state(entity, ''on'') else ''mdi:flash-outline'' }}'
+          icon_color: '{{ ''cyan'' if is_state(entity, ''on'') else ''disabled'' }}'
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+        - type: template
+          entity: switch.zhimi_sg_918358888_meb1_uv_p_2_7
+          icon: '{{ ''mdi:sun-wireless'' if is_state(entity, ''on'') else ''mdi:sun-wireless-outline'' }}'
+          icon_color: '{{ ''purple'' if is_state(entity, ''on'') else ''disabled'' }}'
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+        - type: template
+          entity: switch.zhimi_sg_918358888_meb1_physical_controls_locked_p_8_1
+          icon: '{{ ''mdi:lock'' if is_state(entity, ''on'') else ''mdi:lock-open-variant-outline'' }}'
+          icon_color: '{{ ''amber'' if is_state(entity, ''on'') else ''disabled'' }}'
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+        card_mod:
+          style: |
+            ha-card {
+              position: absolute;
+              top: 10px;
+              right: 10px;
+              width: max-content;
+              background: none !important;
+              border: none !important;
+              box-shadow: none !important;
+              pointer-events: none;
+              z-index: 10;
+              --chip-background: rgba(255, 255, 255, 0.05);
+              --chip-box-shadow: none;
+              --chip-border-width: 0px;
+              --chip-spacing: 6px;
+              --chip-height: 36px;
+              --chip-icon-size: 20px;
+            }
+            mushroom-template-chip {
+              pointer-events: auto;
+            }
+      card_mod:
+        style: |
+          ha-card {
+            position: relative;
+          }
     - type: tile
       entity: sensor.zhimi_sg_918358888_meb1_pm2_5_density_p_3_4
       name: PM2.5
