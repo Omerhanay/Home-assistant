@@ -50,6 +50,11 @@ USER_ADDED = {
     # air purifier plasma / UV / button lock (Koridor chips)
     "switch.zhimi_sg_918358888_meb1_plasma_p_2_6", "switch.zhimi_sg_918358888_meb1_uv_p_2_7",
     "switch.zhimi_sg_918358888_meb1_physical_controls_locked_p_8_1",
+    # TRV manual set-point (shown on the Isıtma chips when a TRV is off)
+    "sensor.sonoff_a4b001d938_manual_target_temperature",
+    "sensor.sonoff_a4b001d93a_manual_target_temperature",
+    "sensor.sonoff_a4b001d937_manual_target_temperature",
+    "sensor.sonoff_a4b001d936_manual_target_temperature",
     # battery sensors (from the user's entity export, 2026-10-13)
     "sensor.sonoff_100235874c_battery", "sensor.sonoff_a4b001a3ce_battery",
     "sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery",

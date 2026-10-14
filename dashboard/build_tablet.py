@@ -90,6 +90,10 @@ for c in s_rooms[1:]:
     # one decimal: a sensor reporting 21.37 shows 21.4
     c["secondary"] = re.sub(r"states\('(sensor\.[a-z0-9_]+)'\) ~", r"(states('\1') | float(0) | round(1)) ~", c["secondary"])
 popup = s_heat.pop()
+# heating cards: half width on the tablet (full width on the phone, where a half card is too narrow for the set-point chip)
+for c in s_heat:
+    if c.get("type") == "custom:vertical-stack-in-card":
+        c["grid_options"] = {"columns": 6}
 assert popup.get("card_type") == "pop-up"
 col3 = s_rooms + s_heat + [popup]
 

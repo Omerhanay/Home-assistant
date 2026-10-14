@@ -1,4 +1,4 @@
-# Ev paneli (telefon, /dashboard-tt) · sürüm 0v05 · 2026-10-14 · bkz. SURUMLER.md
+# Ev paneli (telefon, /dashboard-tt) · sürüm 0v06 · 2026-10-14 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -1341,46 +1341,226 @@ views:
       heading: Isıtma
       heading_style: title
       icon: mdi:radiator
-    - type: tile
-      entity: climate.sonoff_a4b001d938
-      name: Salon
-      state_content:
-      - hvac_action
-      - current_temperature
-      tap_action:
-        action: more-info
+    - type: custom:vertical-stack-in-card
       grid_options:
-        columns: 6
-    - type: tile
-      entity: climate.sonoff_a4b001d93a
-      name: Yatak Odası
-      state_content:
-      - hvac_action
-      - current_temperature
-      tap_action:
-        action: more-info
+        columns: 12
+      cards:
+      - type: tile
+        entity: climate.sonoff_a4b001d938
+        name: Salon
+        state_content:
+        - hvac_action
+        - current_temperature
+        tap_action:
+          action: more-info
+        card_mod:
+          style: |
+            ha-tile-info {
+              padding-inline-end: 72px;
+            }
+      - type: custom:mushroom-chips-card
+        alignment: end
+        chips:
+        - type: template
+          entity: climate.sonoff_a4b001d938
+          icon: mdi:thermostat
+          content: '{% if is_state(entity, ''off'') %}{{ states(''sensor.sonoff_a4b001d938_manual_target_temperature'') | float(0) | round(1) }}°{% else %}{{ state_attr(entity, ''temperature'') }}°{% endif %}'
+          icon_color: '{% if state_attr(entity, ''hvac_action'') == ''heating'' %}deep-orange{% elif is_state(entity, ''off'') %}disabled{% else %}amber{% endif %}'
+          tap_action:
+            action: more-info
+        card_mod:
+          style: |
+            ha-card {
+              position: absolute;
+              top: 50%;
+              right: 12px;
+              transform: translateY(-50%);
+              width: max-content;
+              background: none !important;
+              border: none !important;
+              box-shadow: none !important;
+              pointer-events: none;
+              z-index: 10;
+              --chip-background: rgba(255, 255, 255, 0.06);
+              --chip-box-shadow: none;
+              --chip-border-width: 0px;
+              --chip-height: 32px;
+              --chip-icon-size: 18px;
+              --chip-font-size: 14px;
+            }
+            mushroom-template-chip {
+              pointer-events: auto;
+            }
+      card_mod:
+        style: |
+          ha-card {
+            position: relative;
+          }
+    - type: custom:vertical-stack-in-card
       grid_options:
-        columns: 6
-    - type: tile
-      entity: climate.sonoff_a4b001d937
-      name: Çocuk Odası
-      state_content:
-      - hvac_action
-      - current_temperature
-      tap_action:
-        action: more-info
+        columns: 12
+      cards:
+      - type: tile
+        entity: climate.sonoff_a4b001d93a
+        name: Yatak Odası
+        state_content:
+        - hvac_action
+        - current_temperature
+        tap_action:
+          action: more-info
+        card_mod:
+          style: |
+            ha-tile-info {
+              padding-inline-end: 72px;
+            }
+      - type: custom:mushroom-chips-card
+        alignment: end
+        chips:
+        - type: template
+          entity: climate.sonoff_a4b001d93a
+          icon: mdi:thermostat
+          content: '{% if is_state(entity, ''off'') %}{{ states(''sensor.sonoff_a4b001d93a_manual_target_temperature'') | float(0) | round(1) }}°{% else %}{{ state_attr(entity, ''temperature'') }}°{% endif %}'
+          icon_color: '{% if state_attr(entity, ''hvac_action'') == ''heating'' %}deep-orange{% elif is_state(entity, ''off'') %}disabled{% else %}amber{% endif %}'
+          tap_action:
+            action: more-info
+        card_mod:
+          style: |
+            ha-card {
+              position: absolute;
+              top: 50%;
+              right: 12px;
+              transform: translateY(-50%);
+              width: max-content;
+              background: none !important;
+              border: none !important;
+              box-shadow: none !important;
+              pointer-events: none;
+              z-index: 10;
+              --chip-background: rgba(255, 255, 255, 0.06);
+              --chip-box-shadow: none;
+              --chip-border-width: 0px;
+              --chip-height: 32px;
+              --chip-icon-size: 18px;
+              --chip-font-size: 14px;
+            }
+            mushroom-template-chip {
+              pointer-events: auto;
+            }
+      card_mod:
+        style: |
+          ha-card {
+            position: relative;
+          }
+    - type: custom:vertical-stack-in-card
       grid_options:
-        columns: 6
-    - type: tile
-      entity: climate.sonoff_a4b001d936
-      name: Çalışma Odası
-      state_content:
-      - hvac_action
-      - current_temperature
-      tap_action:
-        action: more-info
+        columns: 12
+      cards:
+      - type: tile
+        entity: climate.sonoff_a4b001d937
+        name: Çocuk Odası
+        state_content:
+        - hvac_action
+        - current_temperature
+        tap_action:
+          action: more-info
+        card_mod:
+          style: |
+            ha-tile-info {
+              padding-inline-end: 72px;
+            }
+      - type: custom:mushroom-chips-card
+        alignment: end
+        chips:
+        - type: template
+          entity: climate.sonoff_a4b001d937
+          icon: mdi:thermostat
+          content: '{% if is_state(entity, ''off'') %}{{ states(''sensor.sonoff_a4b001d937_manual_target_temperature'') | float(0) | round(1) }}°{% else %}{{ state_attr(entity, ''temperature'') }}°{% endif %}'
+          icon_color: '{% if state_attr(entity, ''hvac_action'') == ''heating'' %}deep-orange{% elif is_state(entity, ''off'') %}disabled{% else %}amber{% endif %}'
+          tap_action:
+            action: more-info
+        card_mod:
+          style: |
+            ha-card {
+              position: absolute;
+              top: 50%;
+              right: 12px;
+              transform: translateY(-50%);
+              width: max-content;
+              background: none !important;
+              border: none !important;
+              box-shadow: none !important;
+              pointer-events: none;
+              z-index: 10;
+              --chip-background: rgba(255, 255, 255, 0.06);
+              --chip-box-shadow: none;
+              --chip-border-width: 0px;
+              --chip-height: 32px;
+              --chip-icon-size: 18px;
+              --chip-font-size: 14px;
+            }
+            mushroom-template-chip {
+              pointer-events: auto;
+            }
+      card_mod:
+        style: |
+          ha-card {
+            position: relative;
+          }
+    - type: custom:vertical-stack-in-card
       grid_options:
-        columns: 6
+        columns: 12
+      cards:
+      - type: tile
+        entity: climate.sonoff_a4b001d936
+        name: Çalışma Odası
+        state_content:
+        - hvac_action
+        - current_temperature
+        tap_action:
+          action: more-info
+        card_mod:
+          style: |
+            ha-tile-info {
+              padding-inline-end: 72px;
+            }
+      - type: custom:mushroom-chips-card
+        alignment: end
+        chips:
+        - type: template
+          entity: climate.sonoff_a4b001d936
+          icon: mdi:thermostat
+          content: '{% if is_state(entity, ''off'') %}{{ states(''sensor.sonoff_a4b001d936_manual_target_temperature'') | float(0) | round(1) }}°{% else %}{{ state_attr(entity, ''temperature'') }}°{% endif %}'
+          icon_color: '{% if state_attr(entity, ''hvac_action'') == ''heating'' %}deep-orange{% elif is_state(entity, ''off'') %}disabled{% else %}amber{% endif %}'
+          tap_action:
+            action: more-info
+        card_mod:
+          style: |
+            ha-card {
+              position: absolute;
+              top: 50%;
+              right: 12px;
+              transform: translateY(-50%);
+              width: max-content;
+              background: none !important;
+              border: none !important;
+              box-shadow: none !important;
+              pointer-events: none;
+              z-index: 10;
+              --chip-background: rgba(255, 255, 255, 0.06);
+              --chip-box-shadow: none;
+              --chip-border-width: 0px;
+              --chip-height: 32px;
+              --chip-icon-size: 18px;
+              --chip-font-size: 14px;
+            }
+            mushroom-template-chip {
+              pointer-events: auto;
+            }
+      card_mod:
+        style: |
+          ha-card {
+            position: relative;
+          }
     - type: custom:bubble-card
       card_type: pop-up
       hash: '#hava'
