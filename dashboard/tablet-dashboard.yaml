@@ -1,4 +1,4 @@
-# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v10 · 2026-10-14 · bkz. SURUMLER.md
+# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v11 · 2026-10-14 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -1613,6 +1613,11 @@ views:
                   box-shadow: 0 0 16px -2px var(--icon-color) !important;
                   {% endif %}
                 }
+              .: |
+                ha-card {
+                  background: rgba(255, 255, 255, 0.05) !important;
+                  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+                }
         - type: custom:mushroom-light-card
           entity: light.sonoff_10024a8007
           name: Gece Lambası
@@ -1633,6 +1638,11 @@ views:
                   box-shadow: 0 0 16px -2px var(--icon-color) !important;
                   {% endif %}
                 }
+              .: |
+                ha-card {
+                  background: rgba(255, 255, 255, 0.05) !important;
+                  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+                }
       - type: custom:mushroom-entity-card
         entity: switch.sonoff_a4b0024d63
         name: Kapı Priz
@@ -1643,6 +1653,12 @@ views:
           action: toggle
         hold_action:
           action: more-info
+        card_mod:
+          style: |
+            ha-card {
+              background: rgba(255, 255, 255, 0.05) !important;
+              border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            }
       - type: custom:vertical-stack-in-card
         cards:
         - type: tile
@@ -1704,6 +1720,8 @@ views:
         card_mod:
           style: |
             ha-card {
+              background: rgba(255, 255, 255, 0.05) !important;
+              border: 1px solid rgba(255, 255, 255, 0.12) !important;
               position: relative;
               isolation: isolate;
             }
@@ -1721,6 +1739,12 @@ views:
           - type: trend-graph
             hours_to_show: 24
           features_position: bottom
+          card_mod:
+            style: |
+              ha-card {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
         - type: tile
           entity: sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity
           name: Nem
@@ -1731,6 +1755,12 @@ views:
           - type: trend-graph
             hours_to_show: 24
           features_position: bottom
+          card_mod:
+            style: |
+              ha-card {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
 - title: Salon
   path: salon
   icon: mdi:sofa

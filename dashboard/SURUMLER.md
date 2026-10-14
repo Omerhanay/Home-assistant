@@ -4,6 +4,11 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v11 — 2026-10-14
+
+- Çocuk Odası penceresi: kartlara hafif açık zemin ve ince açık çerçeve eklendi; siyah pencere
+  arka planında kart sınırları yeniden görünüyor.
+
 ## 0v10 — 2026-10-14
 
 - Düzeltme: Isıtma kartlarındaki set sıcaklığı hapları (ve diğer köşe simgeleri) açılan pencerelerin
