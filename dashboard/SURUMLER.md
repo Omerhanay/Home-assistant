@@ -30,6 +30,6 @@ Bu sürüm, sürüm takibine başlamadan önceki tüm çalışmanın birleşik h
 - `evdeyim-automation.yaml` taslak, kurulmadı (kullanıcı kararı bekleniyor).
 
 **Açık konular**
-- Yatak Odası pil kimliği varsayıldı: `sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery` (doğrulanacak).
+- ~~Yatak Odası pil kimliği~~ — kullanıcı doğruladı: `sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery`.
 - Hava temizleyici plazma/UV/tuş kilidi simgeleri denendi, dosyaya henüz işlenmedi.
 - Senaryo otomasyonları (Evdeyim, Tüm Işıklar) daha sonra ele alınacak.
