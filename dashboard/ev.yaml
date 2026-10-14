@@ -1,4 +1,4 @@
-# Ev paneli (YAML modu, /dashboard-ev) · sürüm 0v04 · 2026-10-14 · bkz. SURUMLER.md
+# Ev paneli (YAML modu, /dashboard-ev) · sürüm 0v05 · 2026-10-14 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -1973,19 +1973,6 @@ views:
         show_state: true
         tap_action:
           action: more-info
-    - type: picture-glance
-      title: Kamera
-      camera_image: camera.c225_camerartpstreammanagement_0
-      camera_view: auto
-      entity: camera.c225_camerartpstreammanagement_0
-      tap_action:
-        action: more-info
-      entities:
-      - entity: binary_sensor.c225_motion_sensor
-        tap_action:
-          action: more-info
-      grid_options:
-        columns: full
     - type: custom:mushroom-light-card
       entity: light.cocuk_odasi_lamba
       name: Lamba

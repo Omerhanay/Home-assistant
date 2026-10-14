@@ -4,6 +4,10 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v05 — 2026-10-14
+
+- Çocuk Odası: **C225 kamera kartı kaldırıldı** (canlı görüntü gelmiyordu). Panelde C225'e ait hiçbir şey kalmadı.
+
 ## 0v04 — 2026-10-14
 
 - Çocuk Odası: **C225 kamera** kartı eklendi (`camera.c225_camerartpstreammanagement_0`),
