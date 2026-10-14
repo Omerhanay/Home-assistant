@@ -166,6 +166,7 @@ Her birini HACS'te arayıp **İndir** deyin:
 - **card-mod**
 - **button-card**
 - **Bubble Card** (3.2.0 veya üstü)
+- **Vertical Stack In Card** (petek kartlarındaki kilit/pencere simgeleri için)
 - **Digital Clock** (wassy92x)
 - **Watchman** (isteğe bağlı, kontrol aracı)
 

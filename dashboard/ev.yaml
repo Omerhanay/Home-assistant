@@ -1,3 +1,4 @@
+# Ev paneli (YAML modu, /dashboard-ev) · sürüm 0v01 · 2026-10-14 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
