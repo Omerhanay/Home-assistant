@@ -4,6 +4,11 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v08 — 2026-10-14
+
+- Tablet, Yatak Odası: **Sıcaklık** ve **Nem** grafik kartları telefondaki boyutta (kullanıcının tablette
+  yaptığı düzenleme dosyaya işlendi). Telefon paneli değişmedi.
+
 ## 0v07 — 2026-10-14
 
 - Isıtma kartları sadeleşti: set sıcaklığı küçük bir hap olarak sağ üst köşede (22 / 22.5° biçiminde).

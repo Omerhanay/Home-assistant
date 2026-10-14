@@ -118,6 +118,9 @@ for v in rooms:
     sec["column_span"] = 3
     for c in sec["cards"]:
         go = c.get("grid_options", {})
+        # user's choice (0v08): Yatak Odası temperature/humidity graphs keep the phone size on the tablet
+        if v["path"] == "yatak-odasi" and c.get("name") in ("Sıcaklık", "Nem"):
+            continue
         if isinstance(go.get("columns"), int):
             go["columns"] = go["columns"] * 3 // 2
     tablet_rooms.append(v)

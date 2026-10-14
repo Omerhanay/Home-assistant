@@ -1,4 +1,4 @@
-# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v07 · 2026-10-14 · bkz. SURUMLER.md
+# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v08 · 2026-10-14 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -2111,7 +2111,7 @@ views:
           }
     - type: tile
       grid_options:
-        columns: 9
+        columns: 6
       entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature
       name: Sıcaklık
       icon: mdi:thermometer
@@ -2123,7 +2123,7 @@ views:
       features_position: bottom
     - type: tile
       grid_options:
-        columns: 9
+        columns: 6
       entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity
       name: Nem
       icon: mdi:water-percent
