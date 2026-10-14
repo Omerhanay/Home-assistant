@@ -527,8 +527,8 @@ views:
       grid_options:
         columns: full
     - type: custom:mushroom-template-card
-      primary: '{{ [''binary_sensor.sonoff_a4b0023723_moisture'', ''binary_sensor.sonoff_a4b0023729_moisture'', ''binary_sensor.sonoff_a4b0023728_moisture'', ''binary_sensor.sonoff_a4b0023726_moisture'', ''binary_sensor.sonoff_a4b0023725_moisture'', ''binary_sensor.sonoff_a4b002372b_moisture'', ''binary_sensor.sonoff_a4b002414d_moisture'', ''binary_sensor.sonoff_100235874c'', ''climate.sonoff_a4b001d938'', ''climate.sonoff_a4b001d93a'', ''climate.sonoff_a4b001d937'', ''climate.sonoff_a4b001d936'', ''sensor.sonoff_a4b001d938_temperature'', ''sensor.sonoff_a4b001d93a_temperature'', ''sensor.sonoff_a4b001d937_temperature'', ''sensor.sonoff_a4b001d936_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity''] | reject(''has_value'') | list | count }} sensör yanıt vermiyor'
-      secondary: '{{ [''binary_sensor.sonoff_a4b0023723_moisture'', ''binary_sensor.sonoff_a4b0023729_moisture'', ''binary_sensor.sonoff_a4b0023728_moisture'', ''binary_sensor.sonoff_a4b0023726_moisture'', ''binary_sensor.sonoff_a4b0023725_moisture'', ''binary_sensor.sonoff_a4b002372b_moisture'', ''binary_sensor.sonoff_a4b002414d_moisture'', ''binary_sensor.sonoff_100235874c'', ''climate.sonoff_a4b001d938'', ''climate.sonoff_a4b001d93a'', ''climate.sonoff_a4b001d937'', ''climate.sonoff_a4b001d936'', ''sensor.sonoff_a4b001d938_temperature'', ''sensor.sonoff_a4b001d93a_temperature'', ''sensor.sonoff_a4b001d937_temperature'', ''sensor.sonoff_a4b001d936_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity''] | reject(''has_value'') | list | map(''state_attr'', ''friendly_name'') | map(''default'', ''?'', true) | join('', '') }}'
+      primary: '{{ [''binary_sensor.sonoff_a4b0023723_moisture'', ''binary_sensor.sonoff_a4b0023729_moisture'', ''binary_sensor.sonoff_a4b0023728_moisture'', ''binary_sensor.sonoff_a4b0023726_moisture'', ''binary_sensor.sonoff_a4b0023725_moisture'', ''binary_sensor.sonoff_a4b002372b_moisture'', ''binary_sensor.sonoff_a4b002414d_moisture'', ''binary_sensor.sonoff_100235874c'', ''climate.sonoff_a4b001d938'', ''climate.sonoff_a4b001d93a'', ''climate.sonoff_a4b001d937'', ''climate.sonoff_a4b001d936'', ''sensor.sonoff_a4b001d938_temperature'', ''sensor.sonoff_a4b001d93a_temperature'', ''sensor.sonoff_a4b001d937_temperature'', ''sensor.sonoff_a4b001d936_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity''] | reject(''has_value'') | list | count }} sensör yanıt vermiyor'
+      secondary: '{{ [''binary_sensor.sonoff_a4b0023723_moisture'', ''binary_sensor.sonoff_a4b0023729_moisture'', ''binary_sensor.sonoff_a4b0023728_moisture'', ''binary_sensor.sonoff_a4b0023726_moisture'', ''binary_sensor.sonoff_a4b0023725_moisture'', ''binary_sensor.sonoff_a4b002372b_moisture'', ''binary_sensor.sonoff_a4b002414d_moisture'', ''binary_sensor.sonoff_100235874c'', ''climate.sonoff_a4b001d938'', ''climate.sonoff_a4b001d93a'', ''climate.sonoff_a4b001d937'', ''climate.sonoff_a4b001d936'', ''sensor.sonoff_a4b001d938_temperature'', ''sensor.sonoff_a4b001d93a_temperature'', ''sensor.sonoff_a4b001d937_temperature'', ''sensor.sonoff_a4b001d936_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity''] | reject(''has_value'') | list | map(''state_attr'', ''friendly_name'') | map(''default'', ''?'', true) | join('', '') }}'
       icon: mdi:wifi-off
       icon_color: orange
       multiline_secondary: true
@@ -627,6 +627,16 @@ views:
           state:
           - unavailable
           - unknown
+        - condition: state
+          entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity
+          state:
+          - unavailable
+          - unknown
       grid_options:
         columns: full
     - type: tile
@@ -647,7 +657,7 @@ views:
            'sensor.sonoff_100235874c_battery': 'Kapı Sensörü',
            'sensor.sonoff_a4b001a3ce_battery': 'Hareket Sensörü',
            'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery': 'Çocuk Odası TH',
-           'sensor.miaomiaoc_sg_blt_1_1a3no5uth4g03_t2_battery_level_p_3_1': 'Yatak Odası TH',
+           'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery': 'Yatak Odası TH',
            'sensor.sonoff_a4b001d938_battery': 'Salon Petek',
            'sensor.sonoff_a4b001d93a_battery': 'Yatak Odası Petek',
            'sensor.sonoff_a4b001d937_battery': 'Çocuk Odası Petek',
@@ -664,7 +674,7 @@ views:
            'sensor.sonoff_100235874c_battery': 'Kapı Sensörü',
            'sensor.sonoff_a4b001a3ce_battery': 'Hareket Sensörü',
            'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery': 'Çocuk Odası TH',
-           'sensor.miaomiaoc_sg_blt_1_1a3no5uth4g03_t2_battery_level_p_3_1': 'Yatak Odası TH',
+           'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery': 'Yatak Odası TH',
            'sensor.sonoff_a4b001d938_battery': 'Salon Petek',
            'sensor.sonoff_a4b001d93a_battery': 'Yatak Odası Petek',
            'sensor.sonoff_a4b001d937_battery': 'Çocuk Odası Petek',
@@ -681,7 +691,7 @@ views:
            'sensor.sonoff_100235874c_battery': 'Kapı Sensörü',
            'sensor.sonoff_a4b001a3ce_battery': 'Hareket Sensörü',
            'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery': 'Çocuk Odası TH',
-           'sensor.miaomiaoc_sg_blt_1_1a3no5uth4g03_t2_battery_level_p_3_1': 'Yatak Odası TH',
+           'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery': 'Yatak Odası TH',
            'sensor.sonoff_a4b001d938_battery': 'Salon Petek',
            'sensor.sonoff_a4b001d93a_battery': 'Yatak Odası Petek',
            'sensor.sonoff_a4b001d937_battery': 'Çocuk Odası Petek',
@@ -717,7 +727,7 @@ views:
     - type: markdown
       content: |
         {% set odalar = {'sensor.sonoff_a4b001d938_temperature': 'Salon',
-           'sensor.sonoff_a4b001d93a_temperature': 'Yatak Odası',
+           'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature': 'Yatak Odası',
            'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature': 'Çocuk Odası',
            'sensor.sonoff_a4b001d936_temperature': 'Çalışma Odası'} %}
         {% set ns = namespace(v=[]) %}
@@ -1080,7 +1090,7 @@ views:
           }
     - type: custom:mushroom-template-card
       primary: Yatak Odası
-      secondary: '{% if false %}Su kaçağı!{% else %}{{ (states(''sensor.sonoff_a4b001d93a_temperature'') | float(0) | round(1)) ~ ''° · '' if has_value(''sensor.sonoff_a4b001d93a_temperature'') else '''' }}{% set n = expand([''light.yatak_odasi_tavan'', ''light.yatak_odasi_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işık kapalı'' }}{% endif %}'
+      secondary: '{% if false %}Su kaçağı!{% else %}{{ (states(''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'') | float(0) | round(1)) ~ ''° · '' if has_value(''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'') else '''' }}{{ ''%'' ~ (states(''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity'') | float(0) | round | int) ~ '' · '' if has_value(''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity'') else '''' }}{% set n = expand([''light.yatak_odasi_tavan'', ''light.yatak_odasi_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işık kapalı'' }}{% endif %}'
       icon: mdi:bed
       icon_color: '{% if false %}red{% elif (expand([''light.yatak_odasi_tavan'', ''light.yatak_odasi_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
       tap_action:
@@ -1819,7 +1829,13 @@ views:
       icon: mdi:bed
       badges:
       - type: entity
-        entity: sensor.sonoff_a4b001d93a_temperature
+        entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature
+        show_icon: true
+        show_state: true
+        tap_action:
+          action: more-info
+      - type: entity
+        entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity
         show_icon: true
         show_state: true
         tap_action:
@@ -1934,11 +1950,23 @@ views:
           }
     - type: tile
       grid_options:
-        columns: 18
-      entity: sensor.sonoff_a4b001d93a_temperature
+        columns: 9
+      entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature
       name: Sıcaklık
       icon: mdi:thermometer
       color: deep-orange
+      vertical: false
+      features:
+      - type: trend-graph
+        hours_to_show: 24
+      features_position: bottom
+    - type: tile
+      grid_options:
+        columns: 9
+      entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity
+      name: Nem
+      icon: mdi:water-percent
+      color: blue
       vertical: false
       features:
       - type: trend-graph
@@ -2871,7 +2899,7 @@ views:
       grid_options:
         columns: 9
     - type: tile
-      entity: sensor.miaomiaoc_sg_blt_1_1a3no5uth4g03_t2_battery_level_p_3_1
+      entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery
       name: Yatak Odası TH
       tap_action:
         action: more-info

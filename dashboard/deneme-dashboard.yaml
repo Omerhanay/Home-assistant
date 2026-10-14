@@ -514,10 +514,11 @@ views:
       entity: climate.sonoff_a4b001d93a
       name: Yatak Odası
       variables:
-        sensor_temp: sensor.sonoff_a4b001d93a_temperature
-        sensor_hum: ''
+        sensor_temp: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature
+        sensor_hum: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity
       triggers_update:
-      - sensor.sonoff_a4b001d93a_temperature
+      - sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature
+      - sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity
       - input_boolean.dashboard_animasyon
       grid_options:
         columns: full
@@ -885,7 +886,7 @@ views:
         columns: 6
       cards:
       - type: custom:mushroom-entity-card
-        entity: sensor.sonoff_a4b001d93a_temperature
+        entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature
         name: Yatak Odası
         icon: mdi:thermometer
         primary_info: state
@@ -949,7 +950,7 @@ views:
               }
       - type: custom:mini-graph-card
         entities:
-        - sensor.sonoff_a4b001d93a_temperature
+        - sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature
         hours_to_show: 24
         line_width: 5
         show:
@@ -969,6 +970,110 @@ views:
           color: rgb(255,115,20)
         - value: 26
           color: rgb(255,40,40)
+        card_mod:
+          style: |-
+            ha-card {
+              position: absolute !important;
+              inset: 0 !important;
+              margin: 0 !important;
+              padding: 0 !important;
+              z-index: 1 !important;
+              background: transparent !important;
+              border: none !important;
+              box-shadow: none !important;
+              --ha-card-border-width: 0px !important;
+              --ha-card-background: transparent !important;
+              pointer-events: none;
+              opacity: 0.5;
+              mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 90%);
+            }
+            ha-card::before, ha-card::after { display: none !important; }
+      card_mod:
+        style: |-
+          ha-card {
+            overflow: hidden !important;
+          }
+    - type: custom:vertical-stack-in-card
+      grid_options:
+        columns: 6
+      cards:
+      - type: custom:mushroom-entity-card
+        entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity
+        name: Yatak Odası nem
+        icon: mdi:water-percent
+        primary_info: state
+        secondary_info: name
+        tap_action:
+          action: more-info
+        card_mod:
+          style:
+            mushroom-shape-icon$: |-
+              .shape {
+                {% set v = states(config.entity) | float(0) %}
+                {% if v < 40 %}
+                  {% set rgb = '0,80,200' %}
+                {% elif v < 60 %}
+                  {% set rgb = '120,210,255' %}
+                {% else %}
+                  {% set rgb = '40,140,255' %}
+                {% endif %}
+                {% set anim = states('input_boolean.dashboard_animasyon') != 'off' %}
+                --env-rgb: {{ rgb }};
+                --icon-color: rgba({{ rgb }}, 1);
+                --env-glow: {{ 'env-glow 3.4s ease-in-out infinite' if anim else 'none' }};
+                --env-halo: {{ 'env-halo 3.9s ease-in-out infinite' if anim else 'none' }};
+                background-color: rgba(77, 77, 77, 0.1) !important;
+                box-shadow: none !important;
+                border: 1px solid rgba(255,255,255,0.06);
+                position: relative;
+              }
+              .shape::before, .shape::after {
+                content: '';
+                position: absolute;
+                border-radius: inherit;
+                pointer-events: none;
+              }
+              .shape::before { inset: -8px; animation: var(--env-glow); }
+              .shape::after { inset: -22px; animation: var(--env-halo); mix-blend-mode: screen; }
+              @keyframes env-glow {
+                0%, 100% { box-shadow: 0 0 15px 0 rgba(var(--env-rgb), 0.2); }
+                50% { box-shadow: 0 0 20px 2px rgba(var(--env-rgb), 0.35); }
+              }
+              @keyframes env-halo {
+                0%, 100% { box-shadow: 0 0 35px 10px rgba(var(--env-rgb), 0.1); }
+                50% { box-shadow: 0 0 45px 12px rgba(var(--env-rgb), 0.2); }
+              }
+            .: |-
+              mushroom-shape-icon {
+                --icon-size: 64px;
+                display: flex;
+                margin: -18px 0 10px -20px !important;
+                padding-right: 22px;
+                padding-bottom: 25px;
+              }
+              ha-card {
+                clip-path: inset(0 0 0 0 round var(--ha-card-border-radius, 14px));
+                --card-primary-font-size: 1.3rem !important;
+                --card-primary-line-height: 1.3 !important;
+              }
+      - type: custom:mini-graph-card
+        entities:
+        - sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity
+        hours_to_show: 24
+        line_width: 5
+        show:
+          name: false
+          icon: false
+          state: false
+          labels: false
+          legend: false
+        color_thresholds:
+        - value: 0
+          color: rgb(0,80,200)
+        - value: 40
+          color: rgb(120,210,255)
+        - value: 60
+          color: rgb(40,140,255)
         card_mod:
           style: |-
             ha-card {

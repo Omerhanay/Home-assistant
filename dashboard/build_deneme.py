@@ -670,7 +670,8 @@ HAREKET = {
 # ---------------------------------------------------------------- layout
 ODALAR = [  # name, climate, temperature sensor, humidity sensor
     ("Salon", "climate.sonoff_a4b001d938", "sensor.sonoff_a4b001d938_temperature", ""),
-    ("Yatak Odası", "climate.sonoff_a4b001d93a", "sensor.sonoff_a4b001d93a_temperature", ""),
+    ("Yatak Odası", "climate.sonoff_a4b001d93a", "sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature",
+     "sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity"),
     ("Çocuk Odası", "climate.sonoff_a4b001d937", "sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature",
      "sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity"),
     ("Çalışma Odası", "climate.sonoff_a4b001d936", "sensor.sonoff_a4b001d936_temperature", ""),
@@ -701,7 +702,8 @@ ortam = [heading("Ortam", "mdi:home-thermometer"),
          env_card("sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature", "Çocuk Odası", "mdi:thermometer", "temp"),
          env_card("sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity", "Çocuk Odası nem", "mdi:water-percent", "hum"),
          env_card("sensor.sonoff_a4b001d938_temperature", "Salon", "mdi:thermometer", "temp"),
-         env_card("sensor.sonoff_a4b001d93a_temperature", "Yatak Odası", "mdi:thermometer", "temp"),
+         env_card("sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature", "Yatak Odası", "mdi:thermometer", "temp"),
+         env_card("sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity", "Yatak Odası nem", "mdi:water-percent", "hum"),
          env_card("sensor.sonoff_a4b001d936_temperature", "Çalışma Odası", "mdi:thermometer", "temp"),
          env_card("sensor.zhimi_sg_918358888_meb1_pm2_5_density_p_3_4", "PM2.5 (Koridor)", "mdi:air-filter", "pm25")]
 

@@ -49,7 +49,8 @@ USER_ADDED = {
     "switch.sonoff_a4b001d936_child_lock", "switch.sonoff_a4b001d936_window_switch",
     # battery sensors (from the user's entity export, 2026-10-13)
     "sensor.sonoff_100235874c_battery", "sensor.sonoff_a4b001a3ce_battery",
-    "sensor.miaomiaoc_sg_blt_1_1a3no5uth4g03_t2_battery_level_p_3_1",
+    "sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery",
+    "sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature", "sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity",
     "sensor.sonoff_a4b001d938_battery", "sensor.sonoff_a4b001d93a_battery",
     "sensor.sonoff_a4b001d937_battery", "sensor.sonoff_a4b001d936_battery",
     "sensor.sonoff_a4b0023723_battery", "sensor.sonoff_a4b0023728_battery", "sensor.sonoff_a4b0023726_battery",
@@ -57,7 +58,7 @@ USER_ADDED = {
     "sensor.sonoff_a4b002414d_battery",
 }
 # Card moved to a better source; entity still referenced (offline alert).
-CARD_REPLACED = {"sensor.sonoff_a4b001d937_temperature", "switch.mutfak_masa_priz_socket_1"}  # TRV reading -> Çocuk Odası TH sensor
+CARD_REPLACED = {"sensor.sonoff_a4b001d93a_temperature", "sensor.sonoff_a4b001d937_temperature", "switch.mutfak_masa_priz_socket_1"}  # TRV reading -> Çocuk Odası TH sensor
 GLOBAL_HELPERS = {"input_boolean.dashboard_animasyon"}  # animation switch, global by design
 TOGGLEABLE = ("light.", "switch.", "fan.", "input_boolean.", "media_player.", "climate.")
 
