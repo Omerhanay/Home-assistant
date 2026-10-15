@@ -4,6 +4,13 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v14 — 2026-10-15
+
+- **Salon:** Xiaomi LYWSD03MMC (pvvx yazılımı, BTHome) sensörü eklendi — `sensor.atc_2b36_*`.
+  Salon kartında sıcaklık · nem, Salon penceresinde sıcaklık ve nem grafikleri, iç ortalamada Salon,
+  "sensör yanıt vermiyor" uyarısında ve Piller'de (Salon TH) yer aldı.
+- Not: geçici sensör; yenisi alınınca yalnızca bu üç kimlik değiştirilecek.
+
 ## 0v13 — 2026-10-15 (deneme)
 
 - Salon penceresi, **robot süpürge kartı zenginleşti**: komut düğmelerinin altında pil, son temizlik alanı (m²),

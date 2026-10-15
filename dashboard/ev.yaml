@@ -1,4 +1,4 @@
-# Ev paneli (YAML modu, /dashboard-ev) · sürüm 0v13 · 2026-10-15 · bkz. SURUMLER.md
+# Ev paneli (YAML modu, /dashboard-ev) · sürüm 0v14 · 2026-10-15 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -543,8 +543,8 @@ views:
       grid_options:
         columns: full
     - type: custom:mushroom-template-card
-      primary: '{{ [''binary_sensor.sonoff_a4b0023723_moisture'', ''binary_sensor.sonoff_a4b0023729_moisture'', ''binary_sensor.sonoff_a4b0023728_moisture'', ''binary_sensor.sonoff_a4b0023726_moisture'', ''binary_sensor.sonoff_a4b0023725_moisture'', ''binary_sensor.sonoff_a4b002372b_moisture'', ''binary_sensor.sonoff_a4b002414d_moisture'', ''binary_sensor.sonoff_100235874c'', ''climate.sonoff_a4b001d938'', ''climate.sonoff_a4b001d93a'', ''climate.sonoff_a4b001d937'', ''climate.sonoff_a4b001d936'', ''sensor.sonoff_a4b001d938_temperature'', ''sensor.sonoff_a4b001d93a_temperature'', ''sensor.sonoff_a4b001d937_temperature'', ''sensor.sonoff_a4b001d936_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity''] | reject(''has_value'') | list | count }} sensör yanıt vermiyor'
-      secondary: '{{ [''binary_sensor.sonoff_a4b0023723_moisture'', ''binary_sensor.sonoff_a4b0023729_moisture'', ''binary_sensor.sonoff_a4b0023728_moisture'', ''binary_sensor.sonoff_a4b0023726_moisture'', ''binary_sensor.sonoff_a4b0023725_moisture'', ''binary_sensor.sonoff_a4b002372b_moisture'', ''binary_sensor.sonoff_a4b002414d_moisture'', ''binary_sensor.sonoff_100235874c'', ''climate.sonoff_a4b001d938'', ''climate.sonoff_a4b001d93a'', ''climate.sonoff_a4b001d937'', ''climate.sonoff_a4b001d936'', ''sensor.sonoff_a4b001d938_temperature'', ''sensor.sonoff_a4b001d93a_temperature'', ''sensor.sonoff_a4b001d937_temperature'', ''sensor.sonoff_a4b001d936_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity''] | reject(''has_value'') | list | map(''state_attr'', ''friendly_name'') | map(''default'', ''?'', true) | join('', '') }}'
+      primary: '{{ [''binary_sensor.sonoff_a4b0023723_moisture'', ''binary_sensor.sonoff_a4b0023729_moisture'', ''binary_sensor.sonoff_a4b0023728_moisture'', ''binary_sensor.sonoff_a4b0023726_moisture'', ''binary_sensor.sonoff_a4b0023725_moisture'', ''binary_sensor.sonoff_a4b002372b_moisture'', ''binary_sensor.sonoff_a4b002414d_moisture'', ''binary_sensor.sonoff_100235874c'', ''climate.sonoff_a4b001d938'', ''climate.sonoff_a4b001d93a'', ''climate.sonoff_a4b001d937'', ''climate.sonoff_a4b001d936'', ''sensor.sonoff_a4b001d938_temperature'', ''sensor.sonoff_a4b001d93a_temperature'', ''sensor.sonoff_a4b001d937_temperature'', ''sensor.sonoff_a4b001d936_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity'', ''sensor.atc_2b36_temperature'', ''sensor.atc_2b36_humidity''] | reject(''has_value'') | list | count }} sensör yanıt vermiyor'
+      secondary: '{{ [''binary_sensor.sonoff_a4b0023723_moisture'', ''binary_sensor.sonoff_a4b0023729_moisture'', ''binary_sensor.sonoff_a4b0023728_moisture'', ''binary_sensor.sonoff_a4b0023726_moisture'', ''binary_sensor.sonoff_a4b0023725_moisture'', ''binary_sensor.sonoff_a4b002372b_moisture'', ''binary_sensor.sonoff_a4b002414d_moisture'', ''binary_sensor.sonoff_100235874c'', ''climate.sonoff_a4b001d938'', ''climate.sonoff_a4b001d93a'', ''climate.sonoff_a4b001d937'', ''climate.sonoff_a4b001d936'', ''sensor.sonoff_a4b001d938_temperature'', ''sensor.sonoff_a4b001d93a_temperature'', ''sensor.sonoff_a4b001d937_temperature'', ''sensor.sonoff_a4b001d936_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity'', ''sensor.atc_2b36_temperature'', ''sensor.atc_2b36_humidity''] | reject(''has_value'') | list | map(''state_attr'', ''friendly_name'') | map(''default'', ''?'', true) | join('', '') }}'
       icon: mdi:wifi-off
       icon_color: orange
       multiline_secondary: true
@@ -653,6 +653,16 @@ views:
           state:
           - unavailable
           - unknown
+        - condition: state
+          entity: sensor.atc_2b36_temperature
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: sensor.atc_2b36_humidity
+          state:
+          - unavailable
+          - unknown
       grid_options:
         columns: full
     - type: tile
@@ -687,6 +697,7 @@ views:
            'sensor.sonoff_a4b001a3ce_battery': 'Hareket Sensörü',
            'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery': 'Çocuk Odası TH',
            'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery': 'Yatak Odası TH',
+           'sensor.atc_2b36_battery': 'Salon TH',
            'sensor.sonoff_a4b001d938_battery': 'Salon Petek',
            'sensor.sonoff_a4b001d93a_battery': 'Yatak Odası Petek',
            'sensor.sonoff_a4b001d937_battery': 'Çocuk Odası Petek',
@@ -704,6 +715,7 @@ views:
            'sensor.sonoff_a4b001a3ce_battery': 'Hareket Sensörü',
            'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery': 'Çocuk Odası TH',
            'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery': 'Yatak Odası TH',
+           'sensor.atc_2b36_battery': 'Salon TH',
            'sensor.sonoff_a4b001d938_battery': 'Salon Petek',
            'sensor.sonoff_a4b001d93a_battery': 'Yatak Odası Petek',
            'sensor.sonoff_a4b001d937_battery': 'Çocuk Odası Petek',
@@ -721,6 +733,7 @@ views:
            'sensor.sonoff_a4b001a3ce_battery': 'Hareket Sensörü',
            'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery': 'Çocuk Odası TH',
            'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery': 'Yatak Odası TH',
+           'sensor.atc_2b36_battery': 'Salon TH',
            'sensor.sonoff_a4b001d938_battery': 'Salon Petek',
            'sensor.sonoff_a4b001d93a_battery': 'Yatak Odası Petek',
            'sensor.sonoff_a4b001d937_battery': 'Çocuk Odası Petek',
@@ -742,7 +755,7 @@ views:
         columns: full
     - type: markdown
       content: |
-        {% set odalar = {'sensor.sonoff_a4b001d938_temperature': 'Salon',
+        {% set odalar = {'sensor.atc_2b36_temperature': 'Salon',
            'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature': 'Yatak Odası',
            'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature': 'Çocuk Odası',
            'sensor.sonoff_a4b001d936_temperature': 'Çalışma Odası'} %}
@@ -999,7 +1012,7 @@ views:
       icon: mdi:floor-plan
     - type: custom:mushroom-template-card
       primary: Salon
-      secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.sonoff_a4b001d938_temperature'') ~ '' °C · '' if has_value(''sensor.sonoff_a4b001d938_temperature'') else '''' }}{% set n = expand([''light.salon_lamba_01'', ''light.salon_lamba_02'', ''light.salon_tavan_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.atc_2b36_temperature'') ~ '' °C · '' if has_value(''sensor.atc_2b36_temperature'') else '''' }}{{ ''%'' ~ (states(''sensor.atc_2b36_humidity'') | float(0) | round | int) ~ '' · '' if has_value(''sensor.atc_2b36_humidity'') else '''' }}{% set n = expand([''light.salon_lamba_01'', ''light.salon_lamba_02'', ''light.salon_tavan_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
       icon: mdi:sofa
       icon_color: '{% if false %}red{% elif (expand([''light.salon_lamba_01'', ''light.salon_lamba_02'', ''light.salon_tavan_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
       tap_action:
@@ -1961,20 +1974,38 @@ views:
               background: rgba(255, 255, 255, 0.05) !important;
               border: 1px solid rgba(255, 255, 255, 0.12) !important;
             }
-      - type: tile
-        entity: sensor.sonoff_a4b001d938_temperature
-        name: Sıcaklık
-        icon: mdi:thermometer
-        color: deep-orange
-        features:
-        - type: trend-graph
-          hours_to_show: 24
-        card_mod:
-          style: |
-            ha-card {
-              background: rgba(255, 255, 255, 0.05) !important;
-              border: 1px solid rgba(255, 255, 255, 0.12) !important;
-            }
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.atc_2b36_temperature
+          name: Sıcaklık
+          icon: mdi:thermometer
+          color: deep-orange
+          features:
+          - type: trend-graph
+            hours_to_show: 24
+          card_mod:
+            style: |
+              ha-card {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
+        - type: tile
+          entity: sensor.atc_2b36_humidity
+          name: Nem
+          icon: mdi:water-percent
+          color: blue
+          features:
+          - type: trend-graph
+            hours_to_show: 24
+          card_mod:
+            style: |
+              ha-card {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
       - type: custom:vertical-stack-in-card
         cards:
         - type: custom:mushroom-vacuum-card
@@ -3267,6 +3298,22 @@ views:
                 background: rgba(255, 255, 255, 0.05) !important;
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
               }
+      - type: tile
+        entity: sensor.atc_2b36_battery
+        name: Salon TH
+        tap_action:
+          action: more-info
+        features:
+        - type: bar-gauge
+          min: 0
+          max: 100
+        features_position: inline
+        card_mod:
+          style: |
+            ha-card {
+              background: rgba(255, 255, 255, 0.05) !important;
+              border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            }
       - type: heading
         heading: Petekler
         heading_style: subtitle
