@@ -4,6 +4,13 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v13 — 2026-10-15 (deneme)
+
+- Salon penceresi, **robot süpürge kartı zenginleşti**: komut düğmelerinin altında pil, son temizlik alanı (m²),
+  süresi (dk) ve ana fırça ömrü hapları; altında **Temizlik modu** seçimi (Sweeping vb., cihazın kendi seçenekleri).
+- Ev Durumu: ana fırça ömrü %10'un altına düşünce **"Süpürge ana fırçası değişmeli"** uyarısı.
+- Geri dönüş: beğenilmezse 0v12'deki tek süpürge kartına dönülecek.
+
 ## 0v12 — 2026-10-14
 
 - **Tüm odalar ve Piller artık Bubble Card penceresi:** Salon, Mutfak, Yatak Odası, Çalışma Odası, Koridor,

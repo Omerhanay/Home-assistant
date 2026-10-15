@@ -55,6 +55,11 @@ USER_ADDED = {
     "sensor.sonoff_a4b001d93a_manual_target_temperature",
     "sensor.sonoff_a4b001d937_manual_target_temperature",
     "sensor.sonoff_a4b001d936_manual_target_temperature",
+    # robot vacuum details (Salon pop-up)
+    "sensor.ijai_sg_1025189601_v3_battery_level_p_3_1",
+    "sensor.ijai_sg_1025189601_v3_cleaning_area_p_7_23",
+    "sensor.ijai_sg_1025189601_v3_cleaning_time_p_7_22",
+    "sensor.ijai_sg_1025189601_v3_main_brush_life_p_7_10",
     # battery sensors (from the user's entity export, 2026-10-13)
     "sensor.sonoff_100235874c_battery", "sensor.sonoff_a4b001a3ce_battery",
     "sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery",

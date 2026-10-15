@@ -1,4 +1,4 @@
-# Ev paneli (YAML modu, /dashboard-ev) · sürüm 0v12 · 2026-10-14 · bkz. SURUMLER.md
+# Ev paneli (YAML modu, /dashboard-ev) · sürüm 0v13 · 2026-10-15 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -663,6 +663,19 @@ views:
       visibility:
       - condition: numeric_state
         entity: sensor.zhimi_sg_918358888_meb1_filter_life_level_p_4_1
+        below: 10
+      grid_options:
+        columns: full
+    - type: tile
+      entity: sensor.ijai_sg_1025189601_v3_main_brush_life_p_7_10
+      name: Süpürge ana fırçası değişmeli
+      icon: mdi:brush
+      color: orange
+      tap_action:
+        action: more-info
+      visibility:
+      - condition: numeric_state
+        entity: sensor.ijai_sg_1025189601_v3_main_brush_life_p_7_10
         below: 10
       grid_options:
         columns: full
@@ -1962,34 +1975,85 @@ views:
               background: rgba(255, 255, 255, 0.05) !important;
               border: 1px solid rgba(255, 255, 255, 0.12) !important;
             }
-      - type: custom:mushroom-vacuum-card
-        entity: vacuum.ijai_sg_1025189601_v3
-        name: Robot Süpürge
-        icon: mdi:robot-vacuum
-        secondary_info: state
-        icon_animation: false
-        commands:
-        - start_pause
-        - stop
-        - return_home
-        - locate
-        - clean_spot
-        tap_action:
-          action: more-info
-        card_mod:
-          style:
-            mushroom-shape-icon$: |
-              .shape {
-                transition: box-shadow 0.4s ease !important;
-                {% if states(config.entity) in ['cleaning', 'returning'] and states('input_boolean.dashboard_animasyon') != 'off' %}
-                box-shadow: 0 0 16px -2px var(--icon-color) !important;
-                {% endif %}
-              }
-            .: |
+      - type: custom:vertical-stack-in-card
+        cards:
+        - type: custom:mushroom-vacuum-card
+          entity: vacuum.ijai_sg_1025189601_v3
+          name: Robot Süpürge
+          icon: mdi:robot-vacuum
+          secondary_info: state
+          icon_animation: false
+          commands:
+          - start_pause
+          - stop
+          - return_home
+          - locate
+          - clean_spot
+          tap_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: |
+                .shape {
+                  transition: box-shadow 0.4s ease !important;
+                  {% if states(config.entity) in ['cleaning', 'returning'] and states('input_boolean.dashboard_animasyon') != 'off' %}
+                  box-shadow: 0 0 16px -2px var(--icon-color) !important;
+                  {% endif %}
+                }
+        - type: custom:mushroom-chips-card
+          alignment: start
+          chips:
+          - type: template
+            entity: sensor.ijai_sg_1025189601_v3_battery_level_p_3_1
+            icon: mdi:battery
+            content: '%{{ states(entity) | int(0) }}'
+            icon_color: '{% set b = states(entity) | int(0) %}{{ ''green'' if b > 50 else (''orange'' if b > 20 else ''red'') }}'
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.ijai_sg_1025189601_v3_cleaning_area_p_7_23
+            icon: mdi:texture-box
+            content: '{{ states(entity) }} m²'
+            icon_color: blue
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.ijai_sg_1025189601_v3_cleaning_time_p_7_22
+            icon: mdi:timer-outline
+            content: '{{ states(entity) }} dk'
+            icon_color: blue
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.ijai_sg_1025189601_v3_main_brush_life_p_7_10
+            icon: mdi:brush
+            content: Fırça %{{ states(entity) | int(0) }}
+            icon_color: '{% set f = states(entity) | int(0) %}{{ ''red'' if f < 10 else (''orange'' if f < 20 else ''disabled'') }}'
+            tap_action:
+              action: more-info
+          card_mod:
+            style: |
               ha-card {
-                background: rgba(255, 255, 255, 0.05) !important;
-                border: 1px solid rgba(255, 255, 255, 0.12) !important;
+                padding: 0 12px 10px !important;
+                --chip-height: 28px;
+                --chip-font-size: 12px;
+                --chip-icon-size: 16px;
+                --chip-background: rgba(255, 255, 255, 0.06);
+                --chip-box-shadow: none;
+                --chip-border-width: 0px;
               }
+        - type: tile
+          entity: select.ijai_sg_1025189601_v3_mode_p_2_4
+          name: Temizlik modu
+          icon: mdi:robot-vacuum-variant
+          features:
+          - type: select-options
+        card_mod:
+          style: |
+            ha-card {
+              background: rgba(255, 255, 255, 0.05) !important;
+              border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            }
     - type: custom:bubble-card
       card_type: pop-up
       hash: '#mutfak'
