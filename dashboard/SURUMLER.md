@@ -4,6 +4,12 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v22 — 2026-10-15
+
+- Sığmayan açıklamalar artık **kayıyor** (oda kartlarındaki gibi; sığanlar sabit): Piller kartı,
+  Koridor'da Kapı ve Hareket, Salon'da TV Priz ve PlayStation 5, Mutfak'ta Masa Priz.
+  Animasyon anahtarı kapalıyken yazı alt satıra geçer.
+
 ## 0v21 — 2026-10-15
 
 - Balkon penceresi: su kaçağı kartları **"Sol" / "Sağ"** → **"Sol su sensörü" / "Sağ su sensörü"**.

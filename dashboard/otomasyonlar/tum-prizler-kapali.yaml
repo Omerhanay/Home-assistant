@@ -1,0 +1,27 @@
+alias: Tüm_Prizler_Kapalı_Otomasyonu
+description: >-
+  Panelde "Prizleri Kapat" butonuna basılınca prizleri kapatır. PlayStation 5 prizi yalnızca konsol
+  tamamen kapalıyken (1 W altı) kesilir; bekleme modundaki konsolun elektriği kesilmez.
+triggers:
+  - trigger: state
+    entity_id: input_boolean.tum_prizler_kapali_section
+    to: "on"
+conditions: []
+actions:
+  - action: switch.turn_off
+    continue_on_error: true
+    target:
+      entity_id:
+        - switch.tv_priz
+        - switch.sonoff_10021dd88c_1
+        - switch.mutfak_masa_priz
+        - switch.sonoff_a4b0024d63
+  - if:
+      - condition: numeric_state
+        entity_id: sensor.playstation_5_power
+        below: 1
+    then:
+      - action: switch.turn_off
+        target:
+          entity_id: switch.playstation_5_priz
+mode: single
