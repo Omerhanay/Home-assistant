@@ -3,7 +3,7 @@ description: >-
   Panelde "Uyku" butonuna basılınca: ışıklar ve LED'ler söner (Çocuk Odası gece lambası yanar),
   TV / kahve makinesi / masa prizi kapanır, PS5 yalnızca tamamen kapalıysa kesilir, hava temizleyici
   Sleep moduna geçer, süpürge temizlikteyse şarja döner, Yatak ve Çocuk Odası petekleri 20 °C'ye iner
-  (önceki değerler sabah "Günaydın" ile geri yüklenir), giriş kapısı açıksa telefona bildirim gider,
+  (önceki değerler sabah "Günaydın" ile geri yüklenir), giriş kapısı açıksa telefona ve tablete bildirim gider,
   panel animasyonları kapanır.
 triggers:
   - trigger: state
@@ -98,13 +98,18 @@ actions:
           entity_id: "{{ acik_petekler }}"
         data:
           temperature: 20
-  # 8) Giriş kapısı açıksa telefona bildirim
+  # 8) Giriş kapısı açıksa telefona ve tablete bildirim
   - if:
       - condition: state
         entity_id: binary_sensor.sonoff_100235874c
         state: "on"
     then:
       - action: notify.mobile_app_omer_mi10t
+        continue_on_error: true
+        data:
+          title: Uyku modu
+          message: Giriş kapısı açık kaldı.
+      - action: notify.mobile_app_tablet
         continue_on_error: true
         data:
           title: Uyku modu
