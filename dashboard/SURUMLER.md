@@ -4,6 +4,12 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v15 — 2026-10-15
+
+- Pencereler: tek başına duran kartlar (PlayStation 5, Samsung TV, Kapı Priz, Ayakkabılık vb.) yarım genişlikte
+  kalıp yanında boşluk bırakıyordu; artık tam genişlik.
+- TV Priz / PlayStation 5 / Masa Priz: durum "On / Off" yerine **"Açık / Kapalı"**.
+
 ## 0v14 — 2026-10-15
 
 - **Salon:** Xiaomi LYWSD03MMC (pvvx yazılımı, BTHome) sensörü eklendi — `sensor.atc_2b36_*`.

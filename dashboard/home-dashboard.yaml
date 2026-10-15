@@ -1,4 +1,4 @@
-# Ev paneli (telefon, /dashboard-tt) · sürüm 0v14 · 2026-10-15 · bkz. SURUMLER.md
+# Ev paneli (telefon, /dashboard-tt) · sürüm 0v15 · 2026-10-15 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -1644,22 +1644,26 @@ views:
                   background: rgba(255, 255, 255, 0.05) !important;
                   border: 1px solid rgba(255, 255, 255, 0.12) !important;
                 }
-      - type: custom:mushroom-entity-card
-        entity: switch.sonoff_a4b0024d63
-        name: Kapı Priz
-        icon: mdi:power-plug
-        icon_color: teal
-        secondary_info: state
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        card_mod:
-          style: |
-            ha-card {
-              background: rgba(255, 255, 255, 0.05) !important;
-              border: 1px solid rgba(255, 255, 255, 0.12) !important;
-            }
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: custom:mushroom-entity-card
+          entity: switch.sonoff_a4b0024d63
+          name: Kapı Priz
+          icon: mdi:power-plug
+          icon_color: teal
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style: |
+              ha-card {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
       - type: custom:vertical-stack-in-card
         cards:
         - type: tile
@@ -1852,7 +1856,7 @@ views:
         - type: custom:mushroom-template-card
           entity: switch.tv_priz
           primary: TV Priz
-          secondary: '{{ state_translated(entity) }}{% if is_state(entity, ''on'') and has_value(''sensor.tv_priz_power'') %} · {{ states(''sensor.tv_priz_power'') | float(0) | round(0) | int }} W{% endif %}'
+          secondary: '{{ {''on'': ''Açık'', ''off'': ''Kapalı''}.get(states(entity), state_translated(entity)) }}{% if is_state(entity, ''on'') and has_value(''sensor.tv_priz_power'') %} · {{ states(''sensor.tv_priz_power'') | float(0) | round(0) | int }} W{% endif %}'
           icon: mdi:power-plug
           icon_color: '{{ ''teal'' if is_state(entity, ''on'') else ''disabled'' }}'
           tap_action:
@@ -1867,24 +1871,28 @@ views:
                 background: rgba(255, 255, 255, 0.05) !important;
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
               }
-      - type: custom:mushroom-template-card
-        entity: switch.playstation_5_priz
-        primary: PlayStation 5
-        secondary: '{{ state_translated(entity) }}{% if is_state(entity, ''on'') and has_value(''sensor.playstation_5_power'') %} · {{ states(''sensor.playstation_5_power'') | float(0) | round(0) | int }} W{% endif %}'
-        icon: mdi:controller
-        icon_color: '{{ ''teal'' if is_state(entity, ''on'') else ''disabled'' }}'
-        tap_action:
-          action: toggle
-        icon_tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        card_mod:
-          style: |
-            ha-card {
-              background: rgba(255, 255, 255, 0.05) !important;
-              border: 1px solid rgba(255, 255, 255, 0.12) !important;
-            }
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: custom:mushroom-template-card
+          entity: switch.playstation_5_priz
+          primary: PlayStation 5
+          secondary: '{{ {''on'': ''Açık'', ''off'': ''Kapalı''}.get(states(entity), state_translated(entity)) }}{% if is_state(entity, ''on'') and has_value(''sensor.playstation_5_power'') %} · {{ states(''sensor.playstation_5_power'') | float(0) | round(0) | int }} W{% endif %}'
+          icon: mdi:controller
+          icon_color: '{{ ''teal'' if is_state(entity, ''on'') else ''disabled'' }}'
+          tap_action:
+            action: toggle
+          icon_tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style: |
+              ha-card {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
       - type: custom:vertical-stack-in-card
         cards:
         - type: tile
@@ -1951,29 +1959,33 @@ views:
               position: relative;
               isolation: isolate;
             }
-      - type: custom:mushroom-media-player-card
-        entity: media_player.samsung_7_series_43_ue43ru7100uxtk
-        name: Samsung TV
-        use_media_info: false
-        show_volume_level: true
-        collapsible_controls: false
-        media_controls:
-        - on_off
-        - previous
-        - play_pause_stop
-        - next
-        volume_controls:
-        - volume_mute
-        - volume_set
-        - volume_buttons
-        tap_action:
-          action: more-info
-        card_mod:
-          style: |
-            ha-card {
-              background: rgba(255, 255, 255, 0.05) !important;
-              border: 1px solid rgba(255, 255, 255, 0.12) !important;
-            }
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: custom:mushroom-media-player-card
+          entity: media_player.samsung_7_series_43_ue43ru7100uxtk
+          name: Samsung TV
+          use_media_info: false
+          show_volume_level: true
+          collapsible_controls: false
+          media_controls:
+          - on_off
+          - previous
+          - play_pause_stop
+          - next
+          volume_controls:
+          - volume_mute
+          - volume_set
+          - volume_buttons
+          tap_action:
+            action: more-info
+          card_mod:
+            style: |
+              ha-card {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
       - type: grid
         columns: 2
         square: false
@@ -2204,7 +2216,7 @@ views:
             type: custom:mushroom-template-card
             entity: switch.mutfak_masa_priz
             primary: Masa Priz
-            secondary: '{{ state_translated(entity) }}{% if is_state(entity, ''on'') and has_value(''sensor.mutfak_masa_priz_power'') %} · {{ states(''sensor.mutfak_masa_priz_power'') | float(0) | round(0) | int }} W{% endif %}'
+            secondary: '{{ {''on'': ''Açık'', ''off'': ''Kapalı''}.get(states(entity), state_translated(entity)) }}{% if is_state(entity, ''on'') and has_value(''sensor.mutfak_masa_priz_power'') %} · {{ states(''sensor.mutfak_masa_priz_power'') | float(0) | round(0) | int }} W{% endif %}'
             icon: mdi:power-socket-eu
             icon_color: '{{ ''teal'' if is_state(entity, ''on'') else ''disabled'' }}'
             tap_action:
@@ -2489,30 +2501,34 @@ views:
                   background: rgba(255, 255, 255, 0.05) !important;
                   border: 1px solid rgba(255, 255, 255, 0.12) !important;
                 }
-      - type: custom:mushroom-entity-card
-        entity: switch.calisma_odasi_kapi_priz
-        name: Divan LED Röle
-        icon: mdi:toggle-switch
-        icon_color: amber
-        secondary_info: state
-        tap_action:
-          action: toggle
-        hold_action:
-          action: more-info
-        card_mod:
-          style:
-            mushroom-shape-icon$: |
-              .shape {
-                transition: box-shadow 0.4s ease !important;
-                {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}
-                box-shadow: 0 0 16px -2px var(--icon-color) !important;
-                {% endif %}
-              }
-            .: |
-              ha-card {
-                background: rgba(255, 255, 255, 0.05) !important;
-                border: 1px solid rgba(255, 255, 255, 0.12) !important;
-              }
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: custom:mushroom-entity-card
+          entity: switch.calisma_odasi_kapi_priz
+          name: Divan LED Röle
+          icon: mdi:toggle-switch
+          icon_color: amber
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: |
+                .shape {
+                  transition: box-shadow 0.4s ease !important;
+                  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}
+                  box-shadow: 0 0 16px -2px var(--icon-color) !important;
+                  {% endif %}
+                }
+              .: |
+                ha-card {
+                  background: rgba(255, 255, 255, 0.05) !important;
+                  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+                }
       - type: custom:vertical-stack-in-card
         cards:
         - type: tile
@@ -2579,20 +2595,24 @@ views:
               position: relative;
               isolation: isolate;
             }
-      - type: tile
-        entity: sensor.sonoff_a4b001d936_temperature
-        name: Sıcaklık
-        icon: mdi:thermometer
-        color: deep-orange
-        features:
-        - type: trend-graph
-          hours_to_show: 24
-        card_mod:
-          style: |
-            ha-card {
-              background: rgba(255, 255, 255, 0.05) !important;
-              border: 1px solid rgba(255, 255, 255, 0.12) !important;
-            }
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.sonoff_a4b001d936_temperature
+          name: Sıcaklık
+          icon: mdi:thermometer
+          color: deep-orange
+          features:
+          - type: trend-graph
+            hours_to_show: 24
+          card_mod:
+            style: |
+              ha-card {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
     - type: custom:bubble-card
       card_type: pop-up
       hash: '#koridor'
@@ -2717,55 +2737,59 @@ views:
                   background: rgba(255, 255, 255, 0.05) !important;
                   border: 1px solid rgba(255, 255, 255, 0.12) !important;
                 }
-      - type: custom:mushroom-entity-card
-        entity: binary_sensor.sonoff_a4b0023729_moisture
-        name: Ayakkabılık
-        secondary_info: state
-        tap_action:
-          action: more-info
-        card_mod:
-          style:
-            .: |
-              mushroom-shape-icon {
-                {% if is_state(config.entity, 'on') %}
-                  --icon-color: rgb(var(--rgb-red-color, 244, 67, 54)) !important;
-                  --icon-color-disabled: rgb(var(--rgb-red-color, 244, 67, 54)) !important;
-                  --shape-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;
-                  --shape-color-disabled: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;
-                    {% elif states(config.entity) in ['unavailable', 'unknown'] %}
-                  --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
-                  --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
-                  --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
-                  --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
-                    {% else %}
-                  --icon-color: rgb(var(--rgb-green-color, 76, 175, 80)) !important;
-                  --icon-color-disabled: rgb(var(--rgb-green-color, 76, 175, 80)) !important;
-                  --shape-color: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;
-                  --shape-color-disabled: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;
-                    {% endif %}
-              }
-              ha-card {
-                transition: background-color 0.4s ease;
-                {% if is_state(config.entity, 'on') %}
-                background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);
-                box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);
-                {% endif %}
-              }
-              ha-card {
-                background: rgba(255, 255, 255, 0.05) !important;
-                border: 1px solid rgba(255, 255, 255, 0.12) !important;
-              }
-            mushroom-shape-icon$: |
-              .shape {
-                {% if is_state(config.entity, 'on') %}
-                animation: alert-pulse 1.6s ease-out infinite !important;
-                {% endif %}
-              }
-              @keyframes alert-pulse {
-                0% { box-shadow: 0 0 0 0 rgba(var(--rgb-red-color, 244, 67, 54), 0.6); }
-                100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }
-              }
-              @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: custom:mushroom-entity-card
+          entity: binary_sensor.sonoff_a4b0023729_moisture
+          name: Ayakkabılık
+          secondary_info: state
+          tap_action:
+            action: more-info
+          card_mod:
+            style:
+              .: |
+                mushroom-shape-icon {
+                  {% if is_state(config.entity, 'on') %}
+                    --icon-color: rgb(var(--rgb-red-color, 244, 67, 54)) !important;
+                    --icon-color-disabled: rgb(var(--rgb-red-color, 244, 67, 54)) !important;
+                    --shape-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;
+                    --shape-color-disabled: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;
+                      {% elif states(config.entity) in ['unavailable', 'unknown'] %}
+                    --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
+                    --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
+                    --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
+                    --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
+                      {% else %}
+                    --icon-color: rgb(var(--rgb-green-color, 76, 175, 80)) !important;
+                    --icon-color-disabled: rgb(var(--rgb-green-color, 76, 175, 80)) !important;
+                    --shape-color: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;
+                    --shape-color-disabled: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;
+                      {% endif %}
+                }
+                ha-card {
+                  transition: background-color 0.4s ease;
+                  {% if is_state(config.entity, 'on') %}
+                  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);
+                  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);
+                  {% endif %}
+                }
+                ha-card {
+                  background: rgba(255, 255, 255, 0.05) !important;
+                  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+                }
+              mushroom-shape-icon$: |
+                .shape {
+                  {% if is_state(config.entity, 'on') %}
+                  animation: alert-pulse 1.6s ease-out infinite !important;
+                  {% endif %}
+                }
+                @keyframes alert-pulse {
+                  0% { box-shadow: 0 0 0 0 rgba(var(--rgb-red-color, 244, 67, 54), 0.6); }
+                  100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }
+                }
+                @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
       - type: custom:vertical-stack-in-card
         cards:
         - type: tile
@@ -2953,55 +2977,59 @@ views:
                   100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }
                 }
                 @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
-      - type: custom:mushroom-entity-card
-        entity: binary_sensor.sonoff_a4b0023726_moisture
-        name: Çamaşır Mak.
-        secondary_info: state
-        tap_action:
-          action: more-info
-        card_mod:
-          style:
-            .: |
-              mushroom-shape-icon {
-                {% if is_state(config.entity, 'on') %}
-                  --icon-color: rgb(var(--rgb-red-color, 244, 67, 54)) !important;
-                  --icon-color-disabled: rgb(var(--rgb-red-color, 244, 67, 54)) !important;
-                  --shape-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;
-                  --shape-color-disabled: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;
-                    {% elif states(config.entity) in ['unavailable', 'unknown'] %}
-                  --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
-                  --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
-                  --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
-                  --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
-                    {% else %}
-                  --icon-color: rgb(var(--rgb-green-color, 76, 175, 80)) !important;
-                  --icon-color-disabled: rgb(var(--rgb-green-color, 76, 175, 80)) !important;
-                  --shape-color: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;
-                  --shape-color-disabled: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;
-                    {% endif %}
-              }
-              ha-card {
-                transition: background-color 0.4s ease;
-                {% if is_state(config.entity, 'on') %}
-                background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);
-                box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);
-                {% endif %}
-              }
-              ha-card {
-                background: rgba(255, 255, 255, 0.05) !important;
-                border: 1px solid rgba(255, 255, 255, 0.12) !important;
-              }
-            mushroom-shape-icon$: |
-              .shape {
-                {% if is_state(config.entity, 'on') %}
-                animation: alert-pulse 1.6s ease-out infinite !important;
-                {% endif %}
-              }
-              @keyframes alert-pulse {
-                0% { box-shadow: 0 0 0 0 rgba(var(--rgb-red-color, 244, 67, 54), 0.6); }
-                100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }
-              }
-              @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: custom:mushroom-entity-card
+          entity: binary_sensor.sonoff_a4b0023726_moisture
+          name: Çamaşır Mak.
+          secondary_info: state
+          tap_action:
+            action: more-info
+          card_mod:
+            style:
+              .: |
+                mushroom-shape-icon {
+                  {% if is_state(config.entity, 'on') %}
+                    --icon-color: rgb(var(--rgb-red-color, 244, 67, 54)) !important;
+                    --icon-color-disabled: rgb(var(--rgb-red-color, 244, 67, 54)) !important;
+                    --shape-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;
+                    --shape-color-disabled: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;
+                      {% elif states(config.entity) in ['unavailable', 'unknown'] %}
+                    --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
+                    --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
+                    --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
+                    --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
+                      {% else %}
+                    --icon-color: rgb(var(--rgb-green-color, 76, 175, 80)) !important;
+                    --icon-color-disabled: rgb(var(--rgb-green-color, 76, 175, 80)) !important;
+                    --shape-color: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;
+                    --shape-color-disabled: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;
+                      {% endif %}
+                }
+                ha-card {
+                  transition: background-color 0.4s ease;
+                  {% if is_state(config.entity, 'on') %}
+                  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);
+                  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);
+                  {% endif %}
+                }
+                ha-card {
+                  background: rgba(255, 255, 255, 0.05) !important;
+                  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+                }
+              mushroom-shape-icon$: |
+                .shape {
+                  {% if is_state(config.entity, 'on') %}
+                  animation: alert-pulse 1.6s ease-out infinite !important;
+                  {% endif %}
+                }
+                @keyframes alert-pulse {
+                  0% { box-shadow: 0 0 0 0 rgba(var(--rgb-red-color, 244, 67, 54), 0.6); }
+                  100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }
+                }
+                @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
     - type: custom:bubble-card
       card_type: pop-up
       hash: '#ebeveyn-banyo'
@@ -3168,55 +3196,59 @@ views:
                   100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }
                 }
                 @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
-      - type: custom:mushroom-entity-card
-        entity: binary_sensor.sonoff_a4b002414d_moisture
-        name: Sağ
-        secondary_info: state
-        tap_action:
-          action: more-info
-        card_mod:
-          style:
-            .: |
-              mushroom-shape-icon {
-                {% if is_state(config.entity, 'on') %}
-                  --icon-color: rgb(var(--rgb-red-color, 244, 67, 54)) !important;
-                  --icon-color-disabled: rgb(var(--rgb-red-color, 244, 67, 54)) !important;
-                  --shape-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;
-                  --shape-color-disabled: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;
-                    {% elif states(config.entity) in ['unavailable', 'unknown'] %}
-                  --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
-                  --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
-                  --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
-                  --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
-                    {% else %}
-                  --icon-color: rgb(var(--rgb-green-color, 76, 175, 80)) !important;
-                  --icon-color-disabled: rgb(var(--rgb-green-color, 76, 175, 80)) !important;
-                  --shape-color: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;
-                  --shape-color-disabled: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;
-                    {% endif %}
-              }
-              ha-card {
-                transition: background-color 0.4s ease;
-                {% if is_state(config.entity, 'on') %}
-                background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);
-                box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);
-                {% endif %}
-              }
-              ha-card {
-                background: rgba(255, 255, 255, 0.05) !important;
-                border: 1px solid rgba(255, 255, 255, 0.12) !important;
-              }
-            mushroom-shape-icon$: |
-              .shape {
-                {% if is_state(config.entity, 'on') %}
-                animation: alert-pulse 1.6s ease-out infinite !important;
-                {% endif %}
-              }
-              @keyframes alert-pulse {
-                0% { box-shadow: 0 0 0 0 rgba(var(--rgb-red-color, 244, 67, 54), 0.6); }
-                100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }
-              }
-              @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: custom:mushroom-entity-card
+          entity: binary_sensor.sonoff_a4b002414d_moisture
+          name: Sağ
+          secondary_info: state
+          tap_action:
+            action: more-info
+          card_mod:
+            style:
+              .: |
+                mushroom-shape-icon {
+                  {% if is_state(config.entity, 'on') %}
+                    --icon-color: rgb(var(--rgb-red-color, 244, 67, 54)) !important;
+                    --icon-color-disabled: rgb(var(--rgb-red-color, 244, 67, 54)) !important;
+                    --shape-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;
+                    --shape-color-disabled: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;
+                      {% elif states(config.entity) in ['unavailable', 'unknown'] %}
+                    --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
+                    --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
+                    --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
+                    --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
+                      {% else %}
+                    --icon-color: rgb(var(--rgb-green-color, 76, 175, 80)) !important;
+                    --icon-color-disabled: rgb(var(--rgb-green-color, 76, 175, 80)) !important;
+                    --shape-color: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;
+                    --shape-color-disabled: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;
+                      {% endif %}
+                }
+                ha-card {
+                  transition: background-color 0.4s ease;
+                  {% if is_state(config.entity, 'on') %}
+                  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);
+                  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);
+                  {% endif %}
+                }
+                ha-card {
+                  background: rgba(255, 255, 255, 0.05) !important;
+                  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+                }
+              mushroom-shape-icon$: |
+                .shape {
+                  {% if is_state(config.entity, 'on') %}
+                  animation: alert-pulse 1.6s ease-out infinite !important;
+                  {% endif %}
+                }
+                @keyframes alert-pulse {
+                  0% { box-shadow: 0 0 0 0 rgba(var(--rgb-red-color, 244, 67, 54), 0.6); }
+                  100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }
+                }
+                @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
     - type: custom:bubble-card
       card_type: pop-up
       hash: '#piller'
@@ -3298,22 +3330,26 @@ views:
                 background: rgba(255, 255, 255, 0.05) !important;
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
               }
-      - type: tile
-        entity: sensor.atc_2b36_battery
-        name: Salon TH
-        tap_action:
-          action: more-info
-        features:
-        - type: bar-gauge
-          min: 0
-          max: 100
-        features_position: inline
-        card_mod:
-          style: |
-            ha-card {
-              background: rgba(255, 255, 255, 0.05) !important;
-              border: 1px solid rgba(255, 255, 255, 0.12) !important;
-            }
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.atc_2b36_battery
+          name: Salon TH
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: |
+              ha-card {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
       - type: heading
         heading: Petekler
         heading_style: subtitle
@@ -3500,19 +3536,23 @@ views:
                 background: rgba(255, 255, 255, 0.05) !important;
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
               }
-      - type: tile
-        entity: sensor.sonoff_a4b002414d_battery
-        name: Balkon Sağ
-        tap_action:
-          action: more-info
-        features:
-        - type: bar-gauge
-          min: 0
-          max: 100
-        features_position: inline
-        card_mod:
-          style: |
-            ha-card {
-              background: rgba(255, 255, 255, 0.05) !important;
-              border: 1px solid rgba(255, 255, 255, 0.12) !important;
-            }
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.sonoff_a4b002414d_battery
+          name: Balkon Sağ
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: |
+              ha-card {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
