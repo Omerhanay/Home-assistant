@@ -1,4 +1,4 @@
-# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v21 · 2026-10-15 · bkz. SURUMLER.md
+# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v22 · 2026-10-15 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -738,6 +738,32 @@ views:
         navigation_path: '#piller'
       grid_options:
         columns: full
+      card_mod:
+        style: |
+          ha-tile-info {
+            container-type: inline-size;
+            overflow: hidden;
+          }
+          span[slot="secondary"] {
+          {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+            display: block !important;
+            width: max-content !important;
+            max-width: none !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+            animation: oda-kayan 12s ease-in-out infinite;
+          {% else %}
+            white-space: normal !important;
+          {% endif %}
+          }
+          @keyframes oda-kayan {
+            0%, 15% { transform: translateX(0); }
+            45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+            90%, 100% { transform: translateX(0); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            span[slot="secondary"] { animation: none !important; white-space: normal !important; }
+          }
     - type: tile
       entity: vacuum.ijai_sg_1025189601_v3
       name: Robot süpürge yardım bekliyor
@@ -1896,6 +1922,30 @@ views:
                 background: rgba(255, 255, 255, 0.05) !important;
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
               }
+              ha-tile-info {
+                container-type: inline-size;
+                overflow: hidden;
+              }
+              span[slot="secondary"] {
+              {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+                display: block !important;
+                width: max-content !important;
+                max-width: none !important;
+                overflow: visible !important;
+                text-overflow: clip !important;
+                animation: oda-kayan 12s ease-in-out infinite;
+              {% else %}
+                white-space: normal !important;
+              {% endif %}
+              }
+              @keyframes oda-kayan {
+                0%, 15% { transform: translateX(0); }
+                45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+                90%, 100% { transform: translateX(0); }
+              }
+              @media (prefers-reduced-motion: reduce) {
+                span[slot="secondary"] { animation: none !important; white-space: normal !important; }
+              }
       - type: grid
         columns: 1
         square: false
@@ -1917,6 +1967,30 @@ views:
               ha-card {
                 background: rgba(255, 255, 255, 0.05) !important;
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
+              ha-tile-info {
+                container-type: inline-size;
+                overflow: hidden;
+              }
+              span[slot="secondary"] {
+              {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+                display: block !important;
+                width: max-content !important;
+                max-width: none !important;
+                overflow: visible !important;
+                text-overflow: clip !important;
+                animation: oda-kayan 12s ease-in-out infinite;
+              {% else %}
+                white-space: normal !important;
+              {% endif %}
+              }
+              @keyframes oda-kayan {
+                0%, 15% { transform: translateX(0); }
+                45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+                90%, 100% { transform: translateX(0); }
+              }
+              @media (prefers-reduced-motion: reduce) {
+                span[slot="secondary"] { animation: none !important; white-space: normal !important; }
               }
       - type: custom:vertical-stack-in-card
         cards:
@@ -2310,6 +2384,30 @@ views:
                 ha-card {
                   background: rgba(255, 255, 255, 0.05) !important;
                   border: 1px solid rgba(255, 255, 255, 0.12) !important;
+                }
+                ha-tile-info {
+                  container-type: inline-size;
+                  overflow: hidden;
+                }
+                span[slot="secondary"] {
+                {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+                  display: block !important;
+                  width: max-content !important;
+                  max-width: none !important;
+                  overflow: visible !important;
+                  text-overflow: clip !important;
+                  animation: oda-kayan 12s ease-in-out infinite;
+                {% else %}
+                  white-space: normal !important;
+                {% endif %}
+                }
+                @keyframes oda-kayan {
+                  0%, 15% { transform: translateX(0); }
+                  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+                  90%, 100% { transform: translateX(0); }
+                }
+                @media (prefers-reduced-motion: reduce) {
+                  span[slot="secondary"] { animation: none !important; white-space: normal !important; }
                 }
     - type: custom:bubble-card
       card_type: pop-up
@@ -2720,6 +2818,30 @@ views:
                 background: rgba(255, 255, 255, 0.05) !important;
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
               }
+              ha-tile-info {
+                container-type: inline-size;
+                overflow: hidden;
+              }
+              span[slot="secondary"] {
+              {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+                display: block !important;
+                width: max-content !important;
+                max-width: none !important;
+                overflow: visible !important;
+                text-overflow: clip !important;
+                animation: oda-kayan 12s ease-in-out infinite;
+              {% else %}
+                white-space: normal !important;
+              {% endif %}
+              }
+              @keyframes oda-kayan {
+                0%, 15% { transform: translateX(0); }
+                45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+                90%, 100% { transform: translateX(0); }
+              }
+              @media (prefers-reduced-motion: reduce) {
+                span[slot="secondary"] { animation: none !important; white-space: normal !important; }
+              }
         - type: custom:mushroom-template-card
           entity: binary_sensor.sonoff_a4b001a3ce
           primary: Hareket
@@ -2735,6 +2857,30 @@ views:
               ha-card {
                 background: rgba(255, 255, 255, 0.05) !important;
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
+              ha-tile-info {
+                container-type: inline-size;
+                overflow: hidden;
+              }
+              span[slot="secondary"] {
+              {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+                display: block !important;
+                width: max-content !important;
+                max-width: none !important;
+                overflow: visible !important;
+                text-overflow: clip !important;
+                animation: oda-kayan 12s ease-in-out infinite;
+              {% else %}
+                white-space: normal !important;
+              {% endif %}
+              }
+              @keyframes oda-kayan {
+                0%, 15% { transform: translateX(0); }
+                45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+                90%, 100% { transform: translateX(0); }
+              }
+              @media (prefers-reduced-motion: reduce) {
+                span[slot="secondary"] { animation: none !important; white-space: normal !important; }
               }
       - type: grid
         columns: 1
