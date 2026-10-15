@@ -1,4 +1,4 @@
-# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v18 · 2026-10-15 · bkz. SURUMLER.md
+# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v19 · 2026-10-15 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -2982,7 +2982,7 @@ views:
         cards:
         - type: custom:mushroom-entity-card
           entity: binary_sensor.sonoff_a4b0023726_moisture
-          name: Çamaşır Mak.
+          name: Çamaşır Makinesi
           secondary_info: state
           tap_action:
             action: more-info
