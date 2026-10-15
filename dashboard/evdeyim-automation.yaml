@@ -1,0 +1,42 @@
+# "Evdeyim" senaryosu: panelde Evdeyim butonuna basılınca çalışır.
+#
+# Ne yapar:
+#   1. Isıtma sezonunda (Ekim–Nisan) KAPALI olan petekleri "heat" moduna alır.
+#      Otomatik (auto) veya zaten açık olan peteklere dokunmaz; her petek kendi
+#      hedef sıcaklığına döner.
+#   2. Hava kararmışsa Koridor (Kapı) ışığını yakar.
+#   3. Bildirim yerine panelde "Çalışıyor…" yazar (buton 2 sn sonra sıfırlanır).
+#
+# Ekleme: Ayarlar > Otomasyonlar ve sahneler > + Otomasyon oluştur > Yeni otomasyon oluştur >
+#         sağ üst ⋮ > YAML'da düzenle > bu dosyayı yapıştır > Kaydet.
+# Not: HA, kaydederken bu # açıklama satırlarını siler; bu normaldir.
+alias: Evdeyim_Otomasyonu
+description: Evdeyim butonu - kapalı petekleri açar, karanlıksa koridor ışığını yakar.
+mode: single
+triggers:
+  - trigger: state
+    entity_id: input_boolean.evdeyim_section
+    to: "on"
+actions:
+  - variables:
+      kapali_petekler: >-
+        {{ ['climate.sonoff_a4b001d938', 'climate.sonoff_a4b001d93a',
+            'climate.sonoff_a4b001d937', 'climate.sonoff_a4b001d936']
+           | select('is_state', 'off') | list }}
+  - if:
+      - condition: template
+        value_template: "{{ now().month in [10, 11, 12, 1, 2, 3, 4] and kapali_petekler | count > 0 }}"
+    then:
+      - action: climate.set_hvac_mode
+        target:
+          entity_id: "{{ kapali_petekler }}"
+        data:
+          hvac_mode: heat
+  - if:
+      - condition: state
+        entity_id: sun.sun
+        state: below_horizon
+    then:
+      - action: light.turn_on
+        target:
+          entity_id: light.koridor_kapi

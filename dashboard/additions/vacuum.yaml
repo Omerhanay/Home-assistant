@@ -1,0 +1,41 @@
+# Robot süpürge: oda sayfasına (veya ana sayfaya) eklenecek kart
+- type: custom:mushroom-vacuum-card
+  entity: vacuum.ijai_sg_1025189601_v3
+  name: Robot Süpürge
+  icon: mdi:robot-vacuum
+  secondary_info: state
+  icon_animation: false
+  commands:
+    - start_pause
+    - stop
+    - return_home
+    - locate
+    - clean_spot
+  tap_action:
+    action: more-info
+  grid_options:
+    columns: full
+  card_mod:
+    style:
+      mushroom-shape-icon$: |
+        .shape {
+          transition: box-shadow 0.4s ease !important;
+          {% if states(config.entity) in ['cleaning', 'returning'] %}
+          box-shadow: 0 0 16px -2px var(--icon-color) !important;
+          {% endif %}
+        }
+
+# Ana Sayfa > Ev Durumu bölümüne: yalnızca süpürge hata verdiğinde görünür
+- type: tile
+  entity: vacuum.ijai_sg_1025189601_v3
+  name: Robot süpürge yardım bekliyor
+  icon: mdi:robot-vacuum-alert
+  color: orange
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: state
+      entity: vacuum.ijai_sg_1025189601_v3
+      state: error
+  grid_options:
+    columns: full
