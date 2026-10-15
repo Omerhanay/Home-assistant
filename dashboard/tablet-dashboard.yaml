@@ -1,4 +1,4 @@
-# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v20 · 2026-10-15 · bkz. SURUMLER.md
+# Ev paneli (tablet, /dashboard-tablet) · sürüm 0v21 · 2026-10-15 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -3148,7 +3148,7 @@ views:
                 }
         - type: custom:mushroom-entity-card
           entity: binary_sensor.sonoff_a4b002372b_moisture
-          name: Sol
+          name: Sol su sensörü
           secondary_info: state
           tap_action:
             action: more-info
@@ -3201,7 +3201,7 @@ views:
         cards:
         - type: custom:mushroom-entity-card
           entity: binary_sensor.sonoff_a4b002414d_moisture
-          name: Sağ
+          name: Sağ su sensörü
           secondary_info: state
           tap_action:
             action: more-info
