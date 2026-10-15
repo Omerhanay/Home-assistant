@@ -1,4 +1,4 @@
-# Ev paneli (telefon, /dashboard-tt) · sürüm 0v17 · 2026-10-15 · bkz. SURUMLER.md
+# Ev paneli (telefon, /dashboard-tt) · sürüm 0v18 · 2026-10-15 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -3233,7 +3233,7 @@ views:
         heading: Sensörler
         heading_style: subtitle
       - type: grid
-        columns: 2
+        columns: 1
         square: false
         cards:
         - type: tile
@@ -3269,7 +3269,7 @@ views:
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
               }
       - type: grid
-        columns: 2
+        columns: 1
         square: false
         cards:
         - type: tile
@@ -3328,7 +3328,7 @@ views:
         heading: Petekler
         heading_style: subtitle
       - type: grid
-        columns: 2
+        columns: 1
         square: false
         cards:
         - type: tile
@@ -3364,7 +3364,7 @@ views:
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
               }
       - type: grid
-        columns: 2
+        columns: 1
         square: false
         cards:
         - type: tile
@@ -3403,7 +3403,7 @@ views:
         heading: Su kaçağı sensörleri
         heading_style: subtitle
       - type: grid
-        columns: 2
+        columns: 1
         square: false
         cards:
         - type: tile
@@ -3439,7 +3439,7 @@ views:
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
               }
       - type: grid
-        columns: 2
+        columns: 1
         square: false
         cards:
         - type: tile
@@ -3475,7 +3475,7 @@ views:
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
               }
       - type: grid
-        columns: 2
+        columns: 1
         square: false
         cards:
         - type: tile

@@ -4,6 +4,11 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v18 — 2026-10-15
+
+- Piller penceresi: ikili dizilimde cihaz adları kesiliyordu ("Kap…", "Har…"); artık her pil tam genişlikte
+  tek satır, ad tam okunuyor ve doluluk çubuğu sağda.
+
 ## 0v17 — 2026-10-15
 
 - Mutfak penceresi: Masa Priz gizliyken **Lavabo** yarım genişlikte yalnız kalıyordu; artık tam genişlik.
