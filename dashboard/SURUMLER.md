@@ -4,6 +4,12 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v16 — 2026-10-15
+
+- Koridor penceresi: **Kapı** kartı artık durumu da yazıyor ("Kapalı · 2 saat önce"; açıkken turuncu),
+  **Hareket** kartı "Temiz" yerine "Hareket yok · 12 dk önce" / "Hareket var".
+- PM2.5 çubuğunun ölçeği 0–150'den 0–50'ye (ev içi değerlerde çubuk görünür olsun).
+
 ## 0v15 — 2026-10-15
 
 - Pencereler: tek başına duran kartlar (PlayStation 5, Samsung TV, Kapı Priz, Ayakkabılık vb.) yarım genişlikte

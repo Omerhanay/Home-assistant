@@ -1,4 +1,4 @@
-# Ev paneli (YAML modu, /dashboard-ev) · sürüm 0v15 · 2026-10-15 · bkz. SURUMLER.md
+# Ev paneli (YAML modu, /dashboard-ev) · sürüm 0v16 · 2026-10-15 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -2675,68 +2675,38 @@ views:
         columns: 2
         square: false
         cards:
-        - type: custom:mushroom-entity-card
+        - type: custom:mushroom-template-card
           entity: binary_sensor.sonoff_100235874c
-          name: Kapı
-          secondary_info: last-changed
+          primary: Kapı
+          secondary: '{% if states(entity) in [''unavailable'', ''unknown''] %}Bağlantı yok{% else %}{{ ''Açık'' if is_state(entity, ''on'') else ''Kapalı'' }} · {% set d = (now() - states[entity].last_changed).total_seconds() %}{% if d < 60 %}az önce{% elif d < 3600 %}{{ (d / 60) | int }} dk önce{% elif d < 86400 %}{{ (d / 3600) | int }} saat önce{% else %}{{ (d / 86400) | int }} gün önce{% endif %}{% endif %}'
+          icon: '{{ ''mdi:door-open'' if is_state(entity, ''on'') else ''mdi:door-closed'' }}'
+          icon_color: '{% if is_state(entity, ''on'') %}orange{% elif states(entity) in [''unavailable'', ''unknown''] %}disabled{% else %}green{% endif %}'
           tap_action:
             action: more-info
+          icon_tap_action:
+            action: more-info
           card_mod:
-            style:
-              .: |
-                mushroom-shape-icon {
-                  {% if is_state(config.entity, 'on') %}
-                    --icon-color: rgb(var(--rgb-orange-color, 255, 152, 0)) !important;
-                    --icon-color-disabled: rgb(var(--rgb-orange-color, 255, 152, 0)) !important;
-                    --shape-color: rgba(var(--rgb-orange-color, 255, 152, 0), 0.2) !important;
-                    --shape-color-disabled: rgba(var(--rgb-orange-color, 255, 152, 0), 0.2) !important;
-                      {% elif states(config.entity) in ['unavailable', 'unknown'] %}
-                    --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
-                    --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
-                    --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
-                    --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
-                      {% else %}
-                    --icon-color: rgb(var(--rgb-green-color, 76, 175, 80)) !important;
-                    --icon-color-disabled: rgb(var(--rgb-green-color, 76, 175, 80)) !important;
-                    --shape-color: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;
-                    --shape-color-disabled: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;
-                      {% endif %}
-                }
-                ha-card {
-                  background: rgba(255, 255, 255, 0.05) !important;
-                  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-                }
-        - type: custom:mushroom-entity-card
+            style: |
+              ha-card {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
+        - type: custom:mushroom-template-card
           entity: binary_sensor.sonoff_a4b001a3ce
-          name: Hareket
-          secondary_info: state
+          primary: Hareket
+          secondary: '{% if states(entity) in [''unavailable'', ''unknown''] %}Bağlantı yok{% else %}{% if is_state(entity, ''on'') %}Hareket var{% else %}Hareket yok · {% set d = (now() - states[entity].last_changed).total_seconds() %}{% if d < 60 %}az önce{% elif d < 3600 %}{{ (d / 60) | int }} dk önce{% elif d < 86400 %}{{ (d / 3600) | int }} saat önce{% else %}{{ (d / 86400) | int }} gün önce{% endif %}{% endif %}{% endif %}'
+          icon: '{{ ''mdi:motion-sensor'' if is_state(entity, ''on'') else ''mdi:motion-sensor-off'' }}'
+          icon_color: '{{ ''blue'' if is_state(entity, ''on'') else ''disabled'' }}'
           tap_action:
             action: more-info
+          icon_tap_action:
+            action: more-info
           card_mod:
-            style:
-              .: |
-                mushroom-shape-icon {
-                  {% if is_state(config.entity, 'on') %}
-                    --icon-color: rgb(var(--rgb-blue-color, 33, 150, 243)) !important;
-                    --icon-color-disabled: rgb(var(--rgb-blue-color, 33, 150, 243)) !important;
-                    --shape-color: rgba(var(--rgb-blue-color, 33, 150, 243), 0.2) !important;
-                    --shape-color-disabled: rgba(var(--rgb-blue-color, 33, 150, 243), 0.2) !important;
-                      {% elif states(config.entity) in ['unavailable', 'unknown'] %}
-                    --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
-                    --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
-                    --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
-                    --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
-                      {% else %}
-                    --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
-                    --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;
-                    --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
-                    --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;
-                      {% endif %}
-                }
-                ha-card {
-                  background: rgba(255, 255, 255, 0.05) !important;
-                  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-                }
+            style: |
+              ha-card {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
       - type: grid
         columns: 1
         square: false
@@ -2872,7 +2842,7 @@ views:
           features:
           - type: bar-gauge
             min: 0
-            max: 150
+            max: 50
           card_mod:
             style: |
               ha-card {
