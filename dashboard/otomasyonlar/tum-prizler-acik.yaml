@@ -1,0 +1,18 @@
+alias: Tüm_Prizler_Açık_Otomasyonu
+description: Panelde "Prizleri Aç" butonuna basılınca prizleri açar (Divan LED artık ışık otomasyonlarında).
+triggers:
+  - trigger: state
+    entity_id: input_boolean.tum_prizler_acik_section
+    to: "on"
+conditions: []
+actions:
+  - action: switch.turn_on
+    continue_on_error: true
+    target:
+      entity_id:
+        - switch.tv_priz
+        - switch.playstation_5_priz
+        - switch.sonoff_10021dd88c_1
+        - switch.mutfak_masa_priz
+        - switch.sonoff_a4b0024d63
+mode: single

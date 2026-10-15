@@ -1,0 +1,116 @@
+alias: Uyku_Modu_Otomasyonu
+description: >-
+  Panelde "Uyku" butonuna basılınca: ışıklar ve LED'ler söner (Çocuk Odası gece lambası yanar),
+  TV / kahve makinesi / masa prizi kapanır, PS5 yalnızca tamamen kapalıysa kesilir, hava temizleyici
+  Sleep moduna geçer, süpürge temizlikteyse şarja döner, Yatak ve Çocuk Odası petekleri 20 °C'ye iner
+  (önceki değerler sabah "Günaydın" ile geri yüklenir), giriş kapısı açıksa telefona bildirim gider,
+  panel animasyonları kapanır.
+triggers:
+  - trigger: state
+    entity_id: input_boolean.uyku_modu_section
+    to: "on"
+conditions: []
+actions:
+  # 1) Önceki durumu sakla (sabah Günaydın geri yükler)
+  - action: scene.create
+    data:
+      scene_id: uyku_oncesi
+      snapshot_entities:
+        - climate.sonoff_a4b001d93a
+        - climate.sonoff_a4b001d937
+        - fan.zhimi_sg_918358888_meb1_s_2_air_purifier
+  # 2) Işıklar ve LED'ler (gece lambası hariç)
+  - action: light.turn_off
+    target:
+      entity_id:
+        - light.salon_lamba_01
+        - light.salon_lamba_02
+        - light.salon_tavan_led
+        - light.mutfak_tavan_aydinlatma
+        - light.mutfak_uzun_led_aydinlatma
+        - light.mutfak_kahve_led
+        - light.yatak_odasi_tavan
+        - light.yatak_odasi_led
+        - light.ebeveyn_banyo_aydinlatma
+        - light.cocuk_odasi_lamba
+        - light.calisma_odasi_lamba
+        - light.koridor_kapi
+        - light.koridor_mutfak
+        - light.buyuk_banyo_lamba
+        - light.balkon_tavan_aydinlatma
+  - action: switch.turn_off
+    target:
+      entity_id:
+        - switch.calisma_odasi_kapi_priz
+        - switch.kitaplik_led_sonoff_10021d962d_1
+  # 3) Çocuk Odası gece lambası açık kalsın
+  - action: light.turn_on
+    target:
+      entity_id: light.sonoff_10024a8007
+  # 4) Prizler (Çocuk Odası kapı prizine dokunulmaz)
+  - action: switch.turn_off
+    continue_on_error: true
+    target:
+      entity_id:
+        - switch.tv_priz
+        - switch.sonoff_10021dd88c_1
+        - switch.mutfak_masa_priz
+  - if:
+      - condition: numeric_state
+        entity_id: sensor.playstation_5_power
+        below: 1
+    then:
+      - action: switch.turn_off
+        target:
+          entity_id: switch.playstation_5_priz
+  # 5) Hava temizleyici sessiz mod
+  - if:
+      - condition: state
+        entity_id: fan.zhimi_sg_918358888_meb1_s_2_air_purifier
+        state: "on"
+    then:
+      - action: fan.set_preset_mode
+        continue_on_error: true
+        target:
+          entity_id: fan.zhimi_sg_918358888_meb1_s_2_air_purifier
+        data:
+          preset_mode: Sleep
+  # 6) Süpürge temizlikteyse şarja
+  - if:
+      - condition: state
+        entity_id: vacuum.ijai_sg_1025189601_v3
+        state: cleaning
+    then:
+      - action: vacuum.return_to_base
+        target:
+          entity_id: vacuum.ijai_sg_1025189601_v3
+  # 7) Yatak ve Çocuk Odası petekleri 20 °C (yalnızca kapalı olmayanlar)
+  - variables:
+      acik_petekler: >-
+        {{ ['climate.sonoff_a4b001d93a', 'climate.sonoff_a4b001d937']
+           | reject('is_state', 'off') | list }}
+  - if:
+      - condition: template
+        value_template: "{{ acik_petekler | count > 0 }}"
+    then:
+      - action: climate.set_temperature
+        target:
+          entity_id: "{{ acik_petekler }}"
+        data:
+          temperature: 20
+  # 8) Giriş kapısı açıksa telefona bildirim
+  - if:
+      - condition: state
+        entity_id: binary_sensor.sonoff_100235874c
+        state: "on"
+    then:
+      - action: notify.mobile_app_omer_mi10t
+        continue_on_error: true
+        data:
+          title: Uyku modu
+          message: Giriş kapısı açık kaldı.
+  # 9) Panel animasyonları kapalı
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.dashboard_animasyon
+mode: single
