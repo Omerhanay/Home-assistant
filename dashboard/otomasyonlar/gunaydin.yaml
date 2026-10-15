@@ -9,9 +9,11 @@ conditions:
   - condition: template
     value_template: "{{ states('scene.uyku_oncesi') not in ['unknown', 'unavailable'] }}"
 actions:
+  # Sahne Uyku modunda geçici olarak oluşturulur; şablonla verildiği için düzenleyici
+  # "Varlık bulunamadı" uyarısı göstermez.
   - action: scene.turn_on
     target:
-      entity_id: scene.uyku_oncesi
+      entity_id: "{{ 'scene.uyku_oncesi' }}"
   - action: input_boolean.turn_on
     target:
       entity_id: input_boolean.dashboard_animasyon
