@@ -1,0 +1,33 @@
+alias: Tüm_Işıklar_Açık_Otomasyonu
+description: Panelde "Işıkları Aç" butonuna basılınca evdeki tüm ışıkları ve LED anahtarlarını açar.
+triggers:
+  - trigger: state
+    entity_id: input_boolean.tum_isiklar_acik_section
+    to: "on"
+conditions: []
+actions:
+  - action: light.turn_on
+    target:
+      entity_id:
+        - light.salon_lamba_01
+        - light.salon_lamba_02
+        - light.salon_tavan_led
+        - light.mutfak_tavan_aydinlatma
+        - light.mutfak_uzun_led_aydinlatma
+        - light.mutfak_kahve_led
+        - light.yatak_odasi_tavan
+        - light.yatak_odasi_led
+        - light.ebeveyn_banyo_aydinlatma
+        - light.cocuk_odasi_lamba
+        - light.sonoff_10024a8007
+        - light.calisma_odasi_lamba
+        - light.koridor_kapi
+        - light.koridor_mutfak
+        - light.buyuk_banyo_lamba
+        - light.balkon_tavan_aydinlatma
+  - action: switch.turn_on
+    target:
+      entity_id:
+        - switch.calisma_odasi_kapi_priz
+        - switch.kitaplik_led_sonoff_10021d962d_1
+mode: single
