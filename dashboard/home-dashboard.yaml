@@ -1,4 +1,4 @@
-# Ev paneli (telefon, /dashboard-tt) · sürüm 0v19 · 2026-10-15 · bkz. SURUMLER.md
+# Ev paneli (telefon, /dashboard-tt) · sürüm 0v20 · 2026-10-15 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -2511,8 +2511,8 @@ views:
         cards:
         - type: custom:mushroom-entity-card
           entity: switch.calisma_odasi_kapi_priz
-          name: Divan LED Röle
-          icon: mdi:toggle-switch
+          name: Divan LED
+          icon: mdi:led-strip-variant
           icon_color: amber
           secondary_info: state
           tap_action:
