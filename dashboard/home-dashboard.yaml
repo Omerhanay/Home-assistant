@@ -1,4 +1,4 @@
-# Ev paneli (telefon, /dashboard-tt) · sürüm 0v16 · 2026-10-15 · bkz. SURUMLER.md
+# Ev paneli (telefon, /dashboard-tt) · sürüm 0v17 · 2026-10-15 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -2202,37 +2202,9 @@ views:
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
               }
       - type: grid
-        columns: 2
+        columns: 1
         square: false
         cards:
-        - type: conditional
-          conditions:
-          - condition: state
-            entity: switch.mutfak_masa_priz
-            state_not:
-            - unavailable
-            - unknown
-          card:
-            type: custom:mushroom-template-card
-            entity: switch.mutfak_masa_priz
-            primary: Masa Priz
-            secondary: '{{ {''on'': ''Açık'', ''off'': ''Kapalı''}.get(states(entity), state_translated(entity)) }}{% if is_state(entity, ''on'') and has_value(''sensor.mutfak_masa_priz_power'') %} · {{ states(''sensor.mutfak_masa_priz_power'') | float(0) | round(0) | int }} W{% endif %}'
-            icon: mdi:power-socket-eu
-            icon_color: '{{ ''teal'' if is_state(entity, ''on'') else ''disabled'' }}'
-            tap_action:
-              action: toggle
-            icon_tap_action:
-              action: toggle
-            hold_action:
-              action: more-info
-            double_tap_action:
-              action: none
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(255, 255, 255, 0.05) !important;
-                  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-                }
         - type: custom:mushroom-entity-card
           entity: binary_sensor.sonoff_a4b0023723_moisture
           name: Lavabo
@@ -2282,6 +2254,38 @@ views:
                   100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }
                 }
                 @media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: conditional
+          conditions:
+          - condition: state
+            entity: switch.mutfak_masa_priz
+            state_not:
+            - unavailable
+            - unknown
+          card:
+            type: custom:mushroom-template-card
+            entity: switch.mutfak_masa_priz
+            primary: Masa Priz
+            secondary: '{{ {''on'': ''Açık'', ''off'': ''Kapalı''}.get(states(entity), state_translated(entity)) }}{% if is_state(entity, ''on'') and has_value(''sensor.mutfak_masa_priz_power'') %} · {{ states(''sensor.mutfak_masa_priz_power'') | float(0) | round(0) | int }} W{% endif %}'
+            icon: mdi:power-socket-eu
+            icon_color: '{{ ''teal'' if is_state(entity, ''on'') else ''disabled'' }}'
+            tap_action:
+              action: toggle
+            icon_tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            double_tap_action:
+              action: none
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(255, 255, 255, 0.05) !important;
+                  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+                }
     - type: custom:bubble-card
       card_type: pop-up
       hash: '#yatak-odasi'
