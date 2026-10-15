@@ -4,6 +4,16 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v21 — 2026-10-15
+
+- Balkon penceresi: su kaçağı kartları **"Sol" / "Sağ"** → **"Sol su sensörü" / "Sağ su sensörü"**.
+- Pencere kontrolü tamamlandı: 11 pencerenin tamamı ekran görüntüsüyle gözden geçirildi.
+
+## 0v20 — 2026-10-15
+
+- Çalışma Odası penceresi: **"Divan LED Röle"** → **"Divan LED"**, açma/kapama simgesi yerine LED şerit simgesi
+  (Kitaplık LED ile tutarlı).
+
 ## 0v19 — 2026-10-15
 
 - Büyük Banyo penceresi: kart artık tam genişlik olduğu için "Çamaşır Mak." kısaltması **"Çamaşır Makinesi"** oldu.
