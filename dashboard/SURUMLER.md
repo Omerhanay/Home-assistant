@@ -4,6 +4,33 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v19 — 2026-10-15
+
+- Büyük Banyo penceresi: kart artık tam genişlik olduğu için "Çamaşır Mak." kısaltması **"Çamaşır Makinesi"** oldu.
+- Pencere kontrolü tamamlandı (Salon, Koridor, Mutfak, Piller, Büyük Banyo; Çocuk Odası 0v11'de).
+
+## 0v18 — 2026-10-15
+
+- Piller penceresi: ikili dizilimde cihaz adları kesiliyordu ("Kap…", "Har…"); artık her pil tam genişlikte
+  tek satır, ad tam okunuyor ve doluluk çubuğu sağda.
+
+## 0v17 — 2026-10-15
+
+- Mutfak penceresi: Masa Priz gizliyken **Lavabo** yarım genişlikte yalnız kalıyordu; artık tam genişlik.
+  Masa Priz cihazı bağlanınca altında tam genişlikte görünür.
+
+## 0v16 — 2026-10-15
+
+- Koridor penceresi: **Kapı** kartı artık durumu da yazıyor ("Kapalı · 2 saat önce"; açıkken turuncu),
+  **Hareket** kartı "Temiz" yerine "Hareket yok · 12 dk önce" / "Hareket var".
+- PM2.5 çubuğunun ölçeği 0–150'den 0–50'ye (ev içi değerlerde çubuk görünür olsun).
+
+## 0v15 — 2026-10-15
+
+- Pencereler: tek başına duran kartlar (PlayStation 5, Samsung TV, Kapı Priz, Ayakkabılık vb.) yarım genişlikte
+  kalıp yanında boşluk bırakıyordu; artık tam genişlik.
+- TV Priz / PlayStation 5 / Masa Priz: durum "On / Off" yerine **"Açık / Kapalı"**.
+
 ## 0v14 — 2026-10-15
 
 - **Salon:** Xiaomi LYWSD03MMC (pvvx yazılımı, BTHome) sensörü eklendi — `sensor.atc_2b36_*`.
