@@ -4,6 +4,11 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v23 — 2026-10-17
+
+- Saat/hava kartı: JavaScript içindeki `sun` değişkeninin adı `gunes` oldu. Görünüm değişmedi; Watchman
+  `sun.elevation`, `sun.rising`, `sun.azimuth` kodlarını yanlışlıkla eksik varlık sanıyordu.
+
 ## 0v22 — 2026-10-15
 
 - Sığmayan açıklamalar artık **kayıyor** (oda kartlarındaki gibi; sığanlar sabit): Piller kartı,

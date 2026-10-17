@@ -1,4 +1,4 @@
-# Ev paneli (telefon, /dashboard-tt) · sürüm 0v22 · 2026-10-15 · bkz. SURUMLER.md
+# Ev paneli (telefon, /dashboard-tt) · sürüm 0v23 · 2026-10-17 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -192,10 +192,10 @@ views:
         - text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35)
         - background: |-
             [[[
-              const sun = (states['sun.sun'] || {}).attributes || {};
-              let E = parseFloat(sun.elevation);
+              const gunes = (states['sun.sun'] || {}).attributes || {};
+              let E = parseFloat(gunes.elevation);
               if (isNaN(E)) { const h = new Date().getHours(); E = h >= 7 && h < 19 ? 30 : -20; }
-              const faz = E > 12 ? 'gun' : E > -1 ? (sun.rising ? 'safak' : 'aksam') : E > -8 ? 'alaca' : 'gece';
+              const faz = E > 12 ? 'gun' : E > -1 ? (gunes.rising ? 'safak' : 'aksam') : E > -8 ? 'alaca' : 'gece';
               const gok = {
                 gun: 'linear-gradient(180deg, #1d4ed8 0%, #3b82f6 55%, #7dd3fc 100%)',
                 safak: 'linear-gradient(180deg, #312e81 0%, #c2410c 65%, #fdba74 100%)',
@@ -255,15 +255,15 @@ views:
           - transition: left 2s ease, top 2s ease
           - left: |-
               [[[
-                const sun = (states['sun.sun'] || {}).attributes || {};
-                const E = parseFloat(sun.elevation), A = parseFloat(sun.azimuth);
+                const gunes = (states['sun.sun'] || {}).attributes || {};
+                const E = parseFloat(gunes.elevation), A = parseFloat(gunes.azimuth);
                 if (isNaN(E) || isNaN(A) || E <= -1) return '66%';
                 return `${(38 + Math.min(Math.max((A - 70) / 220, 0), 1) * 54).toFixed(1)}%`;
               ]]]
           - top: |-
               [[[
-                const sun = (states['sun.sun'] || {}).attributes || {};
-                const E = parseFloat(sun.elevation);
+                const gunes = (states['sun.sun'] || {}).attributes || {};
+                const E = parseFloat(gunes.elevation);
                 if (isNaN(E) || E <= -1) return '42%';
                 return `${(30 + Math.min(Math.max(1 - E / 55, 0), 1) * 48).toFixed(1)}%`;
               ]]]
