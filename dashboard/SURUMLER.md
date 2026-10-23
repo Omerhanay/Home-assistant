@@ -4,6 +4,11 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v24 — 2026-10-23
+
+- Salon penceresi: **Mi Box** kartı (Samsung TV'nin altında) — açma/kapama, oynat/duraklat, açık uygulama;
+  altında mini kumanda: yön tuşları + OK, Geri, Ana ekran, Ses −/+ (`remote.mibox4`).
+
 ## 0v23 — 2026-10-17
 
 - Saat/hava kartı: JavaScript içindeki `sun` değişkeninin adı `gunes` oldu. Görünüm değişmedi; Watchman

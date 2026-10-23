@@ -62,6 +62,8 @@ USER_ADDED = {
     "sensor.ijai_sg_1025189601_v3_main_brush_life_p_7_10",
     # Salon ATC (pvvx/BTHome) sensor — temporary, to be replaced
     "sensor.atc_2b36_temperature", "sensor.atc_2b36_humidity", "sensor.atc_2b36_battery",
+    # Mi Box 4 (Android TV Remote) — Salon
+    "media_player.mibox4",
     # battery sensors (from the user's entity export, 2026-10-13)
     "sensor.sonoff_100235874c_battery", "sensor.sonoff_a4b001a3ce_battery",
     "sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery",
