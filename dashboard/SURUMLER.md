@@ -4,6 +4,12 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v25 — 2026-10-28
+
+- **Çalışma Odası TH sensörü** eklendi (`sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_*`), Yatak/Çocuk ile aynı düzen:
+  oda kartında sıcaklık + nem, penceredeki Sıcaklık kutusu petek okuması yerine oda sensörü (Sıcaklık/Nem ikilisi, 24 sa grafik),
+  ortalama sıcaklıkta Çalışma Odası artık bu sensörden, çevrimdışı uyarısına sıcaklık/nem, Piller kartına ve Piller penceresine "Çalışma Odası TH".
+
 ## 0v24 — 2026-10-23
 
 - Salon penceresi: **Mi Box** kartı (Samsung TV'nin altında) — açma/kapama, oynat/duraklat, açık uygulama;

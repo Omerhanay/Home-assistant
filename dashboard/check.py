@@ -37,6 +37,7 @@ INTENTIONALLY_DROPPED = {
 }
 # Added after the original by the user (confirmed in HA / Watchman), not invented.
 USER_ADDED = {
+    "sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature", "sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_humidity", "sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_battery",  # Çalışma Odası TH (0v25)
     "sensor.tv_priz_power", "sensor.playstation_5_power", "sensor.mutfak_masa_priz_power",
     "switch.kitaplik_led_sonoff_10021d962d_1", "input_boolean.dashboard_animasyon", "switch.mutfak_masa_priz",
     "sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature",
@@ -75,7 +76,7 @@ USER_ADDED = {
     "sensor.sonoff_a4b002414d_battery",
 }
 # Card moved to a better source; entity still referenced (offline alert).
-CARD_REPLACED = {"sensor.sonoff_a4b001d938_temperature", "sensor.sonoff_a4b001d93a_temperature", "sensor.sonoff_a4b001d937_temperature", "switch.mutfak_masa_priz_socket_1"}  # TRV reading -> Çocuk Odası TH sensor
+CARD_REPLACED = {"sensor.sonoff_a4b001d938_temperature", "sensor.sonoff_a4b001d93a_temperature", "sensor.sonoff_a4b001d937_temperature", "sensor.sonoff_a4b001d936_temperature", "switch.mutfak_masa_priz_socket_1"}  # TRV reading -> Çocuk Odası TH sensor
 GLOBAL_HELPERS = {"input_boolean.dashboard_animasyon"}  # animation switch, global by design
 TOGGLEABLE = ("light.", "switch.", "fan.", "input_boolean.", "media_player.", "climate.")
 
