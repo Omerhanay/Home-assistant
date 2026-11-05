@@ -1,0 +1,2453 @@
+# Glassy DENEME paneli (/dashboard-glassy) · 0v26 · home-dashboard.yaml'dan üretildi, elle düzenleme
+title: Glassy Deneme
+views:
+- title: Ana Sayfa
+  path: ana-sayfa
+  icon: mdi:home
+  type: sections
+  max_columns: 4
+  badges:
+  - type: entity
+    entity: person.omer
+    name: Ömer
+    show_name: true
+    show_state: true
+    show_icon: true
+    show_entity_picture: true
+    tap_action:
+      action: more-info
+  sections:
+  - type: grid
+    cards:
+    - type: custom:button-card
+      entity: sun.sun
+      show_name: false
+      show_icon: false
+      show_state: false
+      layout: custom
+      tap_action:
+        action: navigate
+        navigation_path: '#hava'
+      hold_action:
+        action: none
+      variables:
+        kisi: person.omer
+        hava: weather.forecast_home
+        kapi: binary_sensor.sonoff_100235874c
+        isiklar:
+        - light.calisma_odasi_lamba
+        - switch.calisma_odasi_kapi_priz
+        - switch.kitaplik_led_sonoff_10021d962d_1
+        - light.koridor_mutfak
+        - light.koridor_kapi
+        - light.mutfak_tavan_aydinlatma
+        - light.mutfak_uzun_led_aydinlatma
+        - light.mutfak_kahve_led
+        - light.cocuk_odasi_lamba
+        - light.sonoff_10024a8007
+        - light.buyuk_banyo_lamba
+        - light.yatak_odasi_tavan
+        - light.yatak_odasi_led
+        - light.salon_lamba_01
+        - light.salon_lamba_02
+        - light.salon_tavan_led
+        - light.balkon_tavan_aydinlatma
+        - light.ebeveyn_banyo_aydinlatma
+        petekler:
+        - climate.sonoff_a4b001d936
+        - climate.sonoff_a4b001d937
+        - climate.sonoff_a4b001d93a
+        - climate.sonoff_a4b001d938
+        kacak:
+        - binary_sensor.sonoff_a4b0023729_moisture
+        - binary_sensor.sonoff_a4b0023723_moisture
+        - binary_sensor.sonoff_a4b0023728_moisture
+        - binary_sensor.sonoff_a4b0023726_moisture
+        - binary_sensor.sonoff_a4b002372b_moisture
+        - binary_sensor.sonoff_a4b002414d_moisture
+        - binary_sensor.sonoff_a4b0023725_moisture
+      triggers_update:
+      - weather.forecast_home
+      - person.omer
+      - binary_sensor.sonoff_100235874c
+      - input_boolean.dashboard_animasyon
+      - light.calisma_odasi_lamba
+      - switch.calisma_odasi_kapi_priz
+      - switch.kitaplik_led_sonoff_10021d962d_1
+      - light.koridor_mutfak
+      - light.koridor_kapi
+      - light.mutfak_tavan_aydinlatma
+      - light.mutfak_uzun_led_aydinlatma
+      - light.mutfak_kahve_led
+      - light.cocuk_odasi_lamba
+      - light.sonoff_10024a8007
+      - light.buyuk_banyo_lamba
+      - light.yatak_odasi_tavan
+      - light.yatak_odasi_led
+      - light.salon_lamba_01
+      - light.salon_lamba_02
+      - light.salon_tavan_led
+      - light.balkon_tavan_aydinlatma
+      - light.ebeveyn_banyo_aydinlatma
+      - climate.sonoff_a4b001d936
+      - climate.sonoff_a4b001d937
+      - climate.sonoff_a4b001d93a
+      - climate.sonoff_a4b001d938
+      - binary_sensor.sonoff_a4b0023729_moisture
+      - binary_sensor.sonoff_a4b0023723_moisture
+      - binary_sensor.sonoff_a4b0023728_moisture
+      - binary_sensor.sonoff_a4b0023726_moisture
+      - binary_sensor.sonoff_a4b002372b_moisture
+      - binary_sensor.sonoff_a4b002414d_moisture
+      - binary_sensor.sonoff_a4b0023725_moisture
+      custom_fields:
+        yildiz: ' '
+        yagis: ' '
+        orb: ' '
+        selam: "[[[\n  const h = new Date().getHours();\n  const s = h >= 5 && h < 11 ? 'Günaydın' : h < 17 && h >= 11 ? 'İyi günler' : h >= 17 && h < 22 ? 'İyi akşamlar' : 'İyi geceler';\n  const k = states[variables.kisi];\n  const ad = k && k.attributes.friendly_name ? k.attributes.friendly_name.split(' ')[0] : '';\n  return ad ? `${s}, ${ad}` : s;\n]]]\n"
+        hava: "[[[\n  const w = states[variables.hava];\n  if (!w || ['unavailable', 'unknown'].includes(w.state)) return '';\n  const ad = {\n    'clear-night': 'Açık', cloudy: 'Bulutlu', fog: 'Sisli', hail: 'Dolu',\n    lightning: 'Gök gürültülü', 'lightning-rainy': 'Fırtına', partlycloudy: 'Parçalı bulutlu',\n    pouring: 'Sağanak', rainy: 'Yağmurlu', snowy: 'Karlı', 'snowy-rainy': 'Karla karışık',\n    sunny: 'Güneşli', windy: 'Rüzgarlı', 'windy-variant': 'Rüzgarlı', exceptional: 'Olağandışı'\n  }[w.state] || w.state;\n  const ik = {\n    'clear-night': 'weather-night', cloudy: 'weather-cloudy', fog: 'weather-fog', hail: 'weather-hail',\n    lightning: 'weather-lightning', 'lightning-rainy': 'weather-lightning-rainy',\n    partlycloudy: 'weather-partly-cloudy', pouring: 'weather-pouring', rainy: 'weather-rainy',\n    snowy: 'weather-snowy', 'snowy-rainy': 'weather-snowy-rainy', sunny: 'weather-sunny',\n    windy: 'weather-windy', 'windy-variant': 'weather-windy-variant'\n  }[w.state] || 'weather-cloudy';\n  const t = parseFloat(w.attributes.temperature);\n  const derece = isNaN(t) ? '' : `<b style=\"font-size:26px;font-weight:300\">${Math.round(t)}°</b>`;\n  return `<div style=\"display:flex;align-items:center;gap:8px\"><ha-icon icon=\"mdi:${ik}\" style=\"--mdc-icon-size:26px\"></ha-icon>${derece}</div>`\n    + `<div style=\"font-size:12px;opacity:.8;text-align:right\">${ad}</div>`;\n]]]\n"
+        saat:
+          card:
+            type: custom:digital-clock
+            locale: tr
+            timeZone: Europe/Istanbul
+            timeFormat: HH:mm
+            dateFormat: cccc, d LLLL
+            card_mod:
+              style: "ha-card {\n  background: none !important;\n  box-shadow: none !important;\n  border: none !important;\n  color: #fff !important;\n  text-align: left !important;\n  padding: 0 !important;\n}\n.first-line { font-size: 64px !important; font-weight: 200 !important; letter-spacing: -2px; line-height: 1 !important; }\n.second-line { font-size: 14px !important; opacity: 0.8; }\n"
+        ozet: "[[[\n  const v = variables, S = id => (states[id] || {}).state;\n  const ad = {\n    'binary_sensor.sonoff_a4b0023729_moisture': 'Ayakkabılık',\n    'binary_sensor.sonoff_a4b0023723_moisture': 'Mutfak',\n    'binary_sensor.sonoff_a4b0023728_moisture': 'Büyük Banyo',\n    'binary_sensor.sonoff_a4b0023726_moisture': 'Çamaşır Makinesi',\n    'binary_sensor.sonoff_a4b002372b_moisture': 'Balkon Sol',\n    'binary_sensor.sonoff_a4b002414d_moisture': 'Balkon Sağ',\n    'binary_sensor.sonoff_a4b0023725_moisture': 'Ebeveyn Banyo'\n  };\n  const islak = v.kacak.filter(id => S(id) === 'on').map(id => ad[id] || id);\n  if (islak.length)\n    return `<span style=\"color:#fecaca;font-weight:700\">⚠ Su kaçağı: ${islak.join(', ')}</span>`;\n  const p = [];\n  const isik = v.isiklar.filter(id => S(id) === 'on').length;\n  p.push(isik ? `${isik} ışık açık` : 'Tüm ışıklar kapalı');\n  const isit = v.petekler.filter(id => ((states[id] || {}).attributes || {}).hvac_action === 'heating').length;\n  if (isit) p.push(`${isit} petek ısıtıyor`);\n  if (S(v.kapi) === 'on') p.push('<span style=\"color:#fed7aa\">giriş kapısı açık</span>');\n  const yok = [...v.kacak, v.kapi, ...v.petekler]\n    .filter(id => !S(id) || ['unavailable', 'unknown'].includes(S(id))).length;\n  if (yok) p.push(`<span style=\"color:#fed7aa\">${yok} sensör çevrimdışı</span>`);\n  else if (S(v.kapi) !== 'on') p.push('her şey yolunda');\n  const c = p.join(', ');\n  return c.charAt(0).toUpperCase() + c.slice(1) + '.';\n]]]\n"
+      styles:
+        card:
+        - height: 100%
+        - padding: 0
+        - border-radius: 28px
+        - overflow: hidden
+        - position: relative
+        - border: 1px solid rgba(255, 255, 255, 0.12)
+        - color: '#fff'
+        - text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35)
+        - background: "[[[\n  const gunes = (states['sun.sun'] || {}).attributes || {};\n  let E = parseFloat(gunes.elevation);\n  if (isNaN(E)) { const h = new Date().getHours(); E = h >= 7 && h < 19 ? 30 : -20; }\n  const faz = E > 12 ? 'gun' : E > -1 ? (gunes.rising ? 'safak' : 'aksam') : E > -8 ? 'alaca' : 'gece';\n  const gok = {\n    gun: 'linear-gradient(180deg, #1d4ed8 0%, #3b82f6 55%, #7dd3fc 100%)',\n    safak: 'linear-gradient(180deg, #312e81 0%, #c2410c 65%, #fdba74 100%)',\n    aksam: 'linear-gradient(180deg, #1e1b4b 0%, #9d174d 55%, #f97316 100%)',\n    alaca: 'linear-gradient(180deg, #0f172a 0%, #312e81 60%, #7c3aed 100%)',\n    gece: 'linear-gradient(180deg, #020617 0%, #0f172a 60%, #1e293b 100%)'\n  }[faz];\n  const c = (states[variables.hava] || {}).state || '';\n  const b = ['cloudy', 'fog'].includes(c) ? 0.5\n    : ['rainy', 'pouring', 'snowy', 'snowy-rainy', 'lightning', 'lightning-rainy', 'hail'].includes(c) ? 0.6\n    : c === 'partlycloudy' ? 0.22 : 0;\n  return `linear-gradient(0deg, rgba(0, 0, 0, 0.45) 0%, transparent 55%),`\n    + ` linear-gradient(rgba(71, 85, 105, ${b}), rgba(100, 116, 139, ${(b * 0.8).toFixed(2)})),`\n    + ` ${gok}`;\n]]]"
+        - border: 1px solid rgba(255, 255, 255, 0.18)
+        - box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 12px 32px rgba(0, 0, 0, 0.45)
+        grid:
+        - position: static
+        - grid-template-areas: '"selam hava" "saat saat" "ozet ozet"'
+        - grid-template-columns: 1fr auto
+        - grid-template-rows: auto 1fr auto
+        - height: 100%
+        - padding: 18px 22px
+        - box-sizing: border-box
+        custom_fields:
+          selam:
+          - justify-self: start
+          - align-self: start
+          - font-size: 17px
+          - font-weight: 600
+          - position: relative
+          - z-index: 2
+          hava:
+          - justify-self: end
+          - align-self: start
+          - position: relative
+          - z-index: 2
+          saat:
+          - justify-self: start
+          - align-self: center
+          - position: relative
+          - z-index: 2
+          ozet:
+          - justify-self: start
+          - font-size: 14px
+          - line-height: 1.4
+          - opacity: 0.95
+          - position: relative
+          - z-index: 2
+          orb:
+          - position: absolute
+          - z-index: 1
+          - width: 44px
+          - height: 44px
+          - border-radius: 50%
+          - transform: translate(-50%, -50%)
+          - pointer-events: none
+          - transition: left 2s ease, top 2s ease
+          - left: "[[[\n  const gunes = (states['sun.sun'] || {}).attributes || {};\n  const E = parseFloat(gunes.elevation), A = parseFloat(gunes.azimuth);\n  if (isNaN(E) || isNaN(A) || E <= -1) return '66%';\n  return `${(38 + Math.min(Math.max((A - 70) / 220, 0), 1) * 54).toFixed(1)}%`;\n]]]"
+          - top: "[[[\n  const gunes = (states['sun.sun'] || {}).attributes || {};\n  const E = parseFloat(gunes.elevation);\n  if (isNaN(E) || E <= -1) return '42%';\n  return `${(30 + Math.min(Math.max(1 - E / 55, 0), 1) * 48).toFixed(1)}%`;\n]]]"
+          - background: "[[[\n  const E = parseFloat(((states['sun.sun'] || {}).attributes || {}).elevation);\n  return !isNaN(E) && E > -1\n    ? 'radial-gradient(circle, #fffbeb 0%, #fde68a 45%, #f59e0b 100%)'\n    : 'transparent';\n]]]"
+          - box-shadow: "[[[\n  const E = parseFloat(((states['sun.sun'] || {}).attributes || {}).elevation);\n  return !isNaN(E) && E > -1\n    ? '0 0 40px 14px rgba(253, 224, 71, 0.45)'\n    : 'inset -11px 7px 0 0 #f1f5f9, 0 0 30px 4px rgba(241, 245, 249, 0.12)';\n]]]"
+          - opacity: "[[[\n  const c = (states[variables.hava] || {}).state || '';\n  return ['cloudy', 'fog', 'rainy', 'pouring', 'snowy', 'snowy-rainy', 'lightning', 'lightning-rainy', 'hail'].includes(c) ? '0.35' : '1';\n]]]"
+          yildiz:
+          - position: absolute
+          - z-index: 0
+          - top: 0
+          - left: 0
+          - width: 2px
+          - height: 2px
+          - border-radius: 50%
+          - pointer-events: none
+          - display: "[[[\n  const E = parseFloat(((states['sun.sun'] || {}).attributes || {}).elevation);\n  const c = (states[variables.hava] || {}).state || '';\n  const acik = !['cloudy', 'fog', 'rainy', 'pouring', 'snowy', 'snowy-rainy', 'lightning-rainy', 'hail'].includes(c);\n  return !isNaN(E) && E < -4 && acik ? 'block' : 'none';\n]]]"
+          - box-shadow: "[[[\n  let s = 7;\n  const r = () => (s = (s * 9301 + 49297) % 233280) / 233280;\n  return Array.from({length: 48}, (_, i) =>\n    `${Math.round(r() * 600)}px ${Math.round(r() * 190)}px 0 ${i % 9 === 0 ? 1 : 0}px rgba(255, 255, 255, ${(0.3 + (i % 5) * 0.14).toFixed(2)})`\n  ).join(', ');\n]]]"
+          yagis:
+          - position: absolute
+          - z-index: 1
+          - left: 0
+          - right: 0
+          - top: -100%
+          - height: 200%
+          - pointer-events: none
+          - opacity: 0.55
+          - display: "[[[\n  const c = (states[variables.hava] || {}).state || '';\n  return ['rainy', 'pouring', 'lightning-rainy', 'snowy', 'snowy-rainy', 'hail'].includes(c) ? 'block' : 'none';\n]]]"
+          - background: "[[[\n  const c = (states[variables.hava] || {}).state || '';\n  return ['snowy', 'snowy-rainy'].includes(c)\n    ? 'radial-gradient(circle, rgba(255,255,255,.95) 1.5px, transparent 2.2px) 0 0 / 32px 32px, radial-gradient(circle, rgba(255,255,255,.7) 1px, transparent 1.6px) 16px 11px / 32px 32px'\n    : 'repeating-linear-gradient(100deg, transparent 0 22px, rgba(255, 255, 255, 0.35) 22px 23px)';\n]]]"
+      extra_styles: "[[[\n  const kapali = (states['input_boolean.dashboard_animasyon'] || {}).state === 'off';\n  if (kapali) return '';\n  const c = (states[variables.hava] || {}).state || '';\n  const kar = ['snowy', 'snowy-rainy'].includes(c);\n  return `\n    #yildiz { animation: gok-parilti 5s ease-in-out infinite; }\n    #yagis { animation: gok-yagis ${kar ? '7s' : c === 'pouring' ? '0.45s' : '0.8s'} linear infinite; }\n    @keyframes gok-parilti { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }\n    @keyframes gok-yagis { from { transform: translateY(0); } to { transform: translateY(50%); } }\n    @media (prefers-reduced-motion: reduce) { #yildiz, #yagis { animation: none; } }\n  `;\n]]]\n"
+      grid_options:
+        columns: full
+        rows: 4
+  - type: grid
+    cards:
+    - type: heading
+      heading: Ev Durumu
+      heading_style: title
+      icon: mdi:home-heart
+      card_mod:
+        style: '.container .title { color: rgba(255, 255, 255, 0.92); letter-spacing: 0.3px; }
+
+          '
+    - type: tile
+      entity: binary_sensor.sonoff_a4b0023723_moisture
+      name: Su kaçağı · Mutfak Lavabo
+      icon: mdi:water-alert
+      color: red
+      tap_action:
+        action: more-info
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_a4b0023723_moisture
+        state: 'on'
+      grid_options:
+        columns: full
+      card_mod:
+        style: "ha-card {\n  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);\n  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);\n  animation: alert-glow 2s ease-in-out infinite;\n}\n@keyframes alert-glow {\n  0%, 100% { background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.10); }\n  50% { background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.24); }\n}\n@media (prefers-reduced-motion: reduce) { ha-card { animation: none !important; } }\nha-card {\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: tile
+      entity: binary_sensor.sonoff_a4b0023729_moisture
+      name: Su kaçağı · Ayakkabılık
+      icon: mdi:water-alert
+      color: red
+      tap_action:
+        action: more-info
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_a4b0023729_moisture
+        state: 'on'
+      grid_options:
+        columns: full
+      card_mod:
+        style: "ha-card {\n  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);\n  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);\n  animation: alert-glow 2s ease-in-out infinite;\n}\n@keyframes alert-glow {\n  0%, 100% { background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.10); }\n  50% { background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.24); }\n}\n@media (prefers-reduced-motion: reduce) { ha-card { animation: none !important; } }\nha-card {\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: tile
+      entity: binary_sensor.sonoff_a4b0023728_moisture
+      name: Su kaçağı · Büyük Banyo Lavabo
+      icon: mdi:water-alert
+      color: red
+      tap_action:
+        action: more-info
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_a4b0023728_moisture
+        state: 'on'
+      grid_options:
+        columns: full
+      card_mod:
+        style: "ha-card {\n  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);\n  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);\n  animation: alert-glow 2s ease-in-out infinite;\n}\n@keyframes alert-glow {\n  0%, 100% { background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.10); }\n  50% { background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.24); }\n}\n@media (prefers-reduced-motion: reduce) { ha-card { animation: none !important; } }\nha-card {\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: tile
+      entity: binary_sensor.sonoff_a4b0023726_moisture
+      name: Su kaçağı · Çamaşır Makinesi
+      icon: mdi:water-alert
+      color: red
+      tap_action:
+        action: more-info
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_a4b0023726_moisture
+        state: 'on'
+      grid_options:
+        columns: full
+      card_mod:
+        style: "ha-card {\n  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);\n  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);\n  animation: alert-glow 2s ease-in-out infinite;\n}\n@keyframes alert-glow {\n  0%, 100% { background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.10); }\n  50% { background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.24); }\n}\n@media (prefers-reduced-motion: reduce) { ha-card { animation: none !important; } }\nha-card {\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: tile
+      entity: binary_sensor.sonoff_a4b0023725_moisture
+      name: Su kaçağı · Ebeveyn Banyo Lavabo
+      icon: mdi:water-alert
+      color: red
+      tap_action:
+        action: more-info
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_a4b0023725_moisture
+        state: 'on'
+      grid_options:
+        columns: full
+      card_mod:
+        style: "ha-card {\n  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);\n  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);\n  animation: alert-glow 2s ease-in-out infinite;\n}\n@keyframes alert-glow {\n  0%, 100% { background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.10); }\n  50% { background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.24); }\n}\n@media (prefers-reduced-motion: reduce) { ha-card { animation: none !important; } }\nha-card {\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: tile
+      entity: binary_sensor.sonoff_a4b002372b_moisture
+      name: Su kaçağı · Balkon Sol
+      icon: mdi:water-alert
+      color: red
+      tap_action:
+        action: more-info
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_a4b002372b_moisture
+        state: 'on'
+      grid_options:
+        columns: full
+      card_mod:
+        style: "ha-card {\n  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);\n  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);\n  animation: alert-glow 2s ease-in-out infinite;\n}\n@keyframes alert-glow {\n  0%, 100% { background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.10); }\n  50% { background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.24); }\n}\n@media (prefers-reduced-motion: reduce) { ha-card { animation: none !important; } }\nha-card {\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: tile
+      entity: binary_sensor.sonoff_a4b002414d_moisture
+      name: Su kaçağı · Balkon Sağ
+      icon: mdi:water-alert
+      color: red
+      tap_action:
+        action: more-info
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_a4b002414d_moisture
+        state: 'on'
+      grid_options:
+        columns: full
+      card_mod:
+        style: "ha-card {\n  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);\n  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);\n  animation: alert-glow 2s ease-in-out infinite;\n}\n@keyframes alert-glow {\n  0%, 100% { background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.10); }\n  50% { background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.24); }\n}\n@media (prefers-reduced-motion: reduce) { ha-card { animation: none !important; } }\nha-card {\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: tile
+      entity: binary_sensor.sonoff_100235874c
+      name: Kapı açık
+      icon: mdi:door-open
+      color: orange
+      tap_action:
+        action: more-info
+      visibility:
+      - condition: state
+        entity: binary_sensor.sonoff_100235874c
+        state: 'on'
+      grid_options:
+        columns: full
+      card_mod:
+        style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      primary: '{{ [''binary_sensor.sonoff_a4b0023723_moisture'', ''binary_sensor.sonoff_a4b0023729_moisture'', ''binary_sensor.sonoff_a4b0023728_moisture'', ''binary_sensor.sonoff_a4b0023726_moisture'', ''binary_sensor.sonoff_a4b0023725_moisture'', ''binary_sensor.sonoff_a4b002372b_moisture'', ''binary_sensor.sonoff_a4b002414d_moisture'', ''binary_sensor.sonoff_100235874c'', ''climate.sonoff_a4b001d938'', ''climate.sonoff_a4b001d93a'', ''climate.sonoff_a4b001d937'', ''climate.sonoff_a4b001d936'', ''sensor.sonoff_a4b001d938_temperature'', ''sensor.sonoff_a4b001d93a_temperature'', ''sensor.sonoff_a4b001d937_temperature'', ''sensor.sonoff_a4b001d936_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity'', ''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature'', ''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_humidity'', ''sensor.atc_2b36_temperature'', ''sensor.atc_2b36_humidity''] | reject(''has_value'') | list | count }} sensör yanıt vermiyor'
+      secondary: '{{ [''binary_sensor.sonoff_a4b0023723_moisture'', ''binary_sensor.sonoff_a4b0023729_moisture'', ''binary_sensor.sonoff_a4b0023728_moisture'', ''binary_sensor.sonoff_a4b0023726_moisture'', ''binary_sensor.sonoff_a4b0023725_moisture'', ''binary_sensor.sonoff_a4b002372b_moisture'', ''binary_sensor.sonoff_a4b002414d_moisture'', ''binary_sensor.sonoff_100235874c'', ''climate.sonoff_a4b001d938'', ''climate.sonoff_a4b001d93a'', ''climate.sonoff_a4b001d937'', ''climate.sonoff_a4b001d936'', ''sensor.sonoff_a4b001d938_temperature'', ''sensor.sonoff_a4b001d93a_temperature'', ''sensor.sonoff_a4b001d937_temperature'', ''sensor.sonoff_a4b001d936_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity'', ''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature'', ''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_humidity'', ''sensor.atc_2b36_temperature'', ''sensor.atc_2b36_humidity''] | reject(''has_value'') | list | map(''state_attr'', ''friendly_name'') | map(''default'', ''?'', true) | join('', '') }}'
+      icon: mdi:wifi-off
+      icon_color: orange
+      multiline_secondary: true
+      tap_action:
+        action: none
+      visibility:
+      - condition: or
+        conditions:
+        - condition: state
+          entity: binary_sensor.sonoff_a4b0023723_moisture
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: binary_sensor.sonoff_a4b0023729_moisture
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: binary_sensor.sonoff_a4b0023728_moisture
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: binary_sensor.sonoff_a4b0023726_moisture
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: binary_sensor.sonoff_a4b0023725_moisture
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: binary_sensor.sonoff_a4b002372b_moisture
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: binary_sensor.sonoff_a4b002414d_moisture
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: binary_sensor.sonoff_100235874c
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: climate.sonoff_a4b001d938
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: climate.sonoff_a4b001d93a
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: climate.sonoff_a4b001d937
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: climate.sonoff_a4b001d936
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: sensor.sonoff_a4b001d938_temperature
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: sensor.sonoff_a4b001d93a_temperature
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: sensor.sonoff_a4b001d937_temperature
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: sensor.sonoff_a4b001d936_temperature
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_humidity
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: sensor.atc_2b36_temperature
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: sensor.atc_2b36_humidity
+          state:
+          - unavailable
+          - unknown
+      grid_options:
+        columns: full
+      card_mod:
+        style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: tile
+      entity: sensor.zhimi_sg_918358888_meb1_filter_life_level_p_4_1
+      name: Hava temizleyici filtresi değişmeli
+      icon: mdi:air-filter
+      color: orange
+      visibility:
+      - condition: numeric_state
+        entity: sensor.zhimi_sg_918358888_meb1_filter_life_level_p_4_1
+        below: 10
+      grid_options:
+        columns: full
+      card_mod:
+        style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: tile
+      entity: sensor.ijai_sg_1025189601_v3_main_brush_life_p_7_10
+      name: Süpürge ana fırçası değişmeli
+      icon: mdi:brush
+      color: orange
+      tap_action:
+        action: more-info
+      visibility:
+      - condition: numeric_state
+        entity: sensor.ijai_sg_1025189601_v3_main_brush_life_p_7_10
+        below: 10
+      grid_options:
+        columns: full
+      card_mod:
+        style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      primary: Piller
+      secondary: "{% set p = {\n   'sensor.sonoff_100235874c_battery': 'Kapı Sensörü',\n   'sensor.sonoff_a4b001a3ce_battery': 'Hareket Sensörü',\n   'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery': 'Çocuk Odası TH',\n   'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery': 'Yatak Odası TH',\n   'sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_battery': 'Çalışma Odası TH',\n   'sensor.atc_2b36_battery': 'Salon TH',\n   'sensor.sonoff_a4b001d938_battery': 'Salon Petek',\n   'sensor.sonoff_a4b001d93a_battery': 'Yatak Odası Petek',\n   'sensor.sonoff_a4b001d937_battery': 'Çocuk Odası Petek',\n   'sensor.sonoff_a4b001d936_battery': 'Çalışma Odası Petek',\n   'sensor.sonoff_a4b0023723_battery': 'Mutfak Lavabo',\n   'sensor.sonoff_a4b0023728_battery': 'Büyük Banyo Lavabo',\n   'sensor.sonoff_a4b0023726_battery': 'Çamaşır Makinesi',\n   'sensor.sonoff_a4b0023725_battery': 'Ebeveyn Banyo',\n   'sensor.sonoff_a4b0023729_battery': 'Ayakkabılık',\n   'sensor.sonoff_a4b002372b_battery': 'Balkon Sol',\n   'sensor.sonoff_a4b002414d_battery': 'Balkon Sağ'} %}{% set ns = namespace(l=[]) %}{% for e, ad in p.items() if states(e) | is_number %}{% set ns.l = ns.l + [(states(e) | float, ad)] %}{% endfor %}{% if ns.l %}{% set s = ns.l | sort %}{% set zayif = s | selectattr(0, 'lt', 20) | list | count %}En düşük: {{ s[0][1] }} %{{ s[0][0] | int }}{{ ' · ' ~ zayif ~ ' pil zayıf' if zayif > 0 else '' }}{% else %}Pil verisi yok{% endif %}"
+      icon: "{% set p = {\n   'sensor.sonoff_100235874c_battery': 'Kapı Sensörü',\n   'sensor.sonoff_a4b001a3ce_battery': 'Hareket Sensörü',\n   'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery': 'Çocuk Odası TH',\n   'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery': 'Yatak Odası TH',\n   'sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_battery': 'Çalışma Odası TH',\n   'sensor.atc_2b36_battery': 'Salon TH',\n   'sensor.sonoff_a4b001d938_battery': 'Salon Petek',\n   'sensor.sonoff_a4b001d93a_battery': 'Yatak Odası Petek',\n   'sensor.sonoff_a4b001d937_battery': 'Çocuk Odası Petek',\n   'sensor.sonoff_a4b001d936_battery': 'Çalışma Odası Petek',\n   'sensor.sonoff_a4b0023723_battery': 'Mutfak Lavabo',\n   'sensor.sonoff_a4b0023728_battery': 'Büyük Banyo Lavabo',\n   'sensor.sonoff_a4b0023726_battery': 'Çamaşır Makinesi',\n   'sensor.sonoff_a4b0023725_battery': 'Ebeveyn Banyo',\n   'sensor.sonoff_a4b0023729_battery': 'Ayakkabılık',\n   'sensor.sonoff_a4b002372b_battery': 'Balkon Sol',\n   'sensor.sonoff_a4b002414d_battery': 'Balkon Sağ'} %}{% set ns = namespace(l=[]) %}{% for e, ad in p.items() if states(e) | is_number %}{% set ns.l = ns.l + [(states(e) | float, ad)] %}{% endfor %}{% set m = (ns.l | sort | first | default([100]))[0] %}{{ 'mdi:battery-alert-variant-outline' if m < 20 else ('mdi:battery-medium' if m < 40 else 'mdi:battery-high') }}"
+      icon_color: "{% set p = {\n   'sensor.sonoff_100235874c_battery': 'Kapı Sensörü',\n   'sensor.sonoff_a4b001a3ce_battery': 'Hareket Sensörü',\n   'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery': 'Çocuk Odası TH',\n   'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery': 'Yatak Odası TH',\n   'sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_battery': 'Çalışma Odası TH',\n   'sensor.atc_2b36_battery': 'Salon TH',\n   'sensor.sonoff_a4b001d938_battery': 'Salon Petek',\n   'sensor.sonoff_a4b001d93a_battery': 'Yatak Odası Petek',\n   'sensor.sonoff_a4b001d937_battery': 'Çocuk Odası Petek',\n   'sensor.sonoff_a4b001d936_battery': 'Çalışma Odası Petek',\n   'sensor.sonoff_a4b0023723_battery': 'Mutfak Lavabo',\n   'sensor.sonoff_a4b0023728_battery': 'Büyük Banyo Lavabo',\n   'sensor.sonoff_a4b0023726_battery': 'Çamaşır Makinesi',\n   'sensor.sonoff_a4b0023725_battery': 'Ebeveyn Banyo',\n   'sensor.sonoff_a4b0023729_battery': 'Ayakkabılık',\n   'sensor.sonoff_a4b002372b_battery': 'Balkon Sol',\n   'sensor.sonoff_a4b002414d_battery': 'Balkon Sağ'} %}{% set ns = namespace(l=[]) %}{% for e, ad in p.items() if states(e) | is_number %}{% set ns.l = ns.l + [(states(e) | float, ad)] %}{% endfor %}{% if not ns.l %}grey{% else %}{% set m = (ns.l | sort | first)[0] %}{{ 'red' if m < 20 else ('orange' if m < 40 else 'green') }}{% endif %}"
+      tap_action:
+        action: navigate
+        navigation_path: '#piller'
+      icon_tap_action:
+        action: navigate
+        navigation_path: '#piller'
+      grid_options:
+        columns: full
+      card_mod:
+        style: "ha-tile-info {\n  container-type: inline-size;\n  overflow: hidden;\n}\nspan[slot=\"secondary\"] {\n{% if states('input_boolean.dashboard_animasyon') != 'off' %}\n  display: block !important;\n  width: max-content !important;\n  max-width: none !important;\n  overflow: visible !important;\n  text-overflow: clip !important;\n  animation: oda-kayan 12s ease-in-out infinite;\n{% else %}\n  white-space: normal !important;\n{% endif %}\n}\n@keyframes oda-kayan {\n  0%, 15% { transform: translateX(0); }\n  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }\n  90%, 100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  span[slot=\"secondary\"] { animation: none !important; white-space: normal !important; }\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: markdown
+      content: "{% set odalar = {'sensor.atc_2b36_temperature': 'Salon',\n   'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature': 'Yatak Odası',\n   'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature': 'Çocuk Odası',\n   'sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature': 'Çalışma Odası'} %}\n{% set ns = namespace(v=[]) %}\n{% for e, ad in odalar.items() if states(e) | is_number %}{% set ns.v = ns.v + [(states(e) | float, ad)] %}{% endfor %}\n{% if ns.v %}{% set s = ns.v | sort %}{% set ort = (s | map(attribute=0) | sum) / (s | count) %}<ha-icon icon=\"mdi:home-thermometer\"></ha-icon> **İç ortalama {{ '%.1f' | format(ort) }} °C**{% if s | count > 1 %}\n\nEn sıcak **{{ s[-1][1] }}** {{ '%.1f' | format(s[-1][0]) }} °C · en soğuk **{{ s[0][1] }}** {{ '%.1f' | format(s[0][0]) }} °C{% endif %}{% else %}Sıcaklık verisi yok{% endif %}\n"
+      grid_options:
+        columns: full
+      card_mod:
+        style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: tile
+      entity: vacuum.ijai_sg_1025189601_v3
+      name: Robot süpürge yardım bekliyor
+      icon: mdi:robot-vacuum-alert
+      color: orange
+      tap_action:
+        action: more-info
+      visibility:
+      - condition: state
+        entity: vacuum.ijai_sg_1025189601_v3
+        state: error
+      grid_options:
+        columns: full
+      card_mod:
+        style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+  - type: grid
+    cards:
+    - type: heading
+      heading: Senaryolar
+      heading_style: title
+      icon: mdi:play-circle-outline
+      card_mod:
+        style: '.container .title { color: rgba(255, 255, 255, 0.92); letter-spacing: 0.3px; }
+
+          '
+    - type: custom:mushroom-template-card
+      entity: input_boolean.evdeyim_section
+      primary: Evdeyim
+      secondary: '{{ ''Çalışıyor…'' if is_state(entity, ''on'') else '''' }}'
+      icon: mdi:home-account
+      icon_color: indigo
+      tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.evdeyim_section
+        confirmation:
+          text: Evdeyim modu aktif edilsin mi?
+      icon_tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.evdeyim_section
+        confirmation:
+          text: Evdeyim modu aktif edilsin mi?
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 4
+      layout: vertical
+      card_mod:
+        style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      entity: input_boolean.tatil_modu_section
+      primary: Tatil
+      secondary: '{{ ''Çalışıyor…'' if is_state(entity, ''on'') else '''' }}'
+      icon: mdi:palm-tree
+      icon_color: indigo
+      tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tatil_modu_section
+        confirmation:
+          text: Tatil modu aktif edilsin mi?
+      icon_tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tatil_modu_section
+        confirmation:
+          text: Tatil modu aktif edilsin mi?
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 4
+      layout: vertical
+      card_mod:
+        style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      entity: input_boolean.uyku_modu_section
+      primary: Uyku
+      secondary: '{{ ''Çalışıyor…'' if is_state(entity, ''on'') else '''' }}'
+      icon: mdi:sleep
+      icon_color: indigo
+      tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.uyku_modu_section
+        confirmation:
+          text: Uyku modu aktif edilsin mi?
+      icon_tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.uyku_modu_section
+        confirmation:
+          text: Uyku modu aktif edilsin mi?
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 4
+      layout: vertical
+      card_mod:
+        style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      entity: input_boolean.tum_isiklar_acik_section
+      primary: Işıkları Aç
+      secondary: '{{ ''Çalışıyor…'' if is_state(entity, ''on'') else '''' }}'
+      icon: mdi:lightbulb-on
+      icon_color: amber
+      tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_isiklar_acik_section
+        confirmation:
+          text: Tüm ışıklar açılsın mı?
+      icon_tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_isiklar_acik_section
+        confirmation:
+          text: Tüm ışıklar açılsın mı?
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      entity: input_boolean.tum_isiklar_kapali_section
+      primary: Işıkları Kapat
+      secondary: '{{ ''Çalışıyor…'' if is_state(entity, ''on'') else '''' }}'
+      icon: mdi:lightbulb-off-outline
+      icon_color: amber
+      tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_isiklar_kapali_section
+        confirmation:
+          text: Tüm ışıklar kapatılsın mı?
+      icon_tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_isiklar_kapali_section
+        confirmation:
+          text: Tüm ışıklar kapatılsın mı?
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      entity: input_boolean.tum_petekler_acik_section
+      primary: Petekleri Aç
+      secondary: '{{ ''Çalışıyor…'' if is_state(entity, ''on'') else '''' }}'
+      icon: mdi:radiator
+      icon_color: deep-orange
+      tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_petekler_acik_section
+        confirmation:
+          text: Tüm petekler açılsın mı?
+      icon_tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_petekler_acik_section
+        confirmation:
+          text: Tüm petekler açılsın mı?
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      entity: input_boolean.tum_petekler_kapali_section
+      primary: Petekleri Kapat
+      secondary: '{{ ''Çalışıyor…'' if is_state(entity, ''on'') else '''' }}'
+      icon: mdi:radiator-off
+      icon_color: deep-orange
+      tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_petekler_kapali_section
+        confirmation:
+          text: Tüm petekler kapatılsın mı?
+      icon_tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_petekler_kapali_section
+        confirmation:
+          text: Tüm petekler kapatılsın mı?
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      entity: input_boolean.tum_prizler_acik_section
+      primary: Prizleri Aç
+      secondary: '{{ ''Çalışıyor…'' if is_state(entity, ''on'') else '''' }}'
+      icon: mdi:power-plug
+      icon_color: teal
+      tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_prizler_acik_section
+        confirmation:
+          text: Tüm prizler açılsın mı?
+      icon_tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_prizler_acik_section
+        confirmation:
+          text: Tüm prizler açılsın mı?
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      entity: input_boolean.tum_prizler_kapali_section
+      primary: Prizleri Kapat
+      secondary: '{{ ''Çalışıyor…'' if is_state(entity, ''on'') else '''' }}'
+      icon: mdi:power-plug-off
+      icon_color: teal
+      tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_prizler_kapali_section
+        confirmation:
+          text: Tüm prizler kapatılsın mı? Prize bağlı tüm cihazların enerjisi kesilir.
+      icon_tap_action:
+        action: perform-action
+        perform_action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.tum_prizler_kapali_section
+        confirmation:
+          text: Tüm prizler kapatılsın mı? Prize bağlı tüm cihazların enerjisi kesilir.
+      hold_action:
+        action: more-info
+      grid_options:
+        columns: 6
+      card_mod:
+        style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+  - type: grid
+    cards:
+    - type: heading
+      heading: Odalar
+      heading_style: title
+      icon: mdi:floor-plan
+      card_mod:
+        style: '.container .title { color: rgba(255, 255, 255, 0.92); letter-spacing: 0.3px; }
+
+          '
+    - type: custom:mushroom-template-card
+      primary: Salon
+      secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.atc_2b36_temperature'') ~ '' °C · '' if has_value(''sensor.atc_2b36_temperature'') else '''' }}{{ ''%'' ~ (states(''sensor.atc_2b36_humidity'') | float(0) | round | int) ~ '' · '' if has_value(''sensor.atc_2b36_humidity'') else '''' }}{% set n = expand([''light.salon_lamba_01'', ''light.salon_lamba_02'', ''light.salon_tavan_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:sofa
+      icon_color: '{% if false %}red{% elif (expand([''light.salon_lamba_01'', ''light.salon_lamba_02'', ''light.salon_tavan_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: '#salon'
+      icon_tap_action:
+        action: navigate
+        navigation_path: '#salon'
+      grid_options:
+        columns: 6
+      card_mod:
+        style: "ha-tile-info {\n  container-type: inline-size;\n  overflow: hidden;\n}\nspan[slot=\"secondary\"] {\n{% if states('input_boolean.dashboard_animasyon') != 'off' %}\n  display: block !important;\n  width: max-content !important;\n  max-width: none !important;\n  overflow: visible !important;\n  text-overflow: clip !important;\n  animation: oda-kayan 12s ease-in-out infinite;\n{% else %}\n  white-space: normal !important;\n{% endif %}\n}\n@keyframes oda-kayan {\n  0%, 15% { transform: translateX(0); }\n  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }\n  90%, 100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  span[slot=\"secondary\"] { animation: none !important; white-space: normal !important; }\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      primary: Mutfak
+      secondary: '{% if is_state(''binary_sensor.sonoff_a4b0023723_moisture'', ''on'') %}Su kaçağı!{% else %}{% set n = expand([''light.mutfak_tavan_aydinlatma'', ''light.mutfak_uzun_led_aydinlatma'', ''light.mutfak_kahve_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:countertop
+      icon_color: '{% if is_state(''binary_sensor.sonoff_a4b0023723_moisture'', ''on'') %}red{% elif (expand([''light.mutfak_tavan_aydinlatma'', ''light.mutfak_uzun_led_aydinlatma'', ''light.mutfak_kahve_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: '#mutfak'
+      icon_tap_action:
+        action: navigate
+        navigation_path: '#mutfak'
+      grid_options:
+        columns: 6
+      card_mod:
+        style: "ha-tile-info {\n  container-type: inline-size;\n  overflow: hidden;\n}\nspan[slot=\"secondary\"] {\n{% if states('input_boolean.dashboard_animasyon') != 'off' %}\n  display: block !important;\n  width: max-content !important;\n  max-width: none !important;\n  overflow: visible !important;\n  text-overflow: clip !important;\n  animation: oda-kayan 12s ease-in-out infinite;\n{% else %}\n  white-space: normal !important;\n{% endif %}\n}\n@keyframes oda-kayan {\n  0%, 15% { transform: translateX(0); }\n  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }\n  90%, 100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  span[slot=\"secondary\"] { animation: none !important; white-space: normal !important; }\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      primary: Yatak Odası
+      secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'') ~ '' °C · '' if has_value(''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'') else '''' }}{{ ''%'' ~ (states(''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity'') | float(0) | round | int) ~ '' · '' if has_value(''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity'') else '''' }}{% set n = expand([''light.yatak_odasi_tavan'', ''light.yatak_odasi_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:bed
+      icon_color: '{% if false %}red{% elif (expand([''light.yatak_odasi_tavan'', ''light.yatak_odasi_led'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: '#yatak-odasi'
+      icon_tap_action:
+        action: navigate
+        navigation_path: '#yatak-odasi'
+      grid_options:
+        columns: 6
+      card_mod:
+        style: "ha-tile-info {\n  container-type: inline-size;\n  overflow: hidden;\n}\nspan[slot=\"secondary\"] {\n{% if states('input_boolean.dashboard_animasyon') != 'off' %}\n  display: block !important;\n  width: max-content !important;\n  max-width: none !important;\n  overflow: visible !important;\n  text-overflow: clip !important;\n  animation: oda-kayan 12s ease-in-out infinite;\n{% else %}\n  white-space: normal !important;\n{% endif %}\n}\n@keyframes oda-kayan {\n  0%, 15% { transform: translateX(0); }\n  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }\n  90%, 100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  span[slot=\"secondary\"] { animation: none !important; white-space: normal !important; }\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      primary: Çocuk Odası
+      secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'') ~ '' °C · '' if has_value(''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'') else '''' }}{{ ''%'' ~ (states(''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'') | float(0) | round | int) ~ '' · '' if has_value(''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'') else '''' }}{% set n = expand([''light.cocuk_odasi_lamba'', ''light.sonoff_10024a8007'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:teddy-bear
+      icon_color: '{% if false %}red{% elif (expand([''light.cocuk_odasi_lamba'', ''light.sonoff_10024a8007'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: '#cocuk-odasi'
+      icon_tap_action:
+        action: navigate
+        navigation_path: '#cocuk-odasi'
+      grid_options:
+        columns: 6
+      card_mod:
+        style: "ha-tile-info {\n  container-type: inline-size;\n  overflow: hidden;\n}\nspan[slot=\"secondary\"] {\n{% if states('input_boolean.dashboard_animasyon') != 'off' %}\n  display: block !important;\n  width: max-content !important;\n  max-width: none !important;\n  overflow: visible !important;\n  text-overflow: clip !important;\n  animation: oda-kayan 12s ease-in-out infinite;\n{% else %}\n  white-space: normal !important;\n{% endif %}\n}\n@keyframes oda-kayan {\n  0%, 15% { transform: translateX(0); }\n  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }\n  90%, 100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  span[slot=\"secondary\"] { animation: none !important; white-space: normal !important; }\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      primary: Çalışma Odası
+      secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature'') ~ '' °C · '' if has_value(''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature'') else '''' }}{{ ''%'' ~ (states(''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_humidity'') | float(0) | round | int) ~ '' · '' if has_value(''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_humidity'') else '''' }}{% set n = expand([''light.calisma_odasi_lamba'', ''switch.calisma_odasi_kapi_priz'', ''switch.kitaplik_led_sonoff_10021d962d_1'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:monitor-dashboard
+      icon_color: '{% if false %}red{% elif (expand([''light.calisma_odasi_lamba'', ''switch.calisma_odasi_kapi_priz'', ''switch.kitaplik_led_sonoff_10021d962d_1'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: '#calisma-odasi'
+      icon_tap_action:
+        action: navigate
+        navigation_path: '#calisma-odasi'
+      grid_options:
+        columns: 6
+      card_mod:
+        style: "ha-tile-info {\n  container-type: inline-size;\n  overflow: hidden;\n}\nspan[slot=\"secondary\"] {\n{% if states('input_boolean.dashboard_animasyon') != 'off' %}\n  display: block !important;\n  width: max-content !important;\n  max-width: none !important;\n  overflow: visible !important;\n  text-overflow: clip !important;\n  animation: oda-kayan 12s ease-in-out infinite;\n{% else %}\n  white-space: normal !important;\n{% endif %}\n}\n@keyframes oda-kayan {\n  0%, 15% { transform: translateX(0); }\n  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }\n  90%, 100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  span[slot=\"secondary\"] { animation: none !important; white-space: normal !important; }\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      primary: Koridor
+      secondary: '{% if is_state(''binary_sensor.sonoff_a4b0023729_moisture'', ''on'') %}Su kaçağı!{% else %}{% set n = expand([''light.koridor_mutfak'', ''light.koridor_kapi'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:door
+      icon_color: '{% if is_state(''binary_sensor.sonoff_a4b0023729_moisture'', ''on'') %}red{% elif (expand([''light.koridor_mutfak'', ''light.koridor_kapi'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: '#koridor'
+      icon_tap_action:
+        action: navigate
+        navigation_path: '#koridor'
+      grid_options:
+        columns: 6
+      card_mod:
+        style: "ha-tile-info {\n  container-type: inline-size;\n  overflow: hidden;\n}\nspan[slot=\"secondary\"] {\n{% if states('input_boolean.dashboard_animasyon') != 'off' %}\n  display: block !important;\n  width: max-content !important;\n  max-width: none !important;\n  overflow: visible !important;\n  text-overflow: clip !important;\n  animation: oda-kayan 12s ease-in-out infinite;\n{% else %}\n  white-space: normal !important;\n{% endif %}\n}\n@keyframes oda-kayan {\n  0%, 15% { transform: translateX(0); }\n  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }\n  90%, 100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  span[slot=\"secondary\"] { animation: none !important; white-space: normal !important; }\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      primary: Büyük Banyo
+      secondary: '{% if is_state(''binary_sensor.sonoff_a4b0023728_moisture'', ''on'') or is_state(''binary_sensor.sonoff_a4b0023726_moisture'', ''on'') %}Su kaçağı!{% else %}{% set n = expand([''light.buyuk_banyo_lamba'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:bathtub
+      icon_color: '{% if is_state(''binary_sensor.sonoff_a4b0023728_moisture'', ''on'') or is_state(''binary_sensor.sonoff_a4b0023726_moisture'', ''on'') %}red{% elif (expand([''light.buyuk_banyo_lamba'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: '#buyuk-banyo'
+      icon_tap_action:
+        action: navigate
+        navigation_path: '#buyuk-banyo'
+      grid_options:
+        columns: 6
+      card_mod:
+        style: "ha-tile-info {\n  container-type: inline-size;\n  overflow: hidden;\n}\nspan[slot=\"secondary\"] {\n{% if states('input_boolean.dashboard_animasyon') != 'off' %}\n  display: block !important;\n  width: max-content !important;\n  max-width: none !important;\n  overflow: visible !important;\n  text-overflow: clip !important;\n  animation: oda-kayan 12s ease-in-out infinite;\n{% else %}\n  white-space: normal !important;\n{% endif %}\n}\n@keyframes oda-kayan {\n  0%, 15% { transform: translateX(0); }\n  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }\n  90%, 100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  span[slot=\"secondary\"] { animation: none !important; white-space: normal !important; }\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      primary: Ebeveyn Banyo
+      secondary: '{% if is_state(''binary_sensor.sonoff_a4b0023725_moisture'', ''on'') %}Su kaçağı!{% else %}{% set n = expand([''light.ebeveyn_banyo_aydinlatma'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:bathtub-outline
+      icon_color: '{% if is_state(''binary_sensor.sonoff_a4b0023725_moisture'', ''on'') %}red{% elif (expand([''light.ebeveyn_banyo_aydinlatma'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: '#ebeveyn-banyo'
+      icon_tap_action:
+        action: navigate
+        navigation_path: '#ebeveyn-banyo'
+      grid_options:
+        columns: 6
+      card_mod:
+        style: "ha-tile-info {\n  container-type: inline-size;\n  overflow: hidden;\n}\nspan[slot=\"secondary\"] {\n{% if states('input_boolean.dashboard_animasyon') != 'off' %}\n  display: block !important;\n  width: max-content !important;\n  max-width: none !important;\n  overflow: visible !important;\n  text-overflow: clip !important;\n  animation: oda-kayan 12s ease-in-out infinite;\n{% else %}\n  white-space: normal !important;\n{% endif %}\n}\n@keyframes oda-kayan {\n  0%, 15% { transform: translateX(0); }\n  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }\n  90%, 100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  span[slot=\"secondary\"] { animation: none !important; white-space: normal !important; }\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:mushroom-template-card
+      primary: Balkon
+      secondary: '{% if is_state(''binary_sensor.sonoff_a4b002372b_moisture'', ''on'') or is_state(''binary_sensor.sonoff_a4b002414d_moisture'', ''on'') %}Su kaçağı!{% else %}{% set n = expand([''light.balkon_tavan_aydinlatma'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      icon: mdi:balcony
+      icon_color: '{% if is_state(''binary_sensor.sonoff_a4b002372b_moisture'', ''on'') or is_state(''binary_sensor.sonoff_a4b002414d_moisture'', ''on'') %}red{% elif (expand([''light.balkon_tavan_aydinlatma'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
+      tap_action:
+        action: navigate
+        navigation_path: '#balkon'
+      icon_tap_action:
+        action: navigate
+        navigation_path: '#balkon'
+      grid_options:
+        columns: full
+      card_mod:
+        style: "ha-tile-info {\n  container-type: inline-size;\n  overflow: hidden;\n}\nspan[slot=\"secondary\"] {\n{% if states('input_boolean.dashboard_animasyon') != 'off' %}\n  display: block !important;\n  width: max-content !important;\n  max-width: none !important;\n  overflow: visible !important;\n  text-overflow: clip !important;\n  animation: oda-kayan 12s ease-in-out infinite;\n{% else %}\n  white-space: normal !important;\n{% endif %}\n}\n@keyframes oda-kayan {\n  0%, 15% { transform: translateX(0); }\n  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }\n  90%, 100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  span[slot=\"secondary\"] { animation: none !important; white-space: normal !important; }\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+  - type: grid
+    cards:
+    - type: heading
+      heading: Isıtma
+      heading_style: title
+      icon: mdi:radiator
+      card_mod:
+        style: '.container .title { color: rgba(255, 255, 255, 0.92); letter-spacing: 0.3px; }
+
+          '
+    - type: custom:vertical-stack-in-card
+      grid_options:
+        columns: 6
+      cards:
+      - type: tile
+        entity: climate.sonoff_a4b001d938
+        name: Salon
+        state_content:
+        - state
+        - current_temperature
+        tap_action:
+          action: more-info
+      - type: custom:mushroom-chips-card
+        alignment: end
+        chips:
+        - type: template
+          entity: climate.sonoff_a4b001d938
+          icon: mdi:thermostat
+          content: '{% if is_state(entity, ''off'') %}{{ ''%g'' | format(states(''sensor.sonoff_a4b001d938_manual_target_temperature'') | float(0)) }}°{% else %}{{ ''%g'' | format(state_attr(entity, ''temperature'') | float(0)) }}°{% endif %}'
+          icon_color: '{% if state_attr(entity, ''hvac_action'') == ''heating'' %}deep-orange{% elif is_state(entity, ''off'') %}disabled{% else %}amber{% endif %}'
+          tap_action:
+            action: more-info
+        card_mod:
+          style: "ha-card {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  width: max-content;\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  pointer-events: none;\n  z-index: 2;\n  --chip-background: rgba(255, 255, 255, 0.06);\n  --chip-box-shadow: none;\n  --chip-border-width: 0px;\n  --chip-height: 22px;\n  --chip-icon-size: 13px;\n  --chip-font-size: 12px;\n  --chip-padding: 0 7px;\n}\nmushroom-template-chip {\n  pointer-events: auto;\n}\n"
+      card_mod:
+        style: "ha-card {\n  position: relative;\n  isolation: isolate;\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:vertical-stack-in-card
+      grid_options:
+        columns: 6
+      cards:
+      - type: tile
+        entity: climate.sonoff_a4b001d93a
+        name: Yatak
+        state_content:
+        - state
+        - current_temperature
+        tap_action:
+          action: more-info
+      - type: custom:mushroom-chips-card
+        alignment: end
+        chips:
+        - type: template
+          entity: climate.sonoff_a4b001d93a
+          icon: mdi:thermostat
+          content: '{% if is_state(entity, ''off'') %}{{ ''%g'' | format(states(''sensor.sonoff_a4b001d93a_manual_target_temperature'') | float(0)) }}°{% else %}{{ ''%g'' | format(state_attr(entity, ''temperature'') | float(0)) }}°{% endif %}'
+          icon_color: '{% if state_attr(entity, ''hvac_action'') == ''heating'' %}deep-orange{% elif is_state(entity, ''off'') %}disabled{% else %}amber{% endif %}'
+          tap_action:
+            action: more-info
+        card_mod:
+          style: "ha-card {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  width: max-content;\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  pointer-events: none;\n  z-index: 2;\n  --chip-background: rgba(255, 255, 255, 0.06);\n  --chip-box-shadow: none;\n  --chip-border-width: 0px;\n  --chip-height: 22px;\n  --chip-icon-size: 13px;\n  --chip-font-size: 12px;\n  --chip-padding: 0 7px;\n}\nmushroom-template-chip {\n  pointer-events: auto;\n}\n"
+      card_mod:
+        style: "ha-card {\n  position: relative;\n  isolation: isolate;\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:vertical-stack-in-card
+      grid_options:
+        columns: 6
+      cards:
+      - type: tile
+        entity: climate.sonoff_a4b001d937
+        name: Çocuk
+        state_content:
+        - state
+        - current_temperature
+        tap_action:
+          action: more-info
+      - type: custom:mushroom-chips-card
+        alignment: end
+        chips:
+        - type: template
+          entity: climate.sonoff_a4b001d937
+          icon: mdi:thermostat
+          content: '{% if is_state(entity, ''off'') %}{{ ''%g'' | format(states(''sensor.sonoff_a4b001d937_manual_target_temperature'') | float(0)) }}°{% else %}{{ ''%g'' | format(state_attr(entity, ''temperature'') | float(0)) }}°{% endif %}'
+          icon_color: '{% if state_attr(entity, ''hvac_action'') == ''heating'' %}deep-orange{% elif is_state(entity, ''off'') %}disabled{% else %}amber{% endif %}'
+          tap_action:
+            action: more-info
+        card_mod:
+          style: "ha-card {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  width: max-content;\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  pointer-events: none;\n  z-index: 2;\n  --chip-background: rgba(255, 255, 255, 0.06);\n  --chip-box-shadow: none;\n  --chip-border-width: 0px;\n  --chip-height: 22px;\n  --chip-icon-size: 13px;\n  --chip-font-size: 12px;\n  --chip-padding: 0 7px;\n}\nmushroom-template-chip {\n  pointer-events: auto;\n}\n"
+      card_mod:
+        style: "ha-card {\n  position: relative;\n  isolation: isolate;\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:vertical-stack-in-card
+      grid_options:
+        columns: 6
+      cards:
+      - type: tile
+        entity: climate.sonoff_a4b001d936
+        name: Çalışma
+        state_content:
+        - state
+        - current_temperature
+        tap_action:
+          action: more-info
+      - type: custom:mushroom-chips-card
+        alignment: end
+        chips:
+        - type: template
+          entity: climate.sonoff_a4b001d936
+          icon: mdi:thermostat
+          content: '{% if is_state(entity, ''off'') %}{{ ''%g'' | format(states(''sensor.sonoff_a4b001d936_manual_target_temperature'') | float(0)) }}°{% else %}{{ ''%g'' | format(state_attr(entity, ''temperature'') | float(0)) }}°{% endif %}'
+          icon_color: '{% if state_attr(entity, ''hvac_action'') == ''heating'' %}deep-orange{% elif is_state(entity, ''off'') %}disabled{% else %}amber{% endif %}'
+          tap_action:
+            action: more-info
+        card_mod:
+          style: "ha-card {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  width: max-content;\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  pointer-events: none;\n  z-index: 2;\n  --chip-background: rgba(255, 255, 255, 0.06);\n  --chip-box-shadow: none;\n  --chip-border-width: 0px;\n  --chip-height: 22px;\n  --chip-icon-size: 13px;\n  --chip-font-size: 12px;\n  --chip-padding: 0 7px;\n}\nmushroom-template-chip {\n  pointer-events: auto;\n}\n"
+      card_mod:
+        style: "ha-card {\n  position: relative;\n  isolation: isolate;\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+    - type: custom:bubble-card
+      card_type: pop-up
+      hash: '#hava'
+      name: Hava Durumu
+      icon: mdi:weather-partly-cloudy
+      cards:
+      - type: weather-forecast
+        entity: weather.forecast_home
+        show_current: true
+        show_forecast: true
+        forecast_type: daily
+        forecast_slots: 5
+        secondary_info_attribute: humidity
+        name: Hava Durumu
+      bg_color: '#16120f'
+      bg_opacity: '45'
+      bg_blur: '24'
+      shadow_opacity: '40'
+    - type: custom:bubble-card
+      card_type: pop-up
+      hash: '#cocuk-odasi'
+      name: Çocuk Odası
+      icon: mdi:teddy-bear
+      cards:
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: custom:mushroom-light-card
+          entity: light.cocuk_odasi_lamba
+          name: Lamba
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: custom:mushroom-light-card
+          entity: light.sonoff_10024a8007
+          name: Gece Lambası
+          icon: mdi:lightbulb-night
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: custom:mushroom-entity-card
+          entity: switch.sonoff_a4b0024d63
+          name: Kapı Priz
+          icon: mdi:power-plug
+          icon_color: teal
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: custom:vertical-stack-in-card
+        cards:
+        - type: tile
+          entity: climate.sonoff_a4b001d937
+          name: Petek
+          state_content:
+          - state
+          - current_temperature
+          features:
+          - type: target-temperature
+          - type: climate-hvac-modes
+            hvac_modes:
+            - heat
+            - auto
+            - 'off'
+            style: icons
+          features_position: bottom
+        - type: custom:mushroom-chips-card
+          alignment: end
+          chips:
+          - type: template
+            entity: switch.sonoff_a4b001d937_child_lock
+            icon: '{{ ''mdi:lock'' if is_state(entity, ''on'') else ''mdi:lock-open-variant-outline'' }}'
+            icon_color: '{{ ''amber'' if is_state(entity, ''on'') else ''disabled'' }}'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: template
+            entity: switch.sonoff_a4b001d937_window_switch
+            icon: '{{ ''mdi:window-open-variant'' if is_state(entity, ''on'') else ''mdi:window-closed-variant'' }}'
+            icon_color: '{{ ''light-blue'' if is_state(entity, ''on'') else ''disabled'' }}'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          card_mod:
+            style: "ha-card {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  width: max-content;\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  pointer-events: none;\n  z-index: 2;\n  --chip-background: rgba(255, 255, 255, 0.05);\n  --chip-box-shadow: none;\n  --chip-border-width: 0px;\n  --chip-spacing: 6px;\n  --chip-height: 36px;\n  --chip-icon-size: 20px;\n}\nmushroom-template-chip {\n  pointer-events: auto;\n}\n"
+        card_mod:
+          style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n  position: relative;\n  isolation: isolate;\n}\n"
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature
+          name: Sıcaklık
+          icon: mdi:thermometer
+          color: deep-orange
+          vertical: false
+          features:
+          - type: trend-graph
+            hours_to_show: 24
+          features_position: bottom
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: tile
+          entity: sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity
+          name: Nem
+          icon: mdi:water-percent
+          color: blue
+          vertical: false
+          features:
+          - type: trend-graph
+            hours_to_show: 24
+          features_position: bottom
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      bg_color: '#16120f'
+      bg_opacity: '45'
+      bg_blur: '24'
+      shadow_opacity: '40'
+    - type: custom:bubble-card
+      card_type: pop-up
+      hash: '#salon'
+      name: Salon
+      icon: mdi:sofa
+      cards:
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: custom:mushroom-light-card
+          entity: light.salon_lamba_01
+          name: Tavan Lamba 1
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: custom:mushroom-light-card
+          entity: light.salon_lamba_02
+          name: Tavan Lamba 2
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: custom:mushroom-light-card
+          entity: light.salon_tavan_led
+          name: Tavan LED
+          icon: mdi:led-strip-variant
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: custom:mushroom-template-card
+          entity: switch.tv_priz
+          primary: TV Priz
+          secondary: '{{ {''on'': ''Açık'', ''off'': ''Kapalı''}.get(states(entity), state_translated(entity)) }}{% if is_state(entity, ''on'') and has_value(''sensor.tv_priz_power'') %} · {{ states(''sensor.tv_priz_power'') | float(0) | round(0) | int }} W{% endif %}'
+          icon: mdi:power-plug
+          icon_color: '{{ ''teal'' if is_state(entity, ''on'') else ''disabled'' }}'
+          tap_action:
+            action: toggle
+          icon_tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\nha-tile-info {\n  container-type: inline-size;\n  overflow: hidden;\n}\nspan[slot=\"secondary\"] {\n{% if states('input_boolean.dashboard_animasyon') != 'off' %}\n  display: block !important;\n  width: max-content !important;\n  max-width: none !important;\n  overflow: visible !important;\n  text-overflow: clip !important;\n  animation: oda-kayan 12s ease-in-out infinite;\n{% else %}\n  white-space: normal !important;\n{% endif %}\n}\n@keyframes oda-kayan {\n  0%, 15% { transform: translateX(0); }\n  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }\n  90%, 100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  span[slot=\"secondary\"] { animation: none !important; white-space: normal !important; }\n}\n"
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: custom:mushroom-template-card
+          entity: switch.playstation_5_priz
+          primary: PlayStation 5
+          secondary: '{{ {''on'': ''Açık'', ''off'': ''Kapalı''}.get(states(entity), state_translated(entity)) }}{% if is_state(entity, ''on'') and has_value(''sensor.playstation_5_power'') %} · {{ states(''sensor.playstation_5_power'') | float(0) | round(0) | int }} W{% endif %}'
+          icon: mdi:controller
+          icon_color: '{{ ''teal'' if is_state(entity, ''on'') else ''disabled'' }}'
+          tap_action:
+            action: toggle
+          icon_tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\nha-tile-info {\n  container-type: inline-size;\n  overflow: hidden;\n}\nspan[slot=\"secondary\"] {\n{% if states('input_boolean.dashboard_animasyon') != 'off' %}\n  display: block !important;\n  width: max-content !important;\n  max-width: none !important;\n  overflow: visible !important;\n  text-overflow: clip !important;\n  animation: oda-kayan 12s ease-in-out infinite;\n{% else %}\n  white-space: normal !important;\n{% endif %}\n}\n@keyframes oda-kayan {\n  0%, 15% { transform: translateX(0); }\n  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }\n  90%, 100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  span[slot=\"secondary\"] { animation: none !important; white-space: normal !important; }\n}\n"
+      - type: custom:vertical-stack-in-card
+        cards:
+        - type: tile
+          entity: climate.sonoff_a4b001d938
+          name: Petek
+          state_content:
+          - state
+          - current_temperature
+          features:
+          - type: target-temperature
+          - type: climate-hvac-modes
+            hvac_modes:
+            - heat
+            - auto
+            - 'off'
+            style: icons
+          features_position: bottom
+        - type: custom:mushroom-chips-card
+          alignment: end
+          chips:
+          - type: template
+            entity: switch.sonoff_a4b001d938_child_lock
+            icon: '{{ ''mdi:lock'' if is_state(entity, ''on'') else ''mdi:lock-open-variant-outline'' }}'
+            icon_color: '{{ ''amber'' if is_state(entity, ''on'') else ''disabled'' }}'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: template
+            entity: switch.sonoff_a4b001d938_window_switch
+            icon: '{{ ''mdi:window-open-variant'' if is_state(entity, ''on'') else ''mdi:window-closed-variant'' }}'
+            icon_color: '{{ ''light-blue'' if is_state(entity, ''on'') else ''disabled'' }}'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          card_mod:
+            style: "ha-card {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  width: max-content;\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  pointer-events: none;\n  z-index: 2;\n  --chip-background: rgba(255, 255, 255, 0.05);\n  --chip-box-shadow: none;\n  --chip-border-width: 0px;\n  --chip-spacing: 6px;\n  --chip-height: 36px;\n  --chip-icon-size: 20px;\n}\nmushroom-template-chip {\n  pointer-events: auto;\n}\n"
+        card_mod:
+          style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n  position: relative;\n  isolation: isolate;\n}\n"
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: custom:mushroom-media-player-card
+          entity: media_player.samsung_7_series_43_ue43ru7100uxtk
+          name: Samsung TV
+          use_media_info: false
+          show_volume_level: true
+          collapsible_controls: false
+          media_controls:
+          - on_off
+          - previous
+          - play_pause_stop
+          - next
+          volume_controls:
+          - volume_mute
+          - volume_set
+          - volume_buttons
+          tap_action:
+            action: more-info
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: custom:vertical-stack-in-card
+        cards:
+        - type: custom:mushroom-media-player-card
+          entity: media_player.mibox4
+          name: Mi Box
+          icon: mdi:android
+          use_media_info: true
+          show_volume_level: false
+          collapsible_controls: false
+          media_controls:
+          - on_off
+          - play_pause_stop
+          volume_controls: []
+          tap_action:
+            action: more-info
+        - type: custom:mushroom-chips-card
+          alignment: center
+          chips:
+          - type: action
+            icon: mdi:chevron-up
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: DPAD_UP
+          card_mod:
+            style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  --chip-height: 44px;\n  --chip-icon-size: 22px;\n  --chip-spacing: 10px;\n  --chip-background: rgba(255, 255, 255, 0.07);\n  --chip-box-shadow: none;\n  --chip-border-width: 0px;\n  padding: 2px 0 !important;\n}\n"
+        - type: custom:mushroom-chips-card
+          alignment: center
+          chips:
+          - type: action
+            icon: mdi:chevron-left
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: DPAD_LEFT
+          - type: action
+            icon: mdi:circle-medium
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: DPAD_CENTER
+          - type: action
+            icon: mdi:chevron-right
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: DPAD_RIGHT
+          card_mod:
+            style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  --chip-height: 44px;\n  --chip-icon-size: 22px;\n  --chip-spacing: 10px;\n  --chip-background: rgba(255, 255, 255, 0.07);\n  --chip-box-shadow: none;\n  --chip-border-width: 0px;\n  padding: 2px 0 !important;\n}\n"
+        - type: custom:mushroom-chips-card
+          alignment: center
+          chips:
+          - type: action
+            icon: mdi:chevron-down
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: DPAD_DOWN
+          card_mod:
+            style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  --chip-height: 44px;\n  --chip-icon-size: 22px;\n  --chip-spacing: 10px;\n  --chip-background: rgba(255, 255, 255, 0.07);\n  --chip-box-shadow: none;\n  --chip-border-width: 0px;\n  padding: 2px 0 !important;\n}\n"
+        - type: custom:mushroom-chips-card
+          alignment: center
+          chips:
+          - type: action
+            icon: mdi:arrow-left
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: BACK
+          - type: action
+            icon: mdi:home-outline
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: HOME
+          - type: action
+            icon: mdi:volume-minus
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: VOLUME_DOWN
+          - type: action
+            icon: mdi:volume-plus
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: VOLUME_UP
+          card_mod:
+            style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  --chip-height: 44px;\n  --chip-icon-size: 22px;\n  --chip-spacing: 10px;\n  --chip-background: rgba(255, 255, 255, 0.07);\n  --chip-box-shadow: none;\n  --chip-border-width: 0px;\n  padding: 2px 0 !important;\n}\n"
+        card_mod:
+          style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n  padding-bottom: 10px !important;\n}\n"
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.atc_2b36_temperature
+          name: Sıcaklık
+          icon: mdi:thermometer
+          color: deep-orange
+          features:
+          - type: trend-graph
+            hours_to_show: 24
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: tile
+          entity: sensor.atc_2b36_humidity
+          name: Nem
+          icon: mdi:water-percent
+          color: blue
+          features:
+          - type: trend-graph
+            hours_to_show: 24
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: custom:vertical-stack-in-card
+        cards:
+        - type: custom:mushroom-vacuum-card
+          entity: vacuum.ijai_sg_1025189601_v3
+          name: Robot Süpürge
+          icon: mdi:robot-vacuum
+          secondary_info: state
+          icon_animation: false
+          commands:
+          - start_pause
+          - stop
+          - return_home
+          - locate
+          - clean_spot
+          tap_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if states(config.entity) in ['cleaning', 'returning'] and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+        - type: custom:mushroom-chips-card
+          alignment: start
+          chips:
+          - type: template
+            entity: sensor.ijai_sg_1025189601_v3_battery_level_p_3_1
+            icon: mdi:battery
+            content: '%{{ states(entity) | int(0) }}'
+            icon_color: '{% set b = states(entity) | int(0) %}{{ ''green'' if b > 50 else (''orange'' if b > 20 else ''red'') }}'
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.ijai_sg_1025189601_v3_cleaning_area_p_7_23
+            icon: mdi:texture-box
+            content: '{{ states(entity) }} m²'
+            icon_color: blue
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.ijai_sg_1025189601_v3_cleaning_time_p_7_22
+            icon: mdi:timer-outline
+            content: '{{ states(entity) }} dk'
+            icon_color: blue
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.ijai_sg_1025189601_v3_main_brush_life_p_7_10
+            icon: mdi:brush
+            content: Fırça %{{ states(entity) | int(0) }}
+            icon_color: '{% set f = states(entity) | int(0) %}{{ ''red'' if f < 10 else (''orange'' if f < 20 else ''disabled'') }}'
+            tap_action:
+              action: more-info
+          card_mod:
+            style: "ha-card {\n  padding: 0 12px 10px !important;\n  --chip-height: 28px;\n  --chip-font-size: 12px;\n  --chip-icon-size: 16px;\n  --chip-background: rgba(255, 255, 255, 0.06);\n  --chip-box-shadow: none;\n  --chip-border-width: 0px;\n}\n"
+        - type: tile
+          entity: select.ijai_sg_1025189601_v3_mode_p_2_4
+          name: Temizlik modu
+          icon: mdi:robot-vacuum-variant
+          features:
+          - type: select-options
+        card_mod:
+          style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      bg_color: '#16120f'
+      bg_opacity: '45'
+      bg_blur: '24'
+      shadow_opacity: '40'
+    - type: custom:bubble-card
+      card_type: pop-up
+      hash: '#mutfak'
+      name: Mutfak
+      icon: mdi:countertop
+      cards:
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: custom:mushroom-light-card
+          entity: light.mutfak_tavan_aydinlatma
+          name: Tavan Lamba
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: custom:mushroom-light-card
+          entity: light.mutfak_uzun_led_aydinlatma
+          name: Uzun LED
+          icon: mdi:led-strip-variant
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: custom:mushroom-light-card
+          entity: light.mutfak_kahve_led
+          name: Kahve LED
+          icon: mdi:led-strip-variant
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: custom:mushroom-entity-card
+          entity: switch.sonoff_10021dd88c_1
+          name: Kahve Makinesi
+          icon: mdi:coffee-maker
+          icon_color: teal
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: custom:mushroom-entity-card
+          entity: binary_sensor.sonoff_a4b0023723_moisture
+          name: Lavabo
+          secondary_info: state
+          tap_action:
+            action: more-info
+          card_mod:
+            style:
+              .: "mushroom-shape-icon {\n  {% if is_state(config.entity, 'on') %}\n    --icon-color: rgb(var(--rgb-red-color, 244, 67, 54)) !important;\n    --icon-color-disabled: rgb(var(--rgb-red-color, 244, 67, 54)) !important;\n    --shape-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;\n      {% elif states(config.entity) in ['unavailable', 'unknown'] %}\n    --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;\n    --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;\n    --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;\n      {% else %}\n    --icon-color: rgb(var(--rgb-green-color, 76, 175, 80)) !important;\n    --icon-color-disabled: rgb(var(--rgb-green-color, 76, 175, 80)) !important;\n    --shape-color: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;\n      {% endif %}\n}\nha-card {\n  transition: background-color 0.4s ease;\n  {% if is_state(config.entity, 'on') %}\n  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);\n  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);\n  {% endif %}\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+              mushroom-shape-icon$: ".shape {\n  {% if is_state(config.entity, 'on') %}\n  animation: alert-pulse 1.6s ease-out infinite !important;\n  {% endif %}\n}\n@keyframes alert-pulse {\n  0% { box-shadow: 0 0 0 0 rgba(var(--rgb-red-color, 244, 67, 54), 0.6); }\n  100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }\n}\n@media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }\n"
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: conditional
+          conditions:
+          - condition: state
+            entity: switch.mutfak_masa_priz
+            state_not:
+            - unavailable
+            - unknown
+          card:
+            type: custom:mushroom-template-card
+            entity: switch.mutfak_masa_priz
+            primary: Masa Priz
+            secondary: '{{ {''on'': ''Açık'', ''off'': ''Kapalı''}.get(states(entity), state_translated(entity)) }}{% if is_state(entity, ''on'') and has_value(''sensor.mutfak_masa_priz_power'') %} · {{ states(''sensor.mutfak_masa_priz_power'') | float(0) | round(0) | int }} W{% endif %}'
+            icon: mdi:power-socket-eu
+            icon_color: '{{ ''teal'' if is_state(entity, ''on'') else ''disabled'' }}'
+            tap_action:
+              action: toggle
+            icon_tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            double_tap_action:
+              action: none
+            card_mod:
+              style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\nha-tile-info {\n  container-type: inline-size;\n  overflow: hidden;\n}\nspan[slot=\"secondary\"] {\n{% if states('input_boolean.dashboard_animasyon') != 'off' %}\n  display: block !important;\n  width: max-content !important;\n  max-width: none !important;\n  overflow: visible !important;\n  text-overflow: clip !important;\n  animation: oda-kayan 12s ease-in-out infinite;\n{% else %}\n  white-space: normal !important;\n{% endif %}\n}\n@keyframes oda-kayan {\n  0%, 15% { transform: translateX(0); }\n  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }\n  90%, 100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  span[slot=\"secondary\"] { animation: none !important; white-space: normal !important; }\n}\n"
+      bg_color: '#16120f'
+      bg_opacity: '45'
+      bg_blur: '24'
+      shadow_opacity: '40'
+    - type: custom:bubble-card
+      card_type: pop-up
+      hash: '#yatak-odasi'
+      name: Yatak Odası
+      icon: mdi:bed
+      cards:
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: custom:mushroom-light-card
+          entity: light.yatak_odasi_tavan
+          name: Tavan Lamba
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: custom:mushroom-light-card
+          entity: light.yatak_odasi_led
+          name: LED
+          icon: mdi:led-strip-variant
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: custom:vertical-stack-in-card
+        cards:
+        - type: tile
+          entity: climate.sonoff_a4b001d93a
+          name: Petek
+          state_content:
+          - state
+          - current_temperature
+          features:
+          - type: target-temperature
+          - type: climate-hvac-modes
+            hvac_modes:
+            - heat
+            - auto
+            - 'off'
+            style: icons
+          features_position: bottom
+        - type: custom:mushroom-chips-card
+          alignment: end
+          chips:
+          - type: template
+            entity: switch.sonoff_a4b001d93a_child_lock
+            icon: '{{ ''mdi:lock'' if is_state(entity, ''on'') else ''mdi:lock-open-variant-outline'' }}'
+            icon_color: '{{ ''amber'' if is_state(entity, ''on'') else ''disabled'' }}'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: template
+            entity: switch.sonoff_a4b001d93a_window_switch
+            icon: '{{ ''mdi:window-open-variant'' if is_state(entity, ''on'') else ''mdi:window-closed-variant'' }}'
+            icon_color: '{{ ''light-blue'' if is_state(entity, ''on'') else ''disabled'' }}'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          card_mod:
+            style: "ha-card {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  width: max-content;\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  pointer-events: none;\n  z-index: 2;\n  --chip-background: rgba(255, 255, 255, 0.05);\n  --chip-box-shadow: none;\n  --chip-border-width: 0px;\n  --chip-spacing: 6px;\n  --chip-height: 36px;\n  --chip-icon-size: 20px;\n}\nmushroom-template-chip {\n  pointer-events: auto;\n}\n"
+        card_mod:
+          style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n  position: relative;\n  isolation: isolate;\n}\n"
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature
+          name: Sıcaklık
+          icon: mdi:thermometer
+          color: deep-orange
+          vertical: false
+          features:
+          - type: trend-graph
+            hours_to_show: 24
+          features_position: bottom
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: tile
+          entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity
+          name: Nem
+          icon: mdi:water-percent
+          color: blue
+          vertical: false
+          features:
+          - type: trend-graph
+            hours_to_show: 24
+          features_position: bottom
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      bg_color: '#16120f'
+      bg_opacity: '45'
+      bg_blur: '24'
+      shadow_opacity: '40'
+    - type: custom:bubble-card
+      card_type: pop-up
+      hash: '#calisma-odasi'
+      name: Çalışma Odası
+      icon: mdi:monitor-dashboard
+      cards:
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: custom:mushroom-light-card
+          entity: light.calisma_odasi_lamba
+          name: Lamba
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: custom:mushroom-entity-card
+          entity: switch.kitaplik_led_sonoff_10021d962d_1
+          name: Kitaplık LED
+          icon: mdi:led-strip
+          icon_color: amber
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: custom:mushroom-entity-card
+          entity: switch.calisma_odasi_kapi_priz
+          name: Divan LED
+          icon: mdi:led-strip-variant
+          icon_color: amber
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: custom:vertical-stack-in-card
+        cards:
+        - type: tile
+          entity: climate.sonoff_a4b001d936
+          name: Petek
+          state_content:
+          - state
+          - current_temperature
+          features:
+          - type: target-temperature
+          - type: climate-hvac-modes
+            hvac_modes:
+            - heat
+            - auto
+            - 'off'
+            style: icons
+          features_position: bottom
+        - type: custom:mushroom-chips-card
+          alignment: end
+          chips:
+          - type: template
+            entity: switch.sonoff_a4b001d936_child_lock
+            icon: '{{ ''mdi:lock'' if is_state(entity, ''on'') else ''mdi:lock-open-variant-outline'' }}'
+            icon_color: '{{ ''amber'' if is_state(entity, ''on'') else ''disabled'' }}'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: template
+            entity: switch.sonoff_a4b001d936_window_switch
+            icon: '{{ ''mdi:window-open-variant'' if is_state(entity, ''on'') else ''mdi:window-closed-variant'' }}'
+            icon_color: '{{ ''light-blue'' if is_state(entity, ''on'') else ''disabled'' }}'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          card_mod:
+            style: "ha-card {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  width: max-content;\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  pointer-events: none;\n  z-index: 2;\n  --chip-background: rgba(255, 255, 255, 0.05);\n  --chip-box-shadow: none;\n  --chip-border-width: 0px;\n  --chip-spacing: 6px;\n  --chip-height: 36px;\n  --chip-icon-size: 20px;\n}\nmushroom-template-chip {\n  pointer-events: auto;\n}\n"
+        card_mod:
+          style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n  position: relative;\n  isolation: isolate;\n}\n"
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature
+          name: Sıcaklık
+          icon: mdi:thermometer
+          color: deep-orange
+          vertical: false
+          features:
+          - type: trend-graph
+            hours_to_show: 24
+          features_position: bottom
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: tile
+          entity: sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_humidity
+          name: Nem
+          icon: mdi:water-percent
+          color: blue
+          vertical: false
+          features:
+          - type: trend-graph
+            hours_to_show: 24
+          features_position: bottom
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      bg_color: '#16120f'
+      bg_opacity: '45'
+      bg_blur: '24'
+      shadow_opacity: '40'
+    - type: custom:bubble-card
+      card_type: pop-up
+      hash: '#koridor'
+      name: Koridor
+      icon: mdi:door
+      cards:
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: custom:mushroom-light-card
+          entity: light.koridor_mutfak
+          name: Mutfak Tarafı
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: custom:mushroom-light-card
+          entity: light.koridor_kapi
+          name: Kapı Tarafı
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: custom:mushroom-template-card
+          entity: binary_sensor.sonoff_100235874c
+          primary: Kapı
+          secondary: '{% if states(entity) in [''unavailable'', ''unknown''] %}Bağlantı yok{% else %}{{ ''Açık'' if is_state(entity, ''on'') else ''Kapalı'' }} · {% set d = (now() - states[entity].last_changed).total_seconds() %}{% if d < 60 %}az önce{% elif d < 3600 %}{{ (d / 60) | int }} dk önce{% elif d < 86400 %}{{ (d / 3600) | int }} saat önce{% else %}{{ (d / 86400) | int }} gün önce{% endif %}{% endif %}'
+          icon: '{{ ''mdi:door-open'' if is_state(entity, ''on'') else ''mdi:door-closed'' }}'
+          icon_color: '{% if is_state(entity, ''on'') %}orange{% elif states(entity) in [''unavailable'', ''unknown''] %}disabled{% else %}green{% endif %}'
+          tap_action:
+            action: more-info
+          icon_tap_action:
+            action: more-info
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\nha-tile-info {\n  container-type: inline-size;\n  overflow: hidden;\n}\nspan[slot=\"secondary\"] {\n{% if states('input_boolean.dashboard_animasyon') != 'off' %}\n  display: block !important;\n  width: max-content !important;\n  max-width: none !important;\n  overflow: visible !important;\n  text-overflow: clip !important;\n  animation: oda-kayan 12s ease-in-out infinite;\n{% else %}\n  white-space: normal !important;\n{% endif %}\n}\n@keyframes oda-kayan {\n  0%, 15% { transform: translateX(0); }\n  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }\n  90%, 100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  span[slot=\"secondary\"] { animation: none !important; white-space: normal !important; }\n}\n"
+        - type: custom:mushroom-template-card
+          entity: binary_sensor.sonoff_a4b001a3ce
+          primary: Hareket
+          secondary: '{% if states(entity) in [''unavailable'', ''unknown''] %}Bağlantı yok{% else %}{% if is_state(entity, ''on'') %}Hareket var{% else %}Hareket yok · {% set d = (now() - states[entity].last_changed).total_seconds() %}{% if d < 60 %}az önce{% elif d < 3600 %}{{ (d / 60) | int }} dk önce{% elif d < 86400 %}{{ (d / 3600) | int }} saat önce{% else %}{{ (d / 86400) | int }} gün önce{% endif %}{% endif %}{% endif %}'
+          icon: '{{ ''mdi:motion-sensor'' if is_state(entity, ''on'') else ''mdi:motion-sensor-off'' }}'
+          icon_color: '{{ ''blue'' if is_state(entity, ''on'') else ''disabled'' }}'
+          tap_action:
+            action: more-info
+          icon_tap_action:
+            action: more-info
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\nha-tile-info {\n  container-type: inline-size;\n  overflow: hidden;\n}\nspan[slot=\"secondary\"] {\n{% if states('input_boolean.dashboard_animasyon') != 'off' %}\n  display: block !important;\n  width: max-content !important;\n  max-width: none !important;\n  overflow: visible !important;\n  text-overflow: clip !important;\n  animation: oda-kayan 12s ease-in-out infinite;\n{% else %}\n  white-space: normal !important;\n{% endif %}\n}\n@keyframes oda-kayan {\n  0%, 15% { transform: translateX(0); }\n  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }\n  90%, 100% { transform: translateX(0); }\n}\n@media (prefers-reduced-motion: reduce) {\n  span[slot=\"secondary\"] { animation: none !important; white-space: normal !important; }\n}\n"
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: custom:mushroom-entity-card
+          entity: binary_sensor.sonoff_a4b0023729_moisture
+          name: Ayakkabılık
+          secondary_info: state
+          tap_action:
+            action: more-info
+          card_mod:
+            style:
+              .: "mushroom-shape-icon {\n  {% if is_state(config.entity, 'on') %}\n    --icon-color: rgb(var(--rgb-red-color, 244, 67, 54)) !important;\n    --icon-color-disabled: rgb(var(--rgb-red-color, 244, 67, 54)) !important;\n    --shape-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;\n      {% elif states(config.entity) in ['unavailable', 'unknown'] %}\n    --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;\n    --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;\n    --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;\n      {% else %}\n    --icon-color: rgb(var(--rgb-green-color, 76, 175, 80)) !important;\n    --icon-color-disabled: rgb(var(--rgb-green-color, 76, 175, 80)) !important;\n    --shape-color: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;\n      {% endif %}\n}\nha-card {\n  transition: background-color 0.4s ease;\n  {% if is_state(config.entity, 'on') %}\n  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);\n  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);\n  {% endif %}\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+              mushroom-shape-icon$: ".shape {\n  {% if is_state(config.entity, 'on') %}\n  animation: alert-pulse 1.6s ease-out infinite !important;\n  {% endif %}\n}\n@keyframes alert-pulse {\n  0% { box-shadow: 0 0 0 0 rgba(var(--rgb-red-color, 244, 67, 54), 0.6); }\n  100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }\n}\n@media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }\n"
+      - type: custom:vertical-stack-in-card
+        cards:
+        - type: tile
+          entity: fan.zhimi_sg_918358888_meb1_s_2_air_purifier
+          name: Kokuştroşko
+          icon: mdi:air-purifier
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          features:
+          - type: fan-preset-modes
+          - type: fan-speed
+        - type: custom:mushroom-chips-card
+          alignment: end
+          chips:
+          - type: template
+            entity: switch.zhimi_sg_918358888_meb1_plasma_p_2_6
+            icon: '{{ ''mdi:virus'' if is_state(entity, ''on'') else ''mdi:virus-outline'' }}'
+            icon_color: '{{ ''cyan'' if is_state(entity, ''on'') else ''disabled'' }}'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: template
+            entity: switch.zhimi_sg_918358888_meb1_uv_p_2_7
+            icon: '{{ ''mdi:sun-wireless'' if is_state(entity, ''on'') else ''mdi:sun-wireless-outline'' }}'
+            icon_color: '{{ ''purple'' if is_state(entity, ''on'') else ''disabled'' }}'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: template
+            entity: switch.zhimi_sg_918358888_meb1_physical_controls_locked_p_8_1
+            icon: '{{ ''mdi:lock'' if is_state(entity, ''on'') else ''mdi:lock-open-variant-outline'' }}'
+            icon_color: '{{ ''amber'' if is_state(entity, ''on'') else ''disabled'' }}'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          card_mod:
+            style: "ha-card {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  width: max-content;\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  pointer-events: none;\n  z-index: 2;\n  --chip-background: rgba(255, 255, 255, 0.05);\n  --chip-box-shadow: none;\n  --chip-border-width: 0px;\n  --chip-spacing: 6px;\n  --chip-height: 36px;\n  --chip-icon-size: 20px;\n}\nmushroom-template-chip {\n  pointer-events: auto;\n}\n"
+        card_mod:
+          style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n  position: relative;\n  isolation: isolate;\n}\n"
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.zhimi_sg_918358888_meb1_pm2_5_density_p_3_4
+          name: PM2.5
+          icon: mdi:blur
+          color: teal
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 50
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: tile
+          entity: sensor.zhimi_sg_918358888_meb1_filter_life_level_p_4_1
+          name: Filtre ömrü
+          icon: mdi:air-filter
+          color: blue
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      bg_color: '#16120f'
+      bg_opacity: '45'
+      bg_blur: '24'
+      shadow_opacity: '40'
+    - type: custom:bubble-card
+      card_type: pop-up
+      hash: '#buyuk-banyo'
+      name: Büyük Banyo
+      icon: mdi:bathtub
+      cards:
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: custom:mushroom-light-card
+          entity: light.buyuk_banyo_lamba
+          name: Lamba
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: custom:mushroom-entity-card
+          entity: binary_sensor.sonoff_a4b0023728_moisture
+          name: Lavabo
+          secondary_info: state
+          tap_action:
+            action: more-info
+          card_mod:
+            style:
+              .: "mushroom-shape-icon {\n  {% if is_state(config.entity, 'on') %}\n    --icon-color: rgb(var(--rgb-red-color, 244, 67, 54)) !important;\n    --icon-color-disabled: rgb(var(--rgb-red-color, 244, 67, 54)) !important;\n    --shape-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;\n      {% elif states(config.entity) in ['unavailable', 'unknown'] %}\n    --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;\n    --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;\n    --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;\n      {% else %}\n    --icon-color: rgb(var(--rgb-green-color, 76, 175, 80)) !important;\n    --icon-color-disabled: rgb(var(--rgb-green-color, 76, 175, 80)) !important;\n    --shape-color: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;\n      {% endif %}\n}\nha-card {\n  transition: background-color 0.4s ease;\n  {% if is_state(config.entity, 'on') %}\n  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);\n  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);\n  {% endif %}\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+              mushroom-shape-icon$: ".shape {\n  {% if is_state(config.entity, 'on') %}\n  animation: alert-pulse 1.6s ease-out infinite !important;\n  {% endif %}\n}\n@keyframes alert-pulse {\n  0% { box-shadow: 0 0 0 0 rgba(var(--rgb-red-color, 244, 67, 54), 0.6); }\n  100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }\n}\n@media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }\n"
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: custom:mushroom-entity-card
+          entity: binary_sensor.sonoff_a4b0023726_moisture
+          name: Çamaşır Makinesi
+          secondary_info: state
+          tap_action:
+            action: more-info
+          card_mod:
+            style:
+              .: "mushroom-shape-icon {\n  {% if is_state(config.entity, 'on') %}\n    --icon-color: rgb(var(--rgb-red-color, 244, 67, 54)) !important;\n    --icon-color-disabled: rgb(var(--rgb-red-color, 244, 67, 54)) !important;\n    --shape-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;\n      {% elif states(config.entity) in ['unavailable', 'unknown'] %}\n    --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;\n    --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;\n    --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;\n      {% else %}\n    --icon-color: rgb(var(--rgb-green-color, 76, 175, 80)) !important;\n    --icon-color-disabled: rgb(var(--rgb-green-color, 76, 175, 80)) !important;\n    --shape-color: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;\n      {% endif %}\n}\nha-card {\n  transition: background-color 0.4s ease;\n  {% if is_state(config.entity, 'on') %}\n  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);\n  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);\n  {% endif %}\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+              mushroom-shape-icon$: ".shape {\n  {% if is_state(config.entity, 'on') %}\n  animation: alert-pulse 1.6s ease-out infinite !important;\n  {% endif %}\n}\n@keyframes alert-pulse {\n  0% { box-shadow: 0 0 0 0 rgba(var(--rgb-red-color, 244, 67, 54), 0.6); }\n  100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }\n}\n@media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }\n"
+      bg_color: '#16120f'
+      bg_opacity: '45'
+      bg_blur: '24'
+      shadow_opacity: '40'
+    - type: custom:bubble-card
+      card_type: pop-up
+      hash: '#ebeveyn-banyo'
+      name: Ebeveyn Banyo
+      icon: mdi:bathtub-outline
+      cards:
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: custom:mushroom-light-card
+          entity: light.ebeveyn_banyo_aydinlatma
+          name: Lamba
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: custom:mushroom-entity-card
+          entity: binary_sensor.sonoff_a4b0023725_moisture
+          name: Lavabo
+          secondary_info: state
+          tap_action:
+            action: more-info
+          card_mod:
+            style:
+              .: "mushroom-shape-icon {\n  {% if is_state(config.entity, 'on') %}\n    --icon-color: rgb(var(--rgb-red-color, 244, 67, 54)) !important;\n    --icon-color-disabled: rgb(var(--rgb-red-color, 244, 67, 54)) !important;\n    --shape-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;\n      {% elif states(config.entity) in ['unavailable', 'unknown'] %}\n    --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;\n    --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;\n    --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;\n      {% else %}\n    --icon-color: rgb(var(--rgb-green-color, 76, 175, 80)) !important;\n    --icon-color-disabled: rgb(var(--rgb-green-color, 76, 175, 80)) !important;\n    --shape-color: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;\n      {% endif %}\n}\nha-card {\n  transition: background-color 0.4s ease;\n  {% if is_state(config.entity, 'on') %}\n  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);\n  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);\n  {% endif %}\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+              mushroom-shape-icon$: ".shape {\n  {% if is_state(config.entity, 'on') %}\n  animation: alert-pulse 1.6s ease-out infinite !important;\n  {% endif %}\n}\n@keyframes alert-pulse {\n  0% { box-shadow: 0 0 0 0 rgba(var(--rgb-red-color, 244, 67, 54), 0.6); }\n  100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }\n}\n@media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }\n"
+      bg_color: '#16120f'
+      bg_opacity: '45'
+      bg_blur: '24'
+      shadow_opacity: '40'
+    - type: custom:bubble-card
+      card_type: pop-up
+      hash: '#balkon'
+      name: Balkon
+      icon: mdi:balcony
+      cards:
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: custom:mushroom-light-card
+          entity: light.balkon_tavan_aydinlatma
+          name: Tavan Lamba
+          icon_color: amber
+          use_light_color: true
+          secondary_info: state
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          card_mod:
+            style:
+              mushroom-shape-icon$: ".shape {\n  transition: box-shadow 0.4s ease !important;\n  {% if is_state(config.entity, 'on') and states('input_boolean.dashboard_animasyon') != 'off' %}\n  box-shadow: 0 0 16px -2px var(--icon-color) !important;\n  {% endif %}\n}\n"
+              .: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: custom:mushroom-entity-card
+          entity: binary_sensor.sonoff_a4b002372b_moisture
+          name: Sol su sensörü
+          secondary_info: state
+          tap_action:
+            action: more-info
+          card_mod:
+            style:
+              .: "mushroom-shape-icon {\n  {% if is_state(config.entity, 'on') %}\n    --icon-color: rgb(var(--rgb-red-color, 244, 67, 54)) !important;\n    --icon-color-disabled: rgb(var(--rgb-red-color, 244, 67, 54)) !important;\n    --shape-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;\n      {% elif states(config.entity) in ['unavailable', 'unknown'] %}\n    --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;\n    --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;\n    --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;\n      {% else %}\n    --icon-color: rgb(var(--rgb-green-color, 76, 175, 80)) !important;\n    --icon-color-disabled: rgb(var(--rgb-green-color, 76, 175, 80)) !important;\n    --shape-color: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;\n      {% endif %}\n}\nha-card {\n  transition: background-color 0.4s ease;\n  {% if is_state(config.entity, 'on') %}\n  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);\n  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);\n  {% endif %}\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+              mushroom-shape-icon$: ".shape {\n  {% if is_state(config.entity, 'on') %}\n  animation: alert-pulse 1.6s ease-out infinite !important;\n  {% endif %}\n}\n@keyframes alert-pulse {\n  0% { box-shadow: 0 0 0 0 rgba(var(--rgb-red-color, 244, 67, 54), 0.6); }\n  100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }\n}\n@media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }\n"
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: custom:mushroom-entity-card
+          entity: binary_sensor.sonoff_a4b002414d_moisture
+          name: Sağ su sensörü
+          secondary_info: state
+          tap_action:
+            action: more-info
+          card_mod:
+            style:
+              .: "mushroom-shape-icon {\n  {% if is_state(config.entity, 'on') %}\n    --icon-color: rgb(var(--rgb-red-color, 244, 67, 54)) !important;\n    --icon-color-disabled: rgb(var(--rgb-red-color, 244, 67, 54)) !important;\n    --shape-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-red-color, 244, 67, 54), 0.2) !important;\n      {% elif states(config.entity) in ['unavailable', 'unknown'] %}\n    --icon-color: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;\n    --icon-color-disabled: rgb(var(--rgb-disabled-color, 189, 189, 189)) !important;\n    --shape-color: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-disabled-color, 189, 189, 189), 0.2) !important;\n      {% else %}\n    --icon-color: rgb(var(--rgb-green-color, 76, 175, 80)) !important;\n    --icon-color-disabled: rgb(var(--rgb-green-color, 76, 175, 80)) !important;\n    --shape-color: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;\n    --shape-color-disabled: rgba(var(--rgb-green-color, 76, 175, 80), 0.2) !important;\n      {% endif %}\n}\nha-card {\n  transition: background-color 0.4s ease;\n  {% if is_state(config.entity, 'on') %}\n  background-color: rgba(var(--rgb-red-color, 244, 67, 54), 0.14);\n  box-shadow: inset 0 0 0 1px rgba(var(--rgb-red-color, 244, 67, 54), 0.6);\n  {% endif %}\n}\nha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+              mushroom-shape-icon$: ".shape {\n  {% if is_state(config.entity, 'on') %}\n  animation: alert-pulse 1.6s ease-out infinite !important;\n  {% endif %}\n}\n@keyframes alert-pulse {\n  0% { box-shadow: 0 0 0 0 rgba(var(--rgb-red-color, 244, 67, 54), 0.6); }\n  100% { box-shadow: 0 0 0 12px rgba(var(--rgb-red-color, 244, 67, 54), 0); }\n}\n@media (prefers-reduced-motion: reduce) { .shape { animation: none !important; } }\n"
+      bg_color: '#16120f'
+      bg_opacity: '45'
+      bg_blur: '24'
+      shadow_opacity: '40'
+    - type: custom:bubble-card
+      card_type: pop-up
+      hash: '#piller'
+      name: Piller
+      icon: mdi:battery-heart-variant
+      cards:
+      - type: heading
+        heading: Sensörler
+        heading_style: subtitle
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.sonoff_100235874c_battery
+          name: Kapı Sensörü
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: tile
+          entity: sensor.sonoff_a4b001a3ce_battery
+          name: Hareket Sensörü
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery
+          name: Çocuk Odası TH
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: tile
+          entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery
+          name: Yatak Odası TH
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: tile
+          entity: sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_battery
+          name: Çalışma Odası TH
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.atc_2b36_battery
+          name: Salon TH
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: heading
+        heading: Petekler
+        heading_style: subtitle
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.sonoff_a4b001d938_battery
+          name: Salon Petek
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: tile
+          entity: sensor.sonoff_a4b001d93a_battery
+          name: Yatak Odası Petek
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.sonoff_a4b001d937_battery
+          name: Çocuk Odası Petek
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: tile
+          entity: sensor.sonoff_a4b001d936_battery
+          name: Çalışma Odası Petek
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: heading
+        heading: Su kaçağı sensörleri
+        heading_style: subtitle
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.sonoff_a4b0023723_battery
+          name: Mutfak Lavabo
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: tile
+          entity: sensor.sonoff_a4b0023728_battery
+          name: Büyük Banyo Lavabo
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.sonoff_a4b0023726_battery
+          name: Çamaşır Makinesi
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: tile
+          entity: sensor.sonoff_a4b0023725_battery
+          name: Ebeveyn Banyo
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.sonoff_a4b0023729_battery
+          name: Ayakkabılık
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+        - type: tile
+          entity: sensor.sonoff_a4b002372b_battery
+          name: Balkon Sol
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+        - type: tile
+          entity: sensor.sonoff_a4b002414d_battery
+          name: Balkon Sağ
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: "ha-card {\n  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border: 1px solid rgba(255, 255, 255, 0.14) !important;\n  border-radius: 22px !important;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 28px rgba(0, 0, 0, 0.38) !important;\n}\n"
+      bg_color: '#16120f'
+      bg_opacity: '45'
+      bg_blur: '24'
+      shadow_opacity: '40'
+  background: 'radial-gradient(circle at 12% 8%, rgba(255, 122, 26, 0.38) 0%, transparent 38%), radial-gradient(circle at 92% 55%, rgba(20, 170, 180, 0.30) 0%, transparent 42%), radial-gradient(circle at 30% 95%, rgba(255, 160, 80, 0.18) 0%, transparent 40%), linear-gradient(160deg, #1c1611 0%, #120f0d 45%, #0b1214 100%) fixed'

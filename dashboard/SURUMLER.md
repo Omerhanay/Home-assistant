@@ -4,6 +4,13 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v26 — 2026-11-05
+
+- **Glassy deneme paneli** (tek seferlik, `glassy-deneme.yaml`, `/dashboard-glassy`): ana panelin cam (glassmorphism)
+  görünümlü kopyası — koyu sıcak arka plan + turuncu/camgöbeği ışık, buzlu cam kartlar (bulanıklık, ince parlak kenar,
+  22 px köşe, gölge), pencereler yarı saydam + bulanık. `build_glassy.py` ile ana panelden üretilir.
+  Ana panel ve tablet değişmedi. Beğenilmezse dosyalar silinecek.
+
 ## 0v25 — 2026-10-28
 
 - **Çalışma Odası TH sensörü** eklendi (`sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_*`), Yatak/Çocuk ile aynı düzen:
