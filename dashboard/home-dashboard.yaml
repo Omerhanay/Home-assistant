@@ -1,4 +1,4 @@
-# Ev paneli (telefon, /dashboard-tt) · sürüm 0v27 · 2026-11-11 · bkz. SURUMLER.md
+# Ev paneli (telefon, /dashboard-tt) · sürüm 0v28 · 2026-11-11 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -1406,6 +1406,58 @@ views:
       heading: Isıtma
       heading_style: title
       icon: mdi:radiator
+    - type: custom:vertical-stack-in-card
+      grid_options:
+        columns: full
+      cards:
+      - type: custom:mushroom-template-card
+        primary: Tüm Petekler
+        secondary: |-
+          {% set p = ['climate.sonoff_a4b001d938', 'climate.sonoff_a4b001d93a', 'climate.sonoff_a4b001d937', 'climate.sonoff_a4b001d936'] %}{% set acik = p | reject('is_state', 'off') | select('has_value') | list | count %}{% set t = expand(p) | map(attribute='attributes.current_temperature') | select('is_number') | list %}{{ acik }}/4 açık{{ ' · ort. ' ~ ((t | sum / t | count) | round(1)) ~ '°' if t else '' }}
+        icon: mdi:radiator
+        icon_color: |-
+          {% set p = ['climate.sonoff_a4b001d938', 'climate.sonoff_a4b001d93a', 'climate.sonoff_a4b001d937', 'climate.sonoff_a4b001d936'] %}{% if expand(p) | selectattr('attributes.hvac_action', 'defined') | selectattr('attributes.hvac_action', 'eq', 'heating') | list | count > 0 %}deep-orange{% elif p | reject('is_state', 'off') | select('has_value') | list | count > 0 %}amber{% else %}disabled{% endif %}
+        tap_action:
+          action: none
+      - type: tile
+        entity: input_number.tum_petekler_hedef
+        name: Hedef sıcaklık
+        icon: mdi:thermostat
+        color: deep-orange
+        features:
+        - type: numeric-input
+          style: buttons
+        features_position: inline
+        tap_action:
+          action: more-info
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+        - type: custom:mushroom-template-card
+          primary: Hepsini aç
+          icon: mdi:fire
+          icon_color: deep-orange
+          layout: horizontal
+          tap_action:
+            action: perform-action
+            perform_action: climate.set_hvac_mode
+            target:
+              entity_id: ['climate.sonoff_a4b001d938', 'climate.sonoff_a4b001d93a', 'climate.sonoff_a4b001d937', 'climate.sonoff_a4b001d936']
+            data:
+              hvac_mode: heat
+        - type: custom:mushroom-template-card
+          primary: Hepsini kapat
+          icon: mdi:power
+          icon_color: grey
+          layout: horizontal
+          tap_action:
+            action: perform-action
+            perform_action: climate.set_hvac_mode
+            target:
+              entity_id: ['climate.sonoff_a4b001d938', 'climate.sonoff_a4b001d93a', 'climate.sonoff_a4b001d937', 'climate.sonoff_a4b001d936']
+            data:
+              hvac_mode: 'off'
     - type: custom:vertical-stack-in-card
       grid_options:
         columns: 6

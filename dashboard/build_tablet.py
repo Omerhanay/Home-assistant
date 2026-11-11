@@ -92,7 +92,7 @@ for c in s_rooms[1:]:
 popup = s_heat.pop()
 # heating cards: half width on the tablet (full width on the phone, where a half card is too narrow for the set-point chip)
 for c in s_heat:
-    if c.get("type") == "custom:vertical-stack-in-card":
+    if c.get("type") == "custom:vertical-stack-in-card" and c.get("grid_options", {}).get("columns") != "full":
         c["grid_options"] = {"columns": 6}
 assert popup.get("card_type") == "pop-up"
 col3 = s_rooms + s_heat + [popup]

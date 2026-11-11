@@ -37,6 +37,7 @@ INTENTIONALLY_DROPPED = {
 }
 # Added after the original by the user (confirmed in HA / Watchman), not invented.
 USER_ADDED = {
+    "input_number.tum_petekler_hedef",  # Tüm Petekler hedef sıcaklık yardımcısı (0v28, kullanıcı oluşturur)
     "sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature", "sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_humidity", "sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_battery",  # Çalışma Odası TH (0v25)
     "sensor.tv_priz_power", "sensor.playstation_5_power", "sensor.mutfak_masa_priz_power",
     "switch.kitaplik_led_sonoff_10021d962d_1", "input_boolean.dashboard_animasyon", "switch.mutfak_masa_priz",
@@ -115,7 +116,7 @@ except yaml.YAMLError as exc:
 
 # 1. every entity the original referenced is still present (or consciously dropped)
 orig_ids = set(ENTITY_RE.findall(orig_text)) - {"fan.includes"}
-SERVICES = {"input_boolean.turn_on", "input_boolean.turn_off", "input_boolean.toggle"}  # action names, not entities
+SERVICES = {"input_boolean.turn_on", "input_boolean.turn_off", "input_boolean.toggle", "climate.set_hvac_mode"}  # action names, not entities
 new_ids = set(ENTITY_RE.findall(new_text)) - SERVICES
 missing = sorted(orig_ids - new_ids - INTENTIONALLY_DROPPED)
 for e in missing:
