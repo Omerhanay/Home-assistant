@@ -1,0 +1,33 @@
+alias: Tüm_Petekler_Sıcaklık_Otomasyonu
+description: >-
+  Paneldeki "Tüm Petekler" kartında hedef sıcaklık (input_number.tum_petekler_hedef) değişince
+  değeri 4 peteğe gönderir. −/+ ile art arda basınca her basışta değil, 2 sn durduktan sonra bir kez gönderir.
+triggers:
+  - trigger: state
+    entity_id: input_number.tum_petekler_hedef
+    not_from:
+      - unavailable
+      - unknown
+    not_to:
+      - unavailable
+      - unknown
+conditions: []
+actions:
+  # mode: restart sayesinde 2 sn içinde gelen yeni basış öncekini iptal eder
+  - delay:
+      seconds: 2
+  # Her petek ayrı: biri yanıt vermezse diğerleri yine ayarlanır
+  - repeat:
+      for_each:
+        - climate.sonoff_a4b001d938
+        - climate.sonoff_a4b001d93a
+        - climate.sonoff_a4b001d937
+        - climate.sonoff_a4b001d936
+      sequence:
+        - action: climate.set_temperature
+          continue_on_error: true
+          target:
+            entity_id: "{{ repeat.item }}"
+          data:
+            temperature: "{{ states('input_number.tum_petekler_hedef') | float }}"
+mode: restart

@@ -4,6 +4,14 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v28 — 2026-11-11
+
+- **Tüm Petekler kartı** (Isıtma bölümünün en başı, tam genişlik): kaç peteğin açık olduğu + ortalama sıcaklık,
+  tek hedef sıcaklık (−/+, `input_number.tum_petekler_hedef`), **Hepsini aç** / **Hepsini kapat**.
+- Yeni otomasyon `otomasyonlar/tum-petekler-sicaklik.yaml`: hedef değişince 2 sn sonra 4 peteğe gönderir.
+- Gerekli yardımcı: Sayı, ad "Tüm Petekler Hedef", 5–30, adım 0,5, °C (kullanıcı oluşturur).
+- Tablet üreticisi: tam genişlik ısıtma kartları tablette yarıya inmez.
+
 ## 0v27 — 2026-11-11
 
 - **Glassy deneme paneli kaldırıldı** (beğenilmedi): `glassy-deneme.yaml` ve `build_glassy.py` silindi.
