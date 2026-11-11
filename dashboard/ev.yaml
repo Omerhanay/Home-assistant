@@ -1,4 +1,4 @@
-# Ev paneli (YAML modu, /dashboard-ev) · sürüm 0v21 · 2026-10-15 · bkz. SURUMLER.md
+# Ev paneli (YAML modu, /dashboard-ev) · sürüm 0v27 · 2026-11-11 · bkz. SURUMLER.md
 views:
 - title: Ana Sayfa
   path: ana-sayfa
@@ -192,10 +192,10 @@ views:
         - text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35)
         - background: |-
             [[[
-              const sun = (states['sun.sun'] || {}).attributes || {};
-              let E = parseFloat(sun.elevation);
+              const gunes = (states['sun.sun'] || {}).attributes || {};
+              let E = parseFloat(gunes.elevation);
               if (isNaN(E)) { const h = new Date().getHours(); E = h >= 7 && h < 19 ? 30 : -20; }
-              const faz = E > 12 ? 'gun' : E > -1 ? (sun.rising ? 'safak' : 'aksam') : E > -8 ? 'alaca' : 'gece';
+              const faz = E > 12 ? 'gun' : E > -1 ? (gunes.rising ? 'safak' : 'aksam') : E > -8 ? 'alaca' : 'gece';
               const gok = {
                 gun: 'linear-gradient(180deg, #1d4ed8 0%, #3b82f6 55%, #7dd3fc 100%)',
                 safak: 'linear-gradient(180deg, #312e81 0%, #c2410c 65%, #fdba74 100%)',
@@ -255,15 +255,15 @@ views:
           - transition: left 2s ease, top 2s ease
           - left: |-
               [[[
-                const sun = (states['sun.sun'] || {}).attributes || {};
-                const E = parseFloat(sun.elevation), A = parseFloat(sun.azimuth);
+                const gunes = (states['sun.sun'] || {}).attributes || {};
+                const E = parseFloat(gunes.elevation), A = parseFloat(gunes.azimuth);
                 if (isNaN(E) || isNaN(A) || E <= -1) return '66%';
                 return `${(38 + Math.min(Math.max((A - 70) / 220, 0), 1) * 54).toFixed(1)}%`;
               ]]]
           - top: |-
               [[[
-                const sun = (states['sun.sun'] || {}).attributes || {};
-                const E = parseFloat(sun.elevation);
+                const gunes = (states['sun.sun'] || {}).attributes || {};
+                const E = parseFloat(gunes.elevation);
                 if (isNaN(E) || E <= -1) return '42%';
                 return `${(30 + Math.min(Math.max(1 - E / 55, 0), 1) * 48).toFixed(1)}%`;
               ]]]
@@ -543,8 +543,8 @@ views:
       grid_options:
         columns: full
     - type: custom:mushroom-template-card
-      primary: '{{ [''binary_sensor.sonoff_a4b0023723_moisture'', ''binary_sensor.sonoff_a4b0023729_moisture'', ''binary_sensor.sonoff_a4b0023728_moisture'', ''binary_sensor.sonoff_a4b0023726_moisture'', ''binary_sensor.sonoff_a4b0023725_moisture'', ''binary_sensor.sonoff_a4b002372b_moisture'', ''binary_sensor.sonoff_a4b002414d_moisture'', ''binary_sensor.sonoff_100235874c'', ''climate.sonoff_a4b001d938'', ''climate.sonoff_a4b001d93a'', ''climate.sonoff_a4b001d937'', ''climate.sonoff_a4b001d936'', ''sensor.sonoff_a4b001d938_temperature'', ''sensor.sonoff_a4b001d93a_temperature'', ''sensor.sonoff_a4b001d937_temperature'', ''sensor.sonoff_a4b001d936_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity'', ''sensor.atc_2b36_temperature'', ''sensor.atc_2b36_humidity''] | reject(''has_value'') | list | count }} sensör yanıt vermiyor'
-      secondary: '{{ [''binary_sensor.sonoff_a4b0023723_moisture'', ''binary_sensor.sonoff_a4b0023729_moisture'', ''binary_sensor.sonoff_a4b0023728_moisture'', ''binary_sensor.sonoff_a4b0023726_moisture'', ''binary_sensor.sonoff_a4b0023725_moisture'', ''binary_sensor.sonoff_a4b002372b_moisture'', ''binary_sensor.sonoff_a4b002414d_moisture'', ''binary_sensor.sonoff_100235874c'', ''climate.sonoff_a4b001d938'', ''climate.sonoff_a4b001d93a'', ''climate.sonoff_a4b001d937'', ''climate.sonoff_a4b001d936'', ''sensor.sonoff_a4b001d938_temperature'', ''sensor.sonoff_a4b001d93a_temperature'', ''sensor.sonoff_a4b001d937_temperature'', ''sensor.sonoff_a4b001d936_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity'', ''sensor.atc_2b36_temperature'', ''sensor.atc_2b36_humidity''] | reject(''has_value'') | list | map(''state_attr'', ''friendly_name'') | map(''default'', ''?'', true) | join('', '') }}'
+      primary: '{{ [''binary_sensor.sonoff_a4b0023723_moisture'', ''binary_sensor.sonoff_a4b0023729_moisture'', ''binary_sensor.sonoff_a4b0023728_moisture'', ''binary_sensor.sonoff_a4b0023726_moisture'', ''binary_sensor.sonoff_a4b0023725_moisture'', ''binary_sensor.sonoff_a4b002372b_moisture'', ''binary_sensor.sonoff_a4b002414d_moisture'', ''binary_sensor.sonoff_100235874c'', ''climate.sonoff_a4b001d938'', ''climate.sonoff_a4b001d93a'', ''climate.sonoff_a4b001d937'', ''climate.sonoff_a4b001d936'', ''sensor.sonoff_a4b001d938_temperature'', ''sensor.sonoff_a4b001d93a_temperature'', ''sensor.sonoff_a4b001d937_temperature'', ''sensor.sonoff_a4b001d936_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity'', ''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature'', ''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_humidity'', ''sensor.atc_2b36_temperature'', ''sensor.atc_2b36_humidity''] | reject(''has_value'') | list | count }} sensör yanıt vermiyor'
+      secondary: '{{ [''binary_sensor.sonoff_a4b0023723_moisture'', ''binary_sensor.sonoff_a4b0023729_moisture'', ''binary_sensor.sonoff_a4b0023728_moisture'', ''binary_sensor.sonoff_a4b0023726_moisture'', ''binary_sensor.sonoff_a4b0023725_moisture'', ''binary_sensor.sonoff_a4b002372b_moisture'', ''binary_sensor.sonoff_a4b002414d_moisture'', ''binary_sensor.sonoff_100235874c'', ''climate.sonoff_a4b001d938'', ''climate.sonoff_a4b001d93a'', ''climate.sonoff_a4b001d937'', ''climate.sonoff_a4b001d936'', ''sensor.sonoff_a4b001d938_temperature'', ''sensor.sonoff_a4b001d93a_temperature'', ''sensor.sonoff_a4b001d937_temperature'', ''sensor.sonoff_a4b001d936_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature'', ''sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_humidity'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature'', ''sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_humidity'', ''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature'', ''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_humidity'', ''sensor.atc_2b36_temperature'', ''sensor.atc_2b36_humidity''] | reject(''has_value'') | list | map(''state_attr'', ''friendly_name'') | map(''default'', ''?'', true) | join('', '') }}'
       icon: mdi:wifi-off
       icon_color: orange
       multiline_secondary: true
@@ -654,6 +654,16 @@ views:
           - unavailable
           - unknown
         - condition: state
+          entity: sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature
+          state:
+          - unavailable
+          - unknown
+        - condition: state
+          entity: sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_humidity
+          state:
+          - unavailable
+          - unknown
+        - condition: state
           entity: sensor.atc_2b36_temperature
           state:
           - unavailable
@@ -697,6 +707,7 @@ views:
            'sensor.sonoff_a4b001a3ce_battery': 'Hareket Sensörü',
            'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery': 'Çocuk Odası TH',
            'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery': 'Yatak Odası TH',
+           'sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_battery': 'Çalışma Odası TH',
            'sensor.atc_2b36_battery': 'Salon TH',
            'sensor.sonoff_a4b001d938_battery': 'Salon Petek',
            'sensor.sonoff_a4b001d93a_battery': 'Yatak Odası Petek',
@@ -715,6 +726,7 @@ views:
            'sensor.sonoff_a4b001a3ce_battery': 'Hareket Sensörü',
            'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery': 'Çocuk Odası TH',
            'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery': 'Yatak Odası TH',
+           'sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_battery': 'Çalışma Odası TH',
            'sensor.atc_2b36_battery': 'Salon TH',
            'sensor.sonoff_a4b001d938_battery': 'Salon Petek',
            'sensor.sonoff_a4b001d93a_battery': 'Yatak Odası Petek',
@@ -733,6 +745,7 @@ views:
            'sensor.sonoff_a4b001a3ce_battery': 'Hareket Sensörü',
            'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_battery': 'Çocuk Odası TH',
            'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery': 'Yatak Odası TH',
+           'sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_battery': 'Çalışma Odası TH',
            'sensor.atc_2b36_battery': 'Salon TH',
            'sensor.sonoff_a4b001d938_battery': 'Salon Petek',
            'sensor.sonoff_a4b001d93a_battery': 'Yatak Odası Petek',
@@ -753,12 +766,38 @@ views:
         navigation_path: '#piller'
       grid_options:
         columns: full
+      card_mod:
+        style: |
+          ha-tile-info {
+            container-type: inline-size;
+            overflow: hidden;
+          }
+          span[slot="secondary"] {
+          {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+            display: block !important;
+            width: max-content !important;
+            max-width: none !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+            animation: oda-kayan 12s ease-in-out infinite;
+          {% else %}
+            white-space: normal !important;
+          {% endif %}
+          }
+          @keyframes oda-kayan {
+            0%, 15% { transform: translateX(0); }
+            45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+            90%, 100% { transform: translateX(0); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            span[slot="secondary"] { animation: none !important; white-space: normal !important; }
+          }
     - type: markdown
       content: |
         {% set odalar = {'sensor.atc_2b36_temperature': 'Salon',
            'sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_temperature': 'Yatak Odası',
            'sensor.cocuk_odasi_th_sensor_sonoff_a4b002ba99_temperature': 'Çocuk Odası',
-           'sensor.sonoff_a4b001d936_temperature': 'Çalışma Odası'} %}
+           'sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature': 'Çalışma Odası'} %}
         {% set ns = namespace(v=[]) %}
         {% for e, ad in odalar.items() if states(e) | is_number %}{% set ns.v = ns.v + [(states(e) | float, ad)] %}{% endfor %}
         {% if ns.v %}{% set s = ns.v | sort %}{% set ort = (s | map(attribute=0) | sum) / (s | count) %}<ha-icon icon="mdi:home-thermometer"></ha-icon> **İç ortalama {{ '%.1f' | format(ort) }} °C**{% if s | count > 1 %}
@@ -1168,7 +1207,7 @@ views:
           }
     - type: custom:mushroom-template-card
       primary: Çalışma Odası
-      secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.sonoff_a4b001d936_temperature'') ~ '' °C · '' if has_value(''sensor.sonoff_a4b001d936_temperature'') else '''' }}{% set n = expand([''light.calisma_odasi_lamba'', ''switch.calisma_odasi_kapi_priz'', ''switch.kitaplik_led_sonoff_10021d962d_1'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
+      secondary: '{% if false %}Su kaçağı!{% else %}{{ states(''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature'') ~ '' °C · '' if has_value(''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature'') else '''' }}{{ ''%'' ~ (states(''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_humidity'') | float(0) | round | int) ~ '' · '' if has_value(''sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_humidity'') else '''' }}{% set n = expand([''light.calisma_odasi_lamba'', ''switch.calisma_odasi_kapi_priz'', ''switch.kitaplik_led_sonoff_10021d962d_1'']) | selectattr(''state'', ''eq'', ''on'') | list | count %}{{ n ~ '' ışık açık'' if n > 0 else ''Işıklar kapalı'' }}{% endif %}'
       icon: mdi:monitor-dashboard
       icon_color: '{% if false %}red{% elif (expand([''light.calisma_odasi_lamba'', ''switch.calisma_odasi_kapi_priz'', ''switch.kitaplik_led_sonoff_10021d962d_1'']) | selectattr(''state'', ''eq'', ''on'') | list | count) > 0 %}amber{% else %}grey{% endif %}'
       tap_action:
@@ -1871,6 +1910,30 @@ views:
                 background: rgba(255, 255, 255, 0.05) !important;
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
               }
+              ha-tile-info {
+                container-type: inline-size;
+                overflow: hidden;
+              }
+              span[slot="secondary"] {
+              {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+                display: block !important;
+                width: max-content !important;
+                max-width: none !important;
+                overflow: visible !important;
+                text-overflow: clip !important;
+                animation: oda-kayan 12s ease-in-out infinite;
+              {% else %}
+                white-space: normal !important;
+              {% endif %}
+              }
+              @keyframes oda-kayan {
+                0%, 15% { transform: translateX(0); }
+                45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+                90%, 100% { transform: translateX(0); }
+              }
+              @media (prefers-reduced-motion: reduce) {
+                span[slot="secondary"] { animation: none !important; white-space: normal !important; }
+              }
       - type: grid
         columns: 1
         square: false
@@ -1892,6 +1955,30 @@ views:
               ha-card {
                 background: rgba(255, 255, 255, 0.05) !important;
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
+              ha-tile-info {
+                container-type: inline-size;
+                overflow: hidden;
+              }
+              span[slot="secondary"] {
+              {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+                display: block !important;
+                width: max-content !important;
+                max-width: none !important;
+                overflow: visible !important;
+                text-overflow: clip !important;
+                animation: oda-kayan 12s ease-in-out infinite;
+              {% else %}
+                white-space: normal !important;
+              {% endif %}
+              }
+              @keyframes oda-kayan {
+                0%, 15% { transform: translateX(0); }
+                45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+                90%, 100% { transform: translateX(0); }
+              }
+              @media (prefers-reduced-motion: reduce) {
+                span[slot="secondary"] { animation: none !important; white-space: normal !important; }
               }
       - type: custom:vertical-stack-in-card
         cards:
@@ -1986,6 +2073,177 @@ views:
                 background: rgba(255, 255, 255, 0.05) !important;
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
               }
+      - type: custom:vertical-stack-in-card
+        cards:
+        - type: custom:mushroom-media-player-card
+          entity: media_player.mibox4
+          name: Mi Box
+          icon: mdi:android
+          use_media_info: true
+          show_volume_level: false
+          collapsible_controls: false
+          media_controls:
+          - on_off
+          - play_pause_stop
+          volume_controls: []
+          tap_action:
+            action: more-info
+        - type: custom:mushroom-chips-card
+          alignment: center
+          chips:
+          - type: action
+            icon: mdi:chevron-up
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: DPAD_UP
+          card_mod:
+            style: |
+              ha-card {
+                background: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                --chip-height: 44px;
+                --chip-icon-size: 22px;
+                --chip-spacing: 10px;
+                --chip-background: rgba(255, 255, 255, 0.07);
+                --chip-box-shadow: none;
+                --chip-border-width: 0px;
+                padding: 2px 0 !important;
+              }
+        - type: custom:mushroom-chips-card
+          alignment: center
+          chips:
+          - type: action
+            icon: mdi:chevron-left
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: DPAD_LEFT
+          - type: action
+            icon: mdi:circle-medium
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: DPAD_CENTER
+          - type: action
+            icon: mdi:chevron-right
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: DPAD_RIGHT
+          card_mod:
+            style: |
+              ha-card {
+                background: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                --chip-height: 44px;
+                --chip-icon-size: 22px;
+                --chip-spacing: 10px;
+                --chip-background: rgba(255, 255, 255, 0.07);
+                --chip-box-shadow: none;
+                --chip-border-width: 0px;
+                padding: 2px 0 !important;
+              }
+        - type: custom:mushroom-chips-card
+          alignment: center
+          chips:
+          - type: action
+            icon: mdi:chevron-down
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: DPAD_DOWN
+          card_mod:
+            style: |
+              ha-card {
+                background: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                --chip-height: 44px;
+                --chip-icon-size: 22px;
+                --chip-spacing: 10px;
+                --chip-background: rgba(255, 255, 255, 0.07);
+                --chip-box-shadow: none;
+                --chip-border-width: 0px;
+                padding: 2px 0 !important;
+              }
+        - type: custom:mushroom-chips-card
+          alignment: center
+          chips:
+          - type: action
+            icon: mdi:arrow-left
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: BACK
+          - type: action
+            icon: mdi:home-outline
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: HOME
+          - type: action
+            icon: mdi:volume-minus
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: VOLUME_DOWN
+          - type: action
+            icon: mdi:volume-plus
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.mibox4
+              data:
+                command: VOLUME_UP
+          card_mod:
+            style: |
+              ha-card {
+                background: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                --chip-height: 44px;
+                --chip-icon-size: 22px;
+                --chip-spacing: 10px;
+                --chip-background: rgba(255, 255, 255, 0.07);
+                --chip-box-shadow: none;
+                --chip-border-width: 0px;
+                padding: 2px 0 !important;
+              }
+        card_mod:
+          style: |
+            ha-card {
+              background: rgba(255, 255, 255, 0.05) !important;
+              border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              padding-bottom: 10px !important;
+            }
       - type: grid
         columns: 2
         square: false
@@ -2285,6 +2543,30 @@ views:
                 ha-card {
                   background: rgba(255, 255, 255, 0.05) !important;
                   border: 1px solid rgba(255, 255, 255, 0.12) !important;
+                }
+                ha-tile-info {
+                  container-type: inline-size;
+                  overflow: hidden;
+                }
+                span[slot="secondary"] {
+                {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+                  display: block !important;
+                  width: max-content !important;
+                  max-width: none !important;
+                  overflow: visible !important;
+                  text-overflow: clip !important;
+                  animation: oda-kayan 12s ease-in-out infinite;
+                {% else %}
+                  white-space: normal !important;
+                {% endif %}
+                }
+                @keyframes oda-kayan {
+                  0%, 15% { transform: translateX(0); }
+                  45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+                  90%, 100% { transform: translateX(0); }
+                }
+                @media (prefers-reduced-motion: reduce) {
+                  span[slot="secondary"] { animation: none !important; white-space: normal !important; }
                 }
     - type: custom:bubble-card
       card_type: pop-up
@@ -2600,17 +2882,35 @@ views:
               isolation: isolate;
             }
       - type: grid
-        columns: 1
+        columns: 2
         square: false
         cards:
         - type: tile
-          entity: sensor.sonoff_a4b001d936_temperature
+          entity: sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_temperature
           name: Sıcaklık
           icon: mdi:thermometer
           color: deep-orange
+          vertical: false
           features:
           - type: trend-graph
             hours_to_show: 24
+          features_position: bottom
+          card_mod:
+            style: |
+              ha-card {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
+        - type: tile
+          entity: sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_humidity
+          name: Nem
+          icon: mdi:water-percent
+          color: blue
+          vertical: false
+          features:
+          - type: trend-graph
+            hours_to_show: 24
+          features_position: bottom
           card_mod:
             style: |
               ha-card {
@@ -2695,6 +2995,30 @@ views:
                 background: rgba(255, 255, 255, 0.05) !important;
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
               }
+              ha-tile-info {
+                container-type: inline-size;
+                overflow: hidden;
+              }
+              span[slot="secondary"] {
+              {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+                display: block !important;
+                width: max-content !important;
+                max-width: none !important;
+                overflow: visible !important;
+                text-overflow: clip !important;
+                animation: oda-kayan 12s ease-in-out infinite;
+              {% else %}
+                white-space: normal !important;
+              {% endif %}
+              }
+              @keyframes oda-kayan {
+                0%, 15% { transform: translateX(0); }
+                45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+                90%, 100% { transform: translateX(0); }
+              }
+              @media (prefers-reduced-motion: reduce) {
+                span[slot="secondary"] { animation: none !important; white-space: normal !important; }
+              }
         - type: custom:mushroom-template-card
           entity: binary_sensor.sonoff_a4b001a3ce
           primary: Hareket
@@ -2710,6 +3034,30 @@ views:
               ha-card {
                 background: rgba(255, 255, 255, 0.05) !important;
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
+              ha-tile-info {
+                container-type: inline-size;
+                overflow: hidden;
+              }
+              span[slot="secondary"] {
+              {% if states('input_boolean.dashboard_animasyon') != 'off' %}
+                display: block !important;
+                width: max-content !important;
+                max-width: none !important;
+                overflow: visible !important;
+                text-overflow: clip !important;
+                animation: oda-kayan 12s ease-in-out infinite;
+              {% else %}
+                white-space: normal !important;
+              {% endif %}
+              }
+              @keyframes oda-kayan {
+                0%, 15% { transform: translateX(0); }
+                45%, 60% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+                90%, 100% { transform: translateX(0); }
+              }
+              @media (prefers-reduced-motion: reduce) {
+                span[slot="secondary"] { animation: none !important; white-space: normal !important; }
               }
       - type: grid
         columns: 1
@@ -3291,6 +3639,22 @@ views:
         - type: tile
           entity: sensor.yatak_odasi_th_sensor_sonoff_a4b002badf_battery
           name: Yatak Odası TH
+          tap_action:
+            action: more-info
+          features:
+          - type: bar-gauge
+            min: 0
+            max: 100
+          features_position: inline
+          card_mod:
+            style: |
+              ha-card {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.12) !important;
+              }
+        - type: tile
+          entity: sensor.calisma_odasi_th_sensor_sonoff_a4b002bf9e_battery
+          name: Çalışma Odası TH
           tap_action:
             action: more-info
           features:
