@@ -4,6 +4,11 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v27 — 2026-11-11
+
+- **Glassy deneme paneli kaldırıldı** (beğenilmedi): `glassy-deneme.yaml` ve `build_glassy.py` silindi.
+  Ana panel ve tablet içerik olarak 0v26 ile aynı. HA'da oluşturduysan "Glassy Deneme" panosunu da sil.
+
 ## 0v26 — 2026-11-05
 
 - **Glassy deneme paneli** (tek seferlik, `glassy-deneme.yaml`, `/dashboard-glassy`): ana panelin cam (glassmorphism)
