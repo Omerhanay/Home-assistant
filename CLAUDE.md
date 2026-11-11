@@ -10,3 +10,5 @@
   4. commit mesajı sürümle başlar (`0v02: …`) ve aynı adla git etiketi atılır.
 - Varlık kimliği uydurma; kullanıcının verdiği kimlikleri `check.py` içindeki `USER_ADDED` listesine ekle.
 - Deneme paneli (`dashboard-deneme`) kaldırıldı; kullanılmıyor.
+- Proje eklentisi: Superpowers (`.claude/settings.json`). Eklentinin iş akışı önerileri (TDD, worktree,
+  plan dosyaları vb.) bu dosyadaki kurallarla çelişirse bu dosyadaki kurallar geçerlidir.
