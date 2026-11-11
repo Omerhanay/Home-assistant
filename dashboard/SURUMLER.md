@@ -4,6 +4,11 @@ Biçim: `0v01`, `0v02`, … Her revizyonda bir artar. Sürüm numarası telefon 
 YAML dosyalarının ilk satırında da yazar (`# Ev paneli … sürüm 0vXX`).
 Home Assistant yapıştırırken bu açıklama satırını siler; sürümü dosyadan takip edin.
 
+## 0v29 — 2026-11-11
+
+- Tüm Petekler kartı: ortalama sıcaklık "°C" ile yazılıyor (ör. "ort. 24.4 °C").
+  Hedef sıcaklık satırındaki "°C" için yardımcıya ölçü birimi verilmesi gerekiyor (HA ayarı, panel dosyası değil).
+
 ## 0v28 — 2026-11-11
 
 - **Tüm Petekler kartı** (Isıtma bölümünün en başı, tam genişlik): kaç peteğin açık olduğu + ortalama sıcaklık,
